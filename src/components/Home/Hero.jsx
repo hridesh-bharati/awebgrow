@@ -6,7 +6,7 @@ import 'aos/dist/aos.css';
 import Link from 'next/link';
 
 // NOTE: Light-mode stats component
-import HomeStatsCards from './HomeStatsCards'; 
+// import HomeStatsCards from './HomeStatsCards'; 
 
 export default function Hero() {
   useEffect(() => {
@@ -378,7 +378,7 @@ export default function Hero() {
       </section>
 
       {/* Stats Component */}
-      <HomeStatsCards />
+      {/* <HomeStatsCards /> */}
     </>
   );
 }

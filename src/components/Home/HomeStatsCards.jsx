@@ -40,6 +40,7 @@ export default function HomeStatsCards() {
           width: 100%;
           height: 100px;
           background-color: #0a192f;
+          color:white;
           display: flex;
           align-items: center;
           overflow: hidden;
