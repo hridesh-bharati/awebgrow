@@ -1,3 +1,4 @@
+"use client";
 import CreateAccount from "@/components/AuthSystem/CreateAccount";
 
 export const metadata = {
