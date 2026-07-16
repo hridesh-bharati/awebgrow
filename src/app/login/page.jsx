@@ -1,4 +1,3 @@
-"use client";
 import Login from "@/components/AuthSystem/Login";
 
 export const metadata = {
