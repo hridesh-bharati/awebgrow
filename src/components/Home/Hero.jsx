@@ -75,7 +75,7 @@ export default function Hero() {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                backgroundImage: 'linear-gradient(to right, #0b1329 0%, #0b1329 40%, rgba(11, 19, 41, 0) 100%), url("/images/pic1.png")',
+                backgroundImage: 'linear-gradient(to right, #0b1329 0%, #0b1329 40%, rgba(11, 19, 41, 0) 100%), url("/images/pic1.webp")',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
@@ -85,7 +85,7 @@ export default function Hero() {
             />
 
             <div
-              className="container min-vh-100 d-flex align-items-center position-relative"
+              className="container d-flex align-items-center position-relative"
               style={{ zIndex: 2, paddingTop: '100px', paddingBottom: '60px' }}
             >
               <div className="row justify-content-start text-start w-100 mx-auto">

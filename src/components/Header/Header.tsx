@@ -170,7 +170,7 @@ export default function Header() {
           <div className="d-flex align-items-center flex-shrink-0">
             <Link href="/" className="text-decoration-none" aria-label="WebGrow Home">
               <Image
-                src="/images/logo.png"
+                src="/icons/logo.png"
                 alt="WebGrow Logo"
                 width={90}
                 height={50}
