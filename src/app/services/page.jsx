@@ -1,3 +1,5 @@
+"use client";
+
 import Services from "@/components/Home/Services";
 import Header from "@/components/Header/Header";
 
