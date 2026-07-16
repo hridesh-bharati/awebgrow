@@ -156,61 +156,65 @@ export default function Hero() {
                   >
                     We provide high-performance solutions for custom web applications, eCommerce, and integrated business platforms. Design, develop, and scale with ease.
                   </p>
-
-                  {/* Buttons */}
+                  {/* Buttons Container */}
                   <div
-                    className="d-flex flex-wrap justify-content-start gap-3"
+                    className="d-flex align-items-center justify-content-start gap-2 gap-sm-3 w-100"
                     data-aos="fade-up"
                     data-aos-delay="700"
+                    style={{ maxWidth: "450px" }}
                   >
+                    {/* Projects Demo Button */}
                     <Link
-                      href="/dashboard"
-                      className="d-inline-flex align-items-center justify-content-center px-4 py-2.5 fw-semibold text-decoration-none"
+                      href="#projects"
+                      className="btn d-inline-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 px-3 px-sm-4 py-2 fw-medium text-decoration-none"
                       style={{
                         background: 'linear-gradient(135deg, #2563eb, #7c3aed)',
                         color: '#ffffff',
                         border: 'none',
-                        fontSize: '0.92rem',
-                        borderRadius: '50px',
-                        transition: 'all 0.3s ease',
-                        boxShadow: '0 4px 14px rgba(37,99,235,0.4)',
+                        fontSize: '0.9rem',
+                        borderRadius: '8px', // Minimal square-rounded look instead of pill shape
+                        transition: 'all 0.25s ease',
+                        boxShadow: '0 2px 8px rgba(37,99,235,0.25)',
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.transform = 'translateY(-1px)';
-                        e.currentTarget.style.boxShadow = '0 6px 20px rgba(37,99,235,0.6)';
+                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(37,99,235,0.4)';
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 4px 14px rgba(37,99,235,0.4)';
+                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(37,99,235,0.25)';
                       }}
                     >
-                      View Dashboard
+                      Projects Demo
                     </Link>
+
+                    {/* Contact Button */}
                     <Link
                       href="/contact"
-                      className="d-inline-flex align-items-center justify-content-center px-4 py-2.5 fw-semibold text-decoration-none"
+                      className="btn d-inline-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 px-3 px-sm-4 py-2 fw-medium text-decoration-none"
                       style={{
-                        background: 'rgba(255,255,255,0.05)',
-                        color: '#ffffff',
-                        border: '1px solid rgba(255,255,255,0.2)',
-                        fontSize: '0.92rem',
-                        borderRadius: '50px',
-                        transition: 'all 0.3s ease',
+                        background: 'transparent',
+                        color: '#e2e8f0',
+                        border: '1px solid rgba(255,255,255,0.15)',
+                        fontSize: '0.9rem',
+                        borderRadius: '8px',
+                        transition: 'all 0.25s ease',
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = '#38bdf8';
-                        e.currentTarget.style.color = '#38bdf8';
-                        e.currentTarget.style.background = 'rgba(56, 189, 248, 0.1)';
+                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)';
+                        e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                        e.currentTarget.style.color = '#ffffff';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
-                        e.currentTarget.style.color = '#ffffff';
-                        e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
+                        e.currentTarget.style.background = 'transparent';
+                        e.currentTarget.style.color = '#e2e8f0';
                       }}
                     >
-                      Start a Project
+                      Contact
                     </Link>
                   </div>
+
                 </div>
               </div>
             </div>
