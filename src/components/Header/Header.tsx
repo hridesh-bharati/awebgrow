@@ -172,8 +172,8 @@ export default function Header() {
               <Image
                 src="/icons/logo.png"
                 alt="WebGrow Logo"
-                width={90}
-                height={50}
+                width={70}
+                height={60}
                 className="object-fit-cover"
               />
             </Link>
