@@ -22,7 +22,6 @@ export default function PWAInstallPrompt() {
       // Event ko state me store karein taaki baad me use ho sake
       setDeferredPrompt(e as BeforeInstallPromptEvent);
       
-      // Kuch seconds ka delay dekar popup show karein taaki user experience kharab na ho (e.g., 2 seconds)
       setTimeout(() => {
         setShowPrompt(true);
       }, 2000);

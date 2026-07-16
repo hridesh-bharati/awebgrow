@@ -11,7 +11,7 @@ import Details from "@/components/Home/Details";
 import CTA from "@/components/Home/CTA";
 import FeatureCard from "@/components/Home/FeatureCard";
 import CustomCursor from "./CustomCursor";
-
+// src\app\page.tsx
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://webgrowhb.vercel.app';
 
 const organizationSchema = {

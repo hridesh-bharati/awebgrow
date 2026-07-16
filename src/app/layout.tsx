@@ -4,11 +4,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "aos/dist/aos.css";
 import "./globale.css";
-
+// src\app\layout.tsx
 import AOSInit from "@/components/AOSInit";
 import { Toaster } from 'sonner';
 import { Viewport } from 'next';
-
+import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
@@ -25,6 +25,7 @@ export const metadata = {
     default: "AWebGrow | Next-Gen Web & App Development Agency",
     template: "%s | AWebGrow"
   },
+  manifest: "/manifest.json",
   description:
     "AWebGrow builds high-performance custom web applications, mobile apps, and scalable digital tech ecosystems. Explore our flexible software solution packages.",
   keywords: [
@@ -111,6 +112,7 @@ export default function RootLayout({
       >
         <AOSInit />
         {children}
+        <PWAInstallPrompt />
         <Toaster position="top-center" richColors closeButton />
         
         {/* Bootstrap - CDN Loading fallback parameters removed to avoid integrity mismatch */}
