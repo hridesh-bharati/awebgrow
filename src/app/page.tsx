@@ -1,4 +1,3 @@
-// src/app/page.tsx
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import Hero from "@/components/Home/Hero";
@@ -13,12 +12,14 @@ import CTA from "@/components/Home/CTA";
 import FeatureCard from "@/components/Home/FeatureCard";
 import CustomCursor from "./CustomCursor";
 
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://webgrowhb.vercel.app';
+
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "AWebGrow",
-  "url": process.env.NEXT_PUBLIC_SITE_URL || 'https://webgrowhs.vercel.app/',
-  "logo": "/images/logo.jpg",
+  "url": BASE_URL, // Fixed domain mismatch here
+  "logo": `${BASE_URL}/images/logo.png`, // Matches your actual structure
   "sameAs": [
     "https://github.com/hrideshbharati",
     "https://linkedin.com/company/AWebGrow",
@@ -40,14 +41,14 @@ const organizationSchema = {
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "url": process.env.NEXT_PUBLIC_SITE_URL || 'https://AWebGrowhb.vercel.app',
+  "url": BASE_URL,
   "name": "AWebGrow",
   "description": "Next-Gen Web & App Development Agency",
   "potentialAction": {
     "@type": "SearchAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://AWebGrowhb.vercel.app'}/search?q={search_term_string}`
+      "urlTemplate": `${BASE_URL}/search?q={search_term_string}`
     },
     "query-input": "required name=search_term_string"
   }
@@ -56,7 +57,6 @@ const websiteSchema = {
 export default function Home() {
   return (
     <>
-      {/* ✅ Schema Injection */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ 

@@ -1,4 +1,3 @@
-// src/app/layout.tsx
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -8,17 +7,20 @@ import "./globale.css";
 
 import AOSInit from "@/components/AOSInit";
 import { Toaster } from 'sonner';
+import { Viewport } from 'next';
 
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
   variable: "--font-inter",
-  display: 'swap', // ✅ Performance boost
+  display: 'swap',
 });
 
-// ✅ Metadata moved here (single source of truth)
+// Single Fallback URL Variable for safety
+const FALLBACK_URL = 'https://webgrowhb.vercel.app';
+
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://AWebGrowhb.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL),
   title: {
     default: "AWebGrow | Next-Gen Web & App Development Agency",
     template: "%s | AWebGrow"
@@ -58,7 +60,7 @@ export const metadata = {
     title: "AWebGrow | Next-Gen Web & App Development Agency",
     description:
       "Transform your business with high-performance custom websites, Android/iOS apps, and enterprise-grade tech stacks.",
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://AWebGrowhb.vercel.app',
+    url: process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL,
     siteName: "AWebGrow",
     images: [
       {
@@ -80,9 +82,20 @@ export const metadata = {
     creator: "@AWebGrow",
   },
   alternates: {
-    canonical: process.env.NEXT_PUBLIC_SITE_URL || 'https://AWebGrowhb.vercel.app',
+    canonical: process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL,
   },
   category: "technology",
+};
+
+// Viewport layout ke andar hi rakhna safe aur clean hai
+export const viewport: Viewport = {
+  themeColor: '#00378a',
+  colorScheme: 'light',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({
@@ -100,12 +113,10 @@ export default function RootLayout({
         {children}
         <Toaster position="top-center" richColors closeButton />
         
-        {/* ✅ Bootstrap - Optimized loading */}
+        {/* Bootstrap - CDN Loading fallback parameters removed to avoid integrity mismatch */}
         <Script 
-          src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
           strategy="afterInteractive"
-          integrity="sha384-cY1w2S5s6C6zgC9Ew7hPHCoj9J/4e7KuC/3EZfLZP2VpzQj7eB8vUqT5w0nFDR1"
-          crossOrigin="anonymous"
         />
       </body>
     </html>
