@@ -1,0 +1,292 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  scrollbar-width: none; /* Firefox के लिए स्क्रॉलबार बंद */
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent; /* Better tap highlights */
+}
+
+/* ✅ सभी मुख्य एलिमेंट्स से स्क्रॉलबार को पूरी तरह गायब (Remove) करने के लिए */
+html, body {
+  scrollbar-width: none;
+  -ms-overflow-style: none; /* IE और पुराने Edge के लिए */
+  scroll-behavior: smooth;
+}
+
+/* Webkit ब्राउज़र्स (Chrome, Safari, Newer Edge) के लिए स्क्रॉलबार छुपाएं */
+html::-webkit-scrollbar, 
+body::-webkit-scrollbar,
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Why Choose Us Section Styles */
+.bg-dark-custom {
+  background-color: #0a0a0f;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Text Gradient Fix */
+.text-gradient-rose {
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+}
+
+/* Description Text */
+.hero-desc {
+  max-width: 600px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Custom Cards */
+.feature-card {
+  background-color: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.stats-card {
+  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+  padding: 40px 30px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Hover Animations */
+.app-hover {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s ease !important;
+}
+
+@media (min-width: 768px) {
+  .app-hover:hover {
+    transform: translateY(-4px);
+    border-color: rgba(225, 29, 72, 0.2) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3) !important;
+  }
+}
+
+/* Typography Utilities */
+.tracking-tight {
+  letter-spacing: -0.02em;
+}
+
+.fw-extrabold {
+  font-weight: 800;
+}
+
+/* Services Section Background */
+.bg-services-dark {
+  background-color: #09090b;
+  padding-bottom: 100px;
+  z-index: 3;
+}
+
+/* Services Header Styling */
+.services-title {
+  color: #ffffff;
+  font-size: 1.6rem;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Premium Image-Matched Card Design */
+.premium-service-card {
+  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s ease !important;
+}
+
+/* Hover Effect - Border turns Rose with slight glow & lift */
+@media (min-width: 768px) {
+  .premium-service-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(225, 29, 72, 0.4) !important;
+    box-shadow: 0 25px 50px rgba(225, 29, 72, 0.1) !important;
+  }
+}
+
+/* Custom Status Indicator Badge matched with Image */
+.badge-optimized {
+  font-size: 0.65rem;
+  background-color: rgba(0, 229, 255, 0.1);
+  color: #00e5ff;
+  border: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+/* Image-Matched Cyan/Blue Gradient Text */
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  display: inline-block;
+}
+
+/* Static Graphic Bar matched with Image */
+.premium-bar-container {
+  height: 6px;
+  border-radius: 100px;
+  background-color: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.premium-bar-fill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  border-radius: 100px;
+}
+
+/* Modern Layered Dark Background Layout */
+.bg-dark-custom {
+  background-color: #0b0b11;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(225, 29, 72, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(0, 198, 255, 0.02) 0%, transparent 40%);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+}
+
+.bg-dark-custom::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(to bottom, #09090b, transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Soft Neon Border Glows for Content Separation */
+.glow-divider-top {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(225, 29, 72, 0.3), rgba(0, 198, 255, 0.3), transparent);
+  z-index: 2;
+}
+
+/* Glassmorphic Adjustments for Grid Features */
+.feature-card-modern {
+  background: rgba(20, 20, 30, 0.6) !important;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 20px !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.feature-card-modern:hover {
+  background: rgba(25, 25, 40, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Interlocking Premium Services Grid Layout */
+.services-interlock-wrapper {
+  background-color: #0c0c0e;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.interlock-card {
+  background-color: #121214;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 992px) {
+  .interlock-card.last-item {
+    border-right: none !important;
+  }
+}
+
+/* Sharp Dark Red Solid Feature Accent Box */
+.accent-box-red {
+  background-color: #be123c;
+  width: 55px;
+  height: 55px;
+  min-width: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: background-color 0.2s;
+}
+
+/* Pure Accent Box Yellow Text/Icon Variant */
+.icon-yellow-accent {
+  color: #fde047 !important;
+}
+
+/* Interlock Card Interactions */
+.interlock-card:hover {
+  background-color: #161619;
+}
+
+.interlock-card:hover .accent-box-red {
+  background-color: #e11d48;
+}
+
+/* Sharp Progress Indicator Minimal Setup */
+.flat-bar-minimal {
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.04);
+  width: 100%;
+}
+
+.flat-fill-minimal {
+  height: 100%;
+  background-color: #be123c;
+}
+
+/* ✅ PWA - Prevent zoom on input focus */
+@media screen and (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* ✅ Safe Area Utilities for PWA Navbar */
+:root {
+  --status-bar-height: env(safe-area-inset-top);
+  --safe-area-bottom: env(safe-area-inset-bottom);
+}
+
+/* ✅ Loading skeleton animation */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right, #f6f7f8 8%, #e9ecef 18%, #f6f7f8 33%);
+  background-size: 1000px 100%;
+}

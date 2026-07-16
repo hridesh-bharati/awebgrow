@@ -1,0 +1,179 @@
+/* ==========================================================================
+   PREMIUM SIDEBAR SYSTEM (LIGHT/DARK MATTE COMBO)
+   ========================================================================== */
+.premium-sidebar {
+  background: #111625; /* Sleek high-end deep midnight background */
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.05);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-sidebar-toggle {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 28px;
+  height: 28px;
+  transition: all 0.2s ease;
+}
+
+.btn-sidebar-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
+}
+
+/* Premium Sidebar Link Items Styles */
+.nav-link-premium {
+  color: #a0aec0;
+  font-weight: 500;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-left: 3px solid transparent;
+}
+
+.nav-link-premium:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.04);
+  padding-left: 20px !important;
+}
+
+.sidebar-closed .nav-link-premium {
+  justify-content: center !important;
+  padding-left: 16px !important;
+}
+.sidebar-closed .nav-link-premium:hover {
+  padding-left: 16px !important;
+}
+
+.nav-link-premium.active-item {
+  color: #ffffff !important;
+  background: linear-gradient(90deg, rgba(0, 122, 255, 0.15) 0%, rgba(0, 122, 255, 0.02) 100%);
+  border-left-color: #007aff; /* Apple Blue Active Ribbon Accent */
+  font-weight: 600;
+}
+
+.nav-link-premium.active-item .menu-icon {
+  color: #007aff !important;
+}
+
+/* ==========================================================================
+   MAIN DASHBOARD DASH CARDS & HERO CARDS
+   ========================================================================== */
+.premium-hero-card {
+  background: linear-gradient(135deg, #800020 0%, #3b000e 100%); /* Deep Crimson Premium Maroon Velvet Overlay */
+  box-shadow: 0 10px 30px rgba(128, 0, 32, 0.15) !important;
+}
+
+.btn-premium-logout {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.btn-premium-logout:hover {
+  background: #ffffff;
+  color: #800020;
+  transform: translateY(-1px);
+}
+
+/* Metric Stats Card */
+.premium-metric-card {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.03) !important;
+}
+
+.premium-metric-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06) !important;
+}
+
+.metric-icon-box {
+  width: 54px;
+  height: 54px;
+}
+
+/* ==========================================================================
+   CLEAN RESPONSIVE ENTERPRISE DIRECTORY TABLE
+   ========================================================================== */
+.data-section-card {
+  border: 1px solid rgba(0, 0, 0, 0.03) !important;
+}
+
+.premium-table thead th {
+  background-color: #f8f9fa;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  text-uppercase: true;
+  letter-spacing: 0.7px;
+  padding: 16px 12px;
+  border-bottom: 2px solid #edf2f7;
+}
+
+.premium-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.premium-table tbody tr:hover {
+  background-color: #fdfdfd;
+}
+
+.premium-table tbody td {
+  padding: 16px 12px;
+  border-bottom: 1px solid #edf2f7;
+  color: #334155;
+  font-size: 14px;
+}
+
+/* Custom UI Avatars status elements */
+.avatar-wrapper {
+  width: fit-content;
+}
+
+.status-dot {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+}
+
+.uid-badge {
+  background-color: #f1f5f9;
+  color: #475569;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Live connection pulse animation indicator */
+.pulse-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulse-ring 1.8s infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
