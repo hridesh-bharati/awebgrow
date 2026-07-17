@@ -48,7 +48,7 @@ export default function Header() {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [showMobileSearchRow, setShowMobileSearchRow] = useState(false);
   const [filteredSuggestions, setFilteredSuggestions] = useState<any[]>([]);
-  
+
   const pathname = usePathname();
   const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -94,7 +94,7 @@ export default function Header() {
         if (isCurrent) setUser(null);
       }
     };
-    
+
     checkAuthStatus();
     return () => {
       isCurrent = false;
@@ -193,7 +193,7 @@ export default function Header() {
               <Image
                 src="/icons/logo.png"
                 alt="WebGrow Logo"
-                width={70} 
+                width={70}
                 height={58}
                 className="object-fit-contain"
                 priority
@@ -354,19 +354,19 @@ export default function Header() {
                   )}
                 </>
               ) : (
-               <Link
-  href="/login"
-  className="btn btn-primary d-inline-flex align-items-center justify-content-center gap-2 rounded-pill text-white border-0 px-4 py-2 text-decoration-none transition-all fw-semibold"
-  style={{ 
-    position: 'relative', 
-    zIndex: 1350,
-    boxShadow: '0 4px 12px rgba(13, 110, 253, 0.25)' 
-  }}
-  aria-label="Login Panel"
->
-  <i className="bi bi-person-circle" style={{ fontSize: '1.2rem', lineHeight: 1 }}></i> 
-  <span>Login</span>
-</Link>
+                <Link
+                  href="/login"
+                  className="btn btn-primary d-inline-flex align-items-center justify-content-center gap-2 rounded-pill text-white border-0 px-4 py-2 text-decoration-none transition-all fw-semibold"
+                  style={{
+                    position: 'relative',
+                    zIndex: 1350,
+                    boxShadow: '0 4px 12px rgba(13, 110, 253, 0.25)'
+                  }}
+                  aria-label="Login Panel"
+                >
+                  <i className="bi bi-person-circle" style={{ fontSize: '1.2rem', lineHeight: 1 }}></i>
+                  <span>Login</span>
+                </Link>
               )}
             </div>
 

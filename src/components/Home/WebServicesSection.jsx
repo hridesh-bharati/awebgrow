@@ -14,9 +14,9 @@ const WebServicesSection = () => {
 
   return (
     <section 
-      className="w-full position-relative overflow-hidden py-4 d-flex align-items-center justify-content-center" 
+      className="w-full position-relative overflow-hidden py-1 d-flex align-items-center justify-content-center" 
       style={{ 
-        background: 'linear-gradient(180deg, #0f172a 0%, #030712 100%)', // Ultra Dark Modern Premium Gradient
+        background: 'linear-gradient(180deg, #0f172a 0%, #030712 100%)',
         borderTop: '1px solid rgba(255, 255, 255, 0.05)',
         borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
       }}
