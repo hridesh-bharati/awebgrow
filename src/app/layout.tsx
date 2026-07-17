@@ -5,7 +5,6 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "aos/dist/aos.css";
 import "./globale.css";
 // src\app\layout.tsx
-import AOSInit from "@/components/AOSInit";
 import { Toaster } from 'sonner';
 import { Viewport } from 'next';
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
@@ -110,7 +109,6 @@ export default function RootLayout({
         style={{ fontFamily: "var(--font-inter), sans-serif" }}
         suppressHydrationWarning
       >
-        <AOSInit />
         {children}
         <PWAInstallPrompt />
         <Toaster position="top-center" richColors closeButton />

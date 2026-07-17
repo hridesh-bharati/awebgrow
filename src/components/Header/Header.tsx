@@ -260,7 +260,7 @@ export default function Header() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     aria-label="Search"
                   />
-                  <button type="submit" className="position-absolute end-0 top-50 translate-middle-y border-0 bg-transparent text-white-50 pe-2.5">
+                  <button type="submit" className="position-absolute end-0 top-50 translate-middle-y border-0 bg-transparent text-white-50 pe-2">
                     <i className="bi bi-search" style={{ fontSize: '0.72rem' }}></i>
                   </button>
                 </div>
@@ -268,7 +268,7 @@ export default function Header() {
 
               {isSearchFocused && filteredSuggestions.length > 0 && (
                 <div
-                  className="position-absolute start-0 py-1 mt-1 text-start shadow-lg"
+                  className="position-absolute start-0 py-1 mt-1   text-start shadow-lg"
                   style={{
                     backgroundColor: '#ffffff',
                     zIndex: 1100,
@@ -332,7 +332,7 @@ export default function Header() {
                         border: '1px solid rgba(0,0,0,0.08)'
                       }}
                     >
-                      <div className="px-3 py-1.5 text-dark fw-bold border-bottom text-truncate" style={{ fontSize: '0.78rem' }}>
+                      <div className="px-3 py-1 text-dark fw-bold border-bottom text-truncate" style={{ fontSize: '0.78rem' }}>
                         {user.name}
                       </div>
                       <Link
@@ -354,14 +354,19 @@ export default function Header() {
                   )}
                 </>
               ) : (
-                <Link
-                  href="/login"
-                  className="d-flex align-items-center justify-content-center text-white-50 rounded-circle text-decoration-none"
-                  style={{ width: '34px', height: '34px', backgroundColor: 'rgba(255,255,255,0.12)', position: 'relative', zIndex: 1350 }}
-                  aria-label="Login Panel"
-                >
-                  <i className="bi bi-person-circle" style={{ fontSize: '1.25rem' }}></i>
-                </Link>
+               <Link
+  href="/login"
+  className="btn btn-primary d-inline-flex align-items-center justify-content-center gap-2 rounded-pill text-white border-0 px-4 py-2 text-decoration-none transition-all fw-semibold"
+  style={{ 
+    position: 'relative', 
+    zIndex: 1350,
+    boxShadow: '0 4px 12px rgba(13, 110, 253, 0.25)' 
+  }}
+  aria-label="Login Panel"
+>
+  <i className="bi bi-person-circle" style={{ fontSize: '1.2rem', lineHeight: 1 }}></i> 
+  <span>Login</span>
+</Link>
               )}
             </div>
 

@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Link from 'next/link';
-
+import WebServicesSection from './WebServicesSection'
 export default function Hero() {
   useEffect(() => {
     AOS.init({
@@ -15,6 +15,7 @@ export default function Hero() {
   }, []);
 
   return (
+ <>
     <section
       id="hero"
       className="carousel slide carousel-fade position-relative overflow-hidden"
@@ -76,7 +77,7 @@ export default function Hero() {
       </div>
 
       <div className="carousel-inner overflow-hidden" style={{ height: '100%' }}>
-        {/* ========== SLIDE 1 ========== */}
+        {/* ========== SLIDE 1: Website Development ========== */}
         <div className="carousel-item active overflow-hidden" style={{ height: '100%' }}>
           <div
             className="hero-bg"
@@ -124,12 +125,14 @@ export default function Hero() {
                     className="badge-text fw-medium text-uppercase"
                     style={{ fontSize: '0.65rem', letterSpacing: '0.1em', color: '#cbd5e1' }}
                   >
-                    Team Collaboration • Web Apps • Growth
+                    Website Development • Custom Solutions • Growth
                   </span>
                 </div>
 
                 <h1
                   className="mb-2 hero-title"
+                  data-aos="fade-right"
+                  data-aos-delay="100"
                   style={{
                     fontWeight: 800,
                     fontSize: 'clamp(1.8rem, 3.8vw, 4rem)', 
@@ -138,7 +141,7 @@ export default function Hero() {
                     letterSpacing: '-0.04em',
                   }}
                 >
-                  <span data-aos="fade-right" data-aos-delay="100">WE </span>
+                  <span data-aos="fade-right" data-aos-delay="200">Build </span>
                   <span
                     data-aos="fade-right"
                     data-aos-delay="300"
@@ -148,10 +151,10 @@ export default function Hero() {
                       WebkitTextFillColor: 'transparent',
                     }}
                   >
-                    BUILD WEBSITES
+                    High-Performance
                   </span>
                   <br />
-                  That Grow Your Business
+                  <span data-aos="fade-right" data-aos-delay="400">Websites & Apps</span>
                 </h1>
 
                 <p
@@ -166,7 +169,8 @@ export default function Hero() {
                     fontWeight: 500,
                   }}
                 >
-                  We provide high-performance solutions for custom web applications, eCommerce, and integrated business platforms. Design, develop, and scale with ease.
+                  From custom web applications and eCommerce platforms to integrated business solutions — 
+                  we design, develop, and scale digital products that drive real results.
                 </p>
 
                 <div
@@ -187,21 +191,19 @@ export default function Hero() {
                       boxShadow: '0 2px 8px rgba(37,99,235,0.25)',
                     }}
                   >
-                    Projects Demo
+                    View Projects
                   </Link>
 
                   <Link
                     href="/contact"
-                    className="btn d-inline-flex align-items-center justify-content-center flex-grow-1 flex-sm-grow-0 px-3 px-sm-4 py-2 fw-medium text-decoration-none"
+                    className="btn d-inline-flex align-items-center justify-content-center bg-warning text-white flex-grow-1 flex-sm-grow-0 px-3 px-sm-4 py-2 fw-bold text-decoration-none"
                     style={{
-                      background: 'transparent',
-                      color: '#e2e8f0',
                       border: '1px solid rgba(255,255,255,0.15)',
                       fontSize: '0.85rem',
                       borderRadius: '8px',
                     }}
                   >
-                    Contact
+                    Contact Us
                   </Link>
                 </div>
               </div>
@@ -209,7 +211,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ========== SLIDE 2 ========== */}
+        {/* ========== SLIDE 2: SEO & Analytics ========== */}
         <div className="carousel-item overflow-hidden" style={{ height: '100%' }}>
           <div
             className="hero-bg"
@@ -241,6 +243,8 @@ export default function Hero() {
               <div className="col-lg-10 col-xl-8">
                 <div
                   className="badge-wrapper d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill mb-3"
+                  data-aos="fade-right"
+                  data-aos-delay="100"
                   style={{ background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.15)' }}
                 >
                   <span
@@ -257,12 +261,14 @@ export default function Hero() {
                     className="badge-text fw-medium text-uppercase"
                     style={{ fontSize: '0.65rem', letterSpacing: '0.1em', color: '#cbd5e1' }}
                   >
-                    Performance • Security • ASO • Business Growth
+                    SEO • Analytics • Performance • Web Ddev
                   </span>
                 </div>
 
                 <h1
                   className="mb-3 hero-title"
+                  data-aos="fade-right"
+                  data-aos-delay="200"
                   style={{
                     fontFamily: "'Inter', sans-serif",
                     fontWeight: 800,
@@ -272,21 +278,26 @@ export default function Hero() {
                     letterSpacing: '-0.04em',
                   }}
                 >
-                  Measure & Grow.
-                  <br />
+                  <span data-aos="fade-right" data-aos-delay="300">Grow Your </span>
                   <span
+                    data-aos="fade-right"
+                    data-aos-delay="400"
                     style={{
                       background: 'linear-gradient(135deg, #10b981, #38bdf8)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                     }}
                   >
-                    Your Apps.
+                    Digital Presence
                   </span>
+                  <br />
+                  <span data-aos="fade-right" data-aos-delay="500">with Data-Driven Insights</span>
                 </h1>
 
                 <p
                   className="mb-4 hero-text d-none d-sm-block"
+                  data-aos="fade-up"
+                  data-aos-delay="600"
                   style={{
                     fontSize: 'clamp(0.9rem, 1.1vw, 1.1rem)',
                     color: '#94a3b8',
@@ -295,12 +306,17 @@ export default function Hero() {
                     fontWeight: 500,
                   }}
                 >
-                  From specialized CRM, ERP, and booking engines to dashboards and SaaS platforms, we build the core digital products that power modern businesses and enhance user experience.
+                  Boost your visibility with expert SEO strategies, track performance with Google Analytics, 
+                  and optimize your apps for maximum reach. We turn data into growth.
                 </p>
 
-                <div className="d-flex flex-wrap justify-content-start gap-3">
+                <div
+                  className="d-flex flex-wrap justify-content-start gap-3"
+                  data-aos="fade-up"
+                  data-aos-delay="700"
+                >
                   <Link
-                    href="/contact"
+                    href="/services"
                     className="d-inline-flex align-items-center justify-content-center px-4 py-2 fw-semibold text-decoration-none"
                     style={{
                       background: 'linear-gradient(135deg, #10b981, #2563eb)',
@@ -311,10 +327,10 @@ export default function Hero() {
                       boxShadow: '0 4px 14px rgba(16,185,129,0.4)',
                     }}
                   >
-                    Get Optimization
+                    Explore Services
                   </Link>
                   <Link
-                    href="/services"
+                    href="/contact"
                     className="d-inline-flex align-items-center justify-content-center px-4 py-2 fw-semibold text-decoration-none"
                     style={{
                       background: 'rgba(255,255,255,0.05)',
@@ -324,7 +340,7 @@ export default function Hero() {
                       borderRadius: '50px',
                     }}
                   >
-                    Our Services
+                    Get Started
                   </Link>
                 </div>
               </div>
@@ -371,5 +387,7 @@ export default function Hero() {
         <span className="visually-hidden">Next</span>
       </button>
     </section>
+    <WebServicesSection />
+ </>
   );
 }

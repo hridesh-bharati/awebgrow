@@ -2,12 +2,12 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import Hero from "@/components/Home/Hero";
 import WhyChooseUs from "@/components/Home/WhyChooseUs";
-import Technologies from "@/components/Home/Technologies";
+// import Technologies from "@/components/Home/Technologies";
 import Process from "@/components/Home/Process";
 import OurProjects from "@/components/Home/OurProjects";
 import PricingPackages from "@/components/Home/PricingPackages";
 import ClientReviews from "@/components/Home/ClientReviews";
-import Details from "@/components/Home/Details";
+// import Details from "@/components/Home/Details";
 import CTA from "@/components/Home/CTA";
 import FeatureCard from "@/components/Home/FeatureCard";
 import CustomCursor from "./CustomCursor";
@@ -74,8 +74,8 @@ export default function Home() {
           <Process />
           <CTA />
           <PricingPackages />
-          <Technologies />
-          <Details />
+          {/* <Technologies /> */}
+          {/* <Details /> */}
           <ClientReviews />
         </main>
         <Footer />
