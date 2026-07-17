@@ -31,16 +31,16 @@ export default function Hero() {
           minHeight: '85vh'
         }}
       >
-        {/* Mobile Responsiveness Framework Fixes */}
+        {/* Mobile Responsiveness Framework - Set to exactly 70vh */}
         <style jsx>{`
           @media (max-width: 767.98px) {
             #hero, .carousel-inner, .carousel-item {
-              height: auto !important;
-              min-height: calc(100vh - 65px) !important; /* Full dynamic mobile viewport minus navbar space */
+              height: 70vh !important;
+              min-height: 70vh !important;
             }
             .hero-bg {
-              background-position: 85% center !important; /* Shifts graphics asset rightward away from mobile copy */
-              background-image: linear-gradient(to top, #0b1329 10%, rgba(11, 19, 41, 0.8) 50%, #0b1329 90%), url("/images/pic1.webp") !important;
+              background-position: 85% center !important; /* Shifts graphics rightward to save text clarity */
+              background-image: linear-gradient(to top, #0b1329 15%, rgba(11, 19, 41, 0.75) 50%, #0b1329 85%), url("/images/pic1.webp") !important;
             }
             .slide2-bg {
               background-position: 85% center !important;
@@ -109,8 +109,8 @@ export default function Hero() {
               className="container d-flex align-items-center position-relative h-100"
               style={{ 
                 zIndex: 2, 
-                paddingTop: '60px',     
-                paddingBottom: '80px',
+                paddingTop: '40px',     
+                paddingBottom: '40px',
                 boxSizing: 'border-box'
               }}
             >
@@ -145,7 +145,7 @@ export default function Hero() {
                     data-aos-delay="100"
                     style={{
                       fontWeight: 800,
-                      fontSize: 'clamp(2.2rem, 4.5vw, 4rem)', 
+                      fontSize: 'clamp(2.1rem, 4.5vw, 4rem)', 
                       lineHeight: '1.2',
                       color: '#ffffff',
                       letterSpacing: '-0.03em',
@@ -169,15 +169,14 @@ export default function Hero() {
                     data-aos="fade-up"
                     data-aos-delay="300"
                     style={{
-                      fontSize: 'clamp(0.9rem, 1.1vw, 1.1rem)',
+                      fontSize: 'clamp(0.88rem, 1.1vw, 1.1rem)',
                       color: '#94a3b8',
                       maxWidth: '650px',
-                      lineHeight: '1.6',
+                      lineHeight: '1.5',
                       fontWeight: 500,
                     }}
                   >
-                    From custom web applications and eCommerce platforms to integrated business solutions — 
-                    we design, develop, and scale digital products that drive real results.
+                    From custom web applications and platforms to SaaS — we design, develop, and scale digital products that drive real results.
                   </p>
 
                   <div
@@ -188,7 +187,7 @@ export default function Hero() {
                   >
                     <Link
                       href="#projects"
-                      className="btn d-inline-flex align-items-center justify-content-center flex-grow-1 px-4 py-2.5 fw-semibold text-decoration-none"
+                      className="btn d-inline-flex align-items-center justify-content-center flex-grow-1 px-4 py-2 fw-semibold text-decoration-none"
                       style={{
                         background: 'linear-gradient(135deg, #2563eb, #7c3aed)',
                         color: '#ffffff',
@@ -203,7 +202,7 @@ export default function Hero() {
 
                     <Link
                       href="/contact"
-                      className="btn d-inline-flex align-items-center justify-content-center bg-warning text-dark flex-grow-1 px-4 py-2.5 fw-bold text-decoration-none"
+                      className="btn d-inline-flex align-items-center justify-content-center bg-warning text-dark flex-grow-1 px-4 py-2 fw-bold text-decoration-none"
                       style={{
                         border: 'none',
                         fontSize: '0.85rem',
@@ -243,8 +242,8 @@ export default function Hero() {
               className="container d-flex align-items-center position-relative h-100"
               style={{ 
                 zIndex: 2, 
-                paddingTop: '60px',
-                paddingBottom: '80px',
+                paddingTop: '40px',
+                paddingBottom: '40px',
                 boxSizing: 'border-box'
               }}
             >
@@ -277,7 +276,7 @@ export default function Hero() {
                     className="mb-3 hero-title"
                     style={{
                       fontWeight: 800,
-                      fontSize: 'clamp(2.2rem, 4.5vw, 4rem)',
+                      fontSize: 'clamp(2.1rem, 4.5vw, 4rem)',
                       lineHeight: '1.2',
                       color: '#ffffff',
                       letterSpacing: '-0.03em',
@@ -299,21 +298,20 @@ export default function Hero() {
                   <p
                     className="mb-4 hero-text"
                     style={{
-                      fontSize: 'clamp(0.9rem, 1.1vw, 1.1rem)',
+                      fontSize: 'clamp(0.88rem, 1.1vw, 1.1rem)',
                       color: '#94a3b8',
                       maxWidth: '650px',
-                      lineHeight: '1.6',
+                      lineHeight: '1.5',
                       fontWeight: 500,
                     }}
                   >
-                    Boost your visibility with expert SEO strategies, track performance with Google Analytics, 
-                    and optimize your apps for maximum reach. We turn data into growth.
+                    Boost your visibility with expert SEO strategies, track performance with Google Analytics, and optimize your apps for maximum reach.
                   </p>
 
                   <div className="d-flex align-items-center justify-content-start gap-3 w-100" style={{ maxWidth: "400px" }}>
                     <Link
                       href="/services"
-                      className="d-inline-flex align-items-center justify-content-center flex-grow-1 px-4 py-2.5 fw-semibold text-decoration-none"
+                      className="d-inline-flex align-items-center justify-content-center flex-grow-1 px-4 py-2 fw-semibold text-decoration-none"
                       style={{
                         background: 'linear-gradient(135deg, #10b981, #2563eb)',
                         color: '#ffffff',
@@ -327,7 +325,7 @@ export default function Hero() {
                     </Link>
                     <Link
                       href="/contact"
-                      className="d-inline-flex align-items-center justify-content-center flex-grow-1 px-4 py-2.5 fw-semibold text-decoration-none"
+                      className="d-inline-flex align-items-center justify-content-center flex-grow-1 px-4 py-2 fw-semibold text-decoration-none"
                       style={{
                         background: 'rgba(255,255,255,0.05)',
                         color: '#ffffff',
