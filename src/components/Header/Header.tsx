@@ -300,7 +300,7 @@ export default function Header() {
               style={{ fontSize: '1.1rem' }}
               aria-label="Toggle Search"
             >
-              <i className={showMobileSearchRow ? "bi bi-x-lg text-danger" : "bi bi-search"}></i>
+              <i className={showMobileSearchRow ? "bi bi-x-lg text-danger bg-white rounded-1" : "bi bi-search"}></i>
             </button>
 
             {/* Auth Dropdown Input Endpoint - Fixed Mobile Clickability */}
