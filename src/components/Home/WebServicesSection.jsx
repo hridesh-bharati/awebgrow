@@ -12,9 +12,21 @@ const WebServicesSection = () => {
     "Tech Support", "Digital Transformation"
   ];
 
+  // हर बैज के लिए अलग-अलग नियॉन कलर्स की लिस्ट
+  const badgeColors = [
+    { text: '#00f2fe', bg: 'rgba(0, 242, 254, 0.05)', border: 'rgba(0, 242, 254, 0.25)', glow: 'rgba(0, 242, 254, 0.3)' },
+    { text: '#ff0080', bg: 'rgba(255, 0, 128, 0.05)', border: 'rgba(255, 0, 128, 0.25)', glow: 'rgba(255, 0, 128, 0.3)' },
+    { text: '#39ff14', bg: 'rgba(57, 255, 20, 0.05)', border: 'rgba(57, 255, 20, 0.25)', glow: 'rgba(57, 255, 20, 0.3)' },
+    { text: '#fffe33', bg: 'rgba(255, 254, 51, 0.05)', border: 'rgba(255, 254, 51, 0.25)', glow: 'rgba(255, 254, 51, 0.3)' },
+    { text: '#ff6600', bg: 'rgba(255, 102, 0, 0.05)', border: 'rgba(255, 102, 0, 0.25)', glow: 'rgba(255, 102, 0, 0.3)' },
+    { text: '#00ffff', bg: 'rgba(0, 255, 255, 0.05)', border: 'rgba(0, 255, 255, 0.25)', glow: 'rgba(0, 255, 255, 0.3)' },
+    { text: '#bd00ff', bg: 'rgba(189, 0, 255, 0.05)', border: 'rgba(189, 0, 255, 0.25)', glow: 'rgba(189, 0, 255, 0.3)' },
+    { text: '#ff003c', bg: 'rgba(255, 0, 60, 0.05)', border: 'rgba(255, 0, 60, 0.25)', glow: 'rgba(255, 0, 60, 0.3)' }
+  ];
+
   return (
     <section 
-      className="w-full position-relative overflow-hidden py-1 d-flex align-items-center justify-content-center" 
+      className="w-full position-relative overflow-hidden py-2 d-flex align-items-center justify-content-center" 
       style={{ 
         background: 'linear-gradient(180deg, #0f172a 0%, #030712 100%)',
         borderTop: '1px solid rgba(255, 255, 255, 0.05)',
@@ -36,19 +48,22 @@ const WebServicesSection = () => {
           animation-play-state: paused;
         }
         .service-badge {
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          color: #f8fafc; /* Crisp clean readable slate-white text */
+          background: var(--bg-color);
+          border: 1px solid var(--border-color);
+          color: var(--text-color);
           padding: 6px 16px;
           border-radius: 100px;
           transition: all 0.3s ease;
+          text-shadow: 0 0 8px var(--glow-color);
+          box-shadow: inset 0 0 10px var(--glow-color);
         }
         .service-badge:hover {
-          background: linear-gradient(90deg, rgba(0, 242, 254, 0.15), rgba(121, 40, 202, 0.15));
-          border-color: #00f2fe;
-          color: #00f2fe;
-          transform: scale(1.03);
-          box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+          background: var(--text-color);
+          color: #030712;
+          border-color: var(--text-color);
+          transform: scale(1.05);
+          box-shadow: 0 0 25px var(--text-color);
+          text-shadow: none;
         }
       `}</style>
 
@@ -64,22 +79,48 @@ const WebServicesSection = () => {
           
           {/* Track Group 1 */}
           <div className="d-flex align-items-center gap-4 text-uppercase fw-bold tracking-wider" style={{ fontSize: '0.78rem', letterSpacing: '0.12em' }}>
-            {services.map((service, index) => (
-              <div key={`orig-${index}`} className="d-flex align-items-center gap-4 whitespace-nowrap">
-                <div className="service-badge">{service}</div>
-                <span style={{ color: '#ff0080', fontSize: '1.2rem', textShadow: '0 0 10px rgba(255,0,128,0.5)' }}>✦</span>
-              </div>
-            ))}
+            {services.map((service, index) => {
+              const color = badgeColors[index % badgeColors.length];
+              return (
+                <div key={`orig-${index}`} className="d-flex align-items-center gap-4 whitespace-nowrap">
+                  <div 
+                    className="service-badge"
+                    style={{
+                      '--text-color': color.text,
+                      '--bg-color': color.bg,
+                      '--border-color': color.border,
+                      '--glow-color': color.glow
+                    }}
+                  >
+                    {service}
+                  </div>
+                  <span style={{ color: color.text, fontSize: '1.2rem', textShadow: `0 0 10px ${color.text}`, opacity: 0.7 }}>✦</span>
+                </div>
+              );
+            })}
           </div>
           
           {/* Track Group 2 (Duplicate for Seamless Scroll Loop) */}
           <div className="d-flex align-items-center gap-4 text-uppercase fw-bold tracking-wider" style={{ fontSize: '0.78rem', letterSpacing: '0.12em' }}>
-            {services.map((service, index) => (
-              <div key={`dup-${index}`} className="d-flex align-items-center gap-4 whitespace-nowrap">
-                <div className="service-badge">{service}</div>
-                <span style={{ color: '#ff0080', fontSize: '1.2rem', textShadow: '0 0 10px rgba(255,0,128,0.5)' }}>✦</span>
-              </div>
-            ))}
+            {services.map((service, index) => {
+              const color = badgeColors[index % badgeColors.length];
+              return (
+                <div key={`dup-${index}`} className="d-flex align-items-center gap-4 whitespace-nowrap">
+                  <div 
+                    className="service-badge"
+                    style={{
+                      '--text-color': color.text,
+                      '--bg-color': color.bg,
+                      '--border-color': color.border,
+                      '--glow-color': color.glow
+                    }}
+                  >
+                    {service}
+                  </div>
+                  <span style={{ color: color.text, fontSize: '1.2rem', textShadow: `0 0 10px ${color.text}`, opacity: 0.7 }}>✦</span>
+                </div>
+              );
+            })}
           </div>
 
         </div>
