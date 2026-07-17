@@ -39,7 +39,7 @@ const SEARCH_INDEX = [
 ];
 
 export default function Header() {
-  const [mounted, setMounted] = useState(false); // Safe Hydration Guard
+  const [mounted, setMounted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [user, setUser] = useState<any>(null);
@@ -55,12 +55,10 @@ export default function Header() {
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
 
-  // Handle Mount State to prevent hydration mismatches
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Handle Scroll Progress & Header Shrink
   useEffect(() => {
     if (!mounted) return;
 
@@ -76,7 +74,6 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [mounted]);
 
-  // Handle Async Auth Session Syncing with Component Lifecycle Guard
   useEffect(() => {
     if (!mounted) return;
     let isCurrent = true;
@@ -100,11 +97,10 @@ export default function Header() {
     
     checkAuthStatus();
     return () => {
-      isCurrent = false; // Prevents "Can't perform state update on unmounted component"
+      isCurrent = false;
     };
   }, [pathname, mounted]);
 
-  // Handle Outside Clicks
   useEffect(() => {
     if (!mounted) return;
 
@@ -123,7 +119,6 @@ export default function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [mounted]);
 
-  // Handle Live Suggestion Filtering
   useEffect(() => {
     if (searchQuery.trim() === '') {
       setFilteredSuggestions([]);
@@ -176,33 +171,30 @@ export default function Header() {
     { path: '/contact', label: 'Contact', icon: 'bi-chat-square-text', activeIcon: 'bi-chat-square-text-fill' },
   ];
 
-  // Server vs Client sync fallback wrapper
   if (!mounted) {
-    return <header style={{ height: '50px', backgroundColor: '#0a2240' }} className="fixed-top" />;
+    return <header style={{ height: '70px', backgroundColor: '#0a2240' }} className="fixed-top" />;
   }
 
   return (
     <>
-      {/* Top Navigation Bar */}
       <header
-        className="fixed-top p-0 transition-all"
+        className="fixed-top p-0"
         style={{
           zIndex: 1050,
           backgroundColor: '#0a2240',
           boxShadow: isScrolled ? '0 4px 15px rgba(0, 0, 0, 0.25)' : 'none',
-          '--hover-bg': 'rgba(255, 255, 255, 0.08)'
-        } as React.CSSProperties}
+        }}
       >
-        <div className="container-fluid d-flex align-items-center justify-content-between py-1.5 px-3 px-md-4" style={{ height: '50px' }}>
+        <div className="container-fluid d-flex align-items-center justify-content-between px-3 px-md-4" style={{ height: '70px' }}>
 
-          {/* Branding Left */}
+          {/* Branding Left - Bigger Logo */}
           <div className="d-flex align-items-center flex-shrink-0">
             <Link href="/" className="text-decoration-none d-flex align-items-center" aria-label="WebGrow Home">
               <Image
                 src="/icons/logo.png"
                 alt="WebGrow Logo"
-                width={50}
-                height={42}
+                width={70} 
+                height={58}
                 className="object-fit-contain"
                 priority
               />
@@ -211,7 +203,7 @@ export default function Header() {
 
           {/* Mobile Center Text Banner */}
           <div className="d-block d-md-none text-center flex-grow-1 mx-2 text-truncate">
-            <span className="text-white-50 fw-semibold tracking-wide" style={{ fontSize: '0.82rem', letterSpacing: '0.03em' }}>
+            <span className="text-white fw-semibold small">
               Next-Gen web services
             </span>
           </div>
@@ -224,11 +216,10 @@ export default function Header() {
                 <Link
                   key={tab.path}
                   href={tab.path}
-                  className="text-decoration-none d-flex align-items-center px-3 py-1 transition-all"
+                  className="text-decoration-none d-flex align-items-center px-3 py-2 mx-1"
                   style={{
                     color: isActive ? '#ffbc00' : '#ffffff',
-                    backgroundColor: isActive ? 'var(--hover-bg)' : 'transparent',
-                    fontSize: '0.82rem',
+                    fontSize: '0.85rem',
                     borderRadius: '6px',
                     fontWeight: 600,
                   }}
@@ -240,7 +231,7 @@ export default function Header() {
           </nav>
 
           {/* Right Action Cluster */}
-          <div className="d-flex align-items-center flex-shrink-0 gap-2">
+          <div className="d-flex align-items-center flex-shrink-0 gap-3">
 
             {/* Desktop Inline Search */}
             <div className="search-wrapper d-none d-md-flex align-items-center position-relative" ref={searchRef} style={{ width: '210px' }}>
@@ -255,8 +246,7 @@ export default function Header() {
                       borderRadius: '14px',
                       fontSize: '0.78rem',
                       outline: 'none',
-                      transition: 'all 0.2s ease',
-                      height: '28px'
+                      height: '32px'
                     }}
                     onFocus={(e) => {
                       setIsSearchFocused(true);
@@ -307,26 +297,26 @@ export default function Header() {
             <button
               onClick={() => setShowMobileSearchRow(!showMobileSearchRow)}
               className="btn p-1 border-0 d-inline-block d-md-none text-white-50"
-              style={{ fontSize: '1.05rem' }}
+              style={{ fontSize: '1.1rem' }}
               aria-label="Toggle Search"
             >
               <i className={showMobileSearchRow ? "bi bi-x-lg text-danger" : "bi bi-search"}></i>
             </button>
 
-            {/* Auth Dropdown Input Endpoint */}
-            <div ref={dropdownRef} className="d-flex align-items-center position-relative" style={{ zIndex: 1200 }}>
+            {/* Auth Dropdown Input Endpoint - Fixed Mobile Clickability */}
+            <div ref={dropdownRef} className="position-relative" style={{ zIndex: 1300 }}>
               {user ? (
                 <>
                   <button
                     onClick={() => setShowDropdown(!showDropdown)}
                     className="btn p-0 border-0 d-flex align-items-center justify-content-center rounded-circle"
-                    style={{ width: '28px', height: '28px' }}
+                    style={{ width: '34px', height: '34px', position: 'relative', zIndex: 1350 }}
                   >
                     <Image
                       src={user.profileImage || "/icons/logo.png"}
                       alt="User avatar"
-                      width={28}
-                      height={28}
+                      width={34}
+                      height={34}
                       className="rounded-circle object-fit-cover border border-1 border-light"
                     />
                   </button>
@@ -366,11 +356,11 @@ export default function Header() {
               ) : (
                 <Link
                   href="/login"
-                  className="d-flex align-items-center justify-content-center text-white-50 rounded-circle"
-                  style={{ width: '28px', height: '28px', backgroundColor: 'rgba(255,255,255,0.12)' }}
+                  className="d-flex align-items-center justify-content-center text-white-50 rounded-circle text-decoration-none"
+                  style={{ width: '34px', height: '34px', backgroundColor: 'rgba(255,255,255,0.12)', position: 'relative', zIndex: 1350 }}
                   aria-label="Login Panel"
                 >
-                  <i className="bi bi-person-circle" style={{ fontSize: '1.1rem' }}></i>
+                  <i className="bi bi-person-circle" style={{ fontSize: '1.25rem' }}></i>
                 </Link>
               )}
             </div>
@@ -380,7 +370,7 @@ export default function Header() {
 
         {/* Mobile Search Drop-down Drawer */}
         {showMobileSearchRow && (
-          <div className="w-100 px-3 pb-2 bg-dark d-block d-md-none" ref={mobileSearchRef}>
+          <div className="w-100 px-3 pb-2 bg-inherit d-block d-md-none" ref={mobileSearchRef}>
             <form onSubmit={handleSearchSubmit} className="w-100 m-0">
               <div className="position-relative">
                 <input
@@ -392,7 +382,7 @@ export default function Header() {
                     borderRadius: '12px',
                     fontSize: '0.8rem',
                     outline: 'none',
-                    height: '30px'
+                    height: '32px'
                   }}
                   placeholder="Type parameters to scan..."
                   value={searchQuery}
@@ -424,16 +414,16 @@ export default function Header() {
 
         {/* Scroll Progress line */}
         <div className="position-absolute bottom-0 start-0 w-100" style={{ height: '2.5px', backgroundColor: 'transparent', overflow: 'hidden' }}>
-          <div style={{ height: '100%', width: `${scrollProgress}%`, backgroundColor: '#e2d300', transition: 'width 0.1s ease-out' }} />
+          <div style={{ height: '100%', width: `${scrollProgress}%`, backgroundColor: '#e2d300' }} />
         </div>
       </header>
 
       {/* Back To Top Action Trigger */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="position-fixed end-0 m-3 d-flex flex-column align-items-center justify-content-center shadow border-0 btn-scroll-top"
+        className="position-fixed end-0 m-3 d-flex flex-column align-items-center justify-content-center shadow border-0"
         style={{
-          bottom: '48px',
+          bottom: '58px',
           zIndex: 1040,
           backgroundColor: 'rgba(0, 54, 105, 0.9)',
           color: '#ffbc00',
@@ -446,7 +436,6 @@ export default function Header() {
           cursor: 'pointer',
           opacity: isScrolled ? 1 : 0,
           transform: isScrolled ? 'scale(1)' : 'scale(0.8)',
-          transition: 'all 0.3s ease',
         }}
         title="Scroll to Top"
       >
