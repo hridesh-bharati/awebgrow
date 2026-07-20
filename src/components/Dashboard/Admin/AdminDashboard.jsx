@@ -5,7 +5,7 @@ import { rtdb } from '@/lib/firebase';
 import { ref, onValue } from 'firebase/database';
 import Link from 'next/link';
 
-import DashboardHome from './DashboardHome';
+import DashboardHome from './DashboardHome.jsx';
 import UserDirectory from './UserDirectory';
 import CouponManager from './CouponManager';
 import WebsiteOrders from './WebsiteOrders';
@@ -59,7 +59,7 @@ export default function AdminDashboard({ session, onLogout }) {
         return <UserDirectory users={allUsers} />;
       case 'analytics':
         return <CouponManager />;
-      case 'orders': // ✅ Fixed structural bug from 'packages' to 'orders'
+      case 'orders': 
         return <WebsiteOrders />;
       case 'projects':
         return <RecentProjects />;
@@ -238,13 +238,23 @@ export default function AdminDashboard({ session, onLogout }) {
               <span className="text-muted d-none d-sm-inline-block small fw-medium">Console / System Management</span>
             </div>
 
-            <div className="d-flex align-items-center gap-4">
+            <div className="d-flex align-items-center gap-3">
+              {/* ✅ होम (Home) बटन - नोटिफिकेशन बेल से ठीक पहले */}
+              <Link 
+                href="/" 
+                className="btn btn-link text-muted p-1 border-0 d-flex align-items-center justify-content-center" 
+                title="Go to Home"
+              >
+                <i className="bi bi-house fs-5"></i>
+              </Link>
+
+              {/* नोटिफिकेशन बेल */}
               <button className="btn btn-link text-muted position-relative p-1 border-0">
                 <i className="bi bi-bell fs-5"></i>
                 <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
               </button>
 
-              <div className="d-flex align-items-center gap-3 border-start ps-4">
+              <div className="d-flex align-items-center gap-3 border-start ps-3">
                 <div className="text-end">
                   <div className="fw-semibold text-dark small">{session?.name || 'Hridesh'}</div>
                   <div className="text-muted" style={{ fontSize: '11px' }}>Super Admin</div>

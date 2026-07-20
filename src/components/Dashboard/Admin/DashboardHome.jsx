@@ -1,27 +1,27 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { rtdb as db } from '@/lib/firebase'; 
+import { rtdb as db } from '@/lib/firebase';
 import { ref, onValue } from 'firebase/database';
-import { 
+import Link from 'next/link'; // होम बटन के लिए Link इम्पोर्ट किया
+import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell, Bar 
+  PieChart, Pie, Cell, Bar
 } from 'recharts';
-import { 
-  Users, FolderCheck, Box, ArrowUpRight
+import {
+  Users, FolderCheck, Box, ArrowUpRight, Home
 } from 'lucide-react';
 
-const CHART_COLORS = ['#3b00a8', '#2563EB', '#F59E0B', '#EF4444']; 
+const CHART_COLORS = ['#3b00a8', '#2563EB', '#F59E0B', '#EF4444'];
 
 export default function DashboardHome() {
   const [metrics, setMetrics] = useState({
     totalUsers: 0,
-    activeProjects: 0, 
+    activeProjects: 0,
     packagesCount: 8
   });
   const [orders, setOrders] = useState([]);
-  
-  // तीनों डेटा सोर्सेज के लिए कंबाइंड लोडिंग ट्रैकर
+
   const [loadingStates, setLoadingStates] = useState({
     users: true,
     orders: true,
@@ -48,7 +48,6 @@ export default function DashboardHome() {
         Object.keys(data).forEach((key) => {
           ordersList.push({ id: key, ...data[key] });
         });
-        // नए ऑर्डर्स को ऊपर दिखाने के लिए सॉर्टिंग
         ordersList.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
         setOrders(ordersList);
       } else {
@@ -76,7 +75,7 @@ export default function DashboardHome() {
 
   const orderStatusData = useMemo(() => {
     let newOrCompleted = 0, pending = 0, processing = 0, cancelled = 0;
-    
+
     orders.forEach((order) => {
       const status = order.orderStatus;
       if (["Completed", "New"].includes(status)) newOrCompleted++;
@@ -94,7 +93,7 @@ export default function DashboardHome() {
       { name: 'Pending Workflow', value: pending },
       { name: 'Processing Orders', value: processing },
       { name: 'Cancelled Base', value: cancelled },
-    ].filter(item => item.value > 0); 
+    ].filter(item => item.value > 0);
   }, [orders]);
 
   const chartData = [
@@ -117,75 +116,74 @@ export default function DashboardHome() {
 
   return (
     <div className="container-fluid px-0 animate-fade">
-      
+
       {/* टॉप हेडर */}
       <div className="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
-        <div>
-          <h2 className="fw-bold text-primary m-0 tracking-tight" style={{ letterSpacing: '-0.5px' }}>
-            System Metrics
-          </h2>
-          <p className="text-dark small m-0 mt-1" style={{ opacity: 0.85 }}>Platform overview indicators. <span className="fw-bold text-success">● Live Sync</span></p>
+        <div className="d-flex align-items-center gap-3">
+          <div>
+            <h2 className="fw-bold text-primary m-0 tracking-tight" style={{ letterSpacing: '-0.5px' }}>
+              System Metrics
+            </h2>
+            <p className="text-dark small m-0 mt-1" style={{ opacity: 0.85 }}>Platform overview indicators. <span className="fw-bold text-success">● Live Sync</span></p>
+          </div>
         </div>
       </div>
 
-    {/* प्रीमियम कलरफुल कार्ड्स */}
-      <div className="row g-4 mb-4">
-        {/* Total Users */}
+      {/* प्रीमियम कलरफुल कार्ड्स (मोबाइल रिस्पॉन्सिव ग्रिड) */}
+      <div className="row g-3 mb-4">
+        {/* 1st Card: Mobile full, Desktop col-4 */}
         <div className="col-12 col-md-4">
-          <div className="card border-0 shadow-sm rounded-4 p-4 text-white" 
-               style={{ background: 'linear-gradient(135deg, #6366f1 0%, #3b00a8 100%)' }}>
+          <div className="card border-0 shadow-sm rounded-4 p-3 p-sm-4 text-white h-100"
+            style={{ background: 'linear-gradient(135deg, #6366f1 0%, #3b00a8 100%)' }}>
             <div className="d-flex justify-content-between align-items-center">
               <div>
-                <span className="text-white-50 text-uppercase fw-bold" style={{ fontSize: '11px', letterSpacing: '0.5px' }}>Total Users</span>
-                <h2 className="fw-extrabold mt-2 mb-1 text-white" style={{ fontSize: '2.3rem' }}>{metrics.totalUsers}</h2>
-                <span className="text-white small fw-bold d-flex align-items-center gap-1 opacity-90">
-                  <ArrowUpRight size={16} /> Real-Time Database
+                <span className="text-white-50 text-uppercase fw-bold" style={{ fontSize: '10px', letterSpacing: '0.5px' }}>Total Users</span>
+                <h2 className="fw-extrabold mt-2 mb-1 text-white" style={{ fontSize: '2rem' }}>{metrics.totalUsers}</h2>
+                <span className="text-white small fw-bold d-flex align-items-center gap-1 opacity-90" style={{ fontSize: '12px' }}>
+                  <ArrowUpRight size={14} /> Live DB
                 </span>
               </div>
-              {/* प्योर वाइट सर्कल विथ कलर्ड आइकॉन */}
-              <div className="bg-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" 
-                   style={{ width: '52px', height: '52px', minWidth: '52px' }}>
-                <Users size={24} style={{ color: '#3b00a8' }} />
+              <div className="bg-white rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                style={{ width: '46px', height: '46px', minWidth: '46px' }}>
+                <Users size={20} style={{ color: '#3b00a8' }} />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Active Projects */}
-        <div className="col-12 col-md-4">
-          <div className="card border-0 shadow-sm rounded-4 p-4 text-white" 
-               style={{ background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)' }}>
+        {/* 2nd Card: Mobile half, Desktop col-4 */}
+        <div className="col-6 col-md-4">
+          <div className="card border-0 shadow-sm rounded-4 p-3 p-sm-4 text-white h-100"
+            style={{ background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)' }}>
             <div className="d-flex justify-content-between align-items-center">
               <div>
-                <span className="text-white-50 text-uppercase fw-bold" style={{ fontSize: '11px', letterSpacing: '0.5px' }}>Active Projects</span>
-                <h2 className="fw-extrabold mt-2 mb-1 text-white" style={{ fontSize: '2.3rem' }}>{metrics.activeProjects}</h2>
-                <span className="text-white small fw-bold d-flex align-items-center gap-1 opacity-90">
-                  <ArrowUpRight size={16} /> Production Live
+                <span className="text-white-50 text-uppercase fw-bold" style={{ fontSize: '10px', letterSpacing: '0.5px' }}>Active Projects</span>
+                <h2 className="fw-extrabold mt-2 mb-1 text-white" style={{ fontSize: '2rem' }}>{metrics.activeProjects}</h2>
+                <span className="text-white small fw-bold d-flex align-items-center gap-1 opacity-90" style={{ fontSize: '12px' }}>
+                  <ArrowUpRight size={14} /> Live
                 </span>
               </div>
-              {/* प्योर वाइट सर्कल विथ कलर्ड आइकॉन */}
-              <div className="bg-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" 
-                   style={{ width: '52px', height: '52px', minWidth: '52px' }}>
-                <FolderCheck size={24} style={{ color: '#1d4ed8' }} />
+              <div className="bg-white rounded-circle d-flex align-items-center justify-content-center shadow-sm d-none d-sm-flex"
+                style={{ width: '46px', height: '46px', minWidth: '46px' }}>
+                <FolderCheck size={20} style={{ color: '#1d4ed8' }} />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Packages */}
-        <div className="col-12 col-md-4">
-          <div className="card border-0 shadow-sm rounded-4 p-4 text-white" 
-               style={{ background: 'linear-gradient(135deg, #fbbf24 0%, #d97706 100%)' }}>
+        {/* 3rd Card: Mobile half, Desktop col-4 */}
+        <div className="col-6 col-md-4">
+          <div className="card border-0 shadow-sm rounded-4 p-3 p-sm-4 text-white h-100"
+            style={{ background: 'linear-gradient(135deg, #fbbf24 0%, #d97706 100%)' }}>
             <div className="d-flex justify-content-between align-items-center">
               <div>
-                <span className="text-white-50 text-uppercase fw-bold" style={{ fontSize: '11px', letterSpacing: '0.5px' }}>Packages</span>
-                <h2 className="fw-extrabold mt-2 mb-1 text-white" style={{ fontSize: '2.3rem' }}>{metrics.packagesCount} Layers</h2>
-                <span className="text-white small fw-bold opacity-90">System Core v2.0</span>
+                <span className="text-white-50 text-uppercase fw-bold" style={{ fontSize: '10px', letterSpacing: '0.5px' }}>Packages</span>
+                <h2 className="fw-extrabold mt-2 mb-1 text-white" style={{ fontSize: '1.8rem' }}>{metrics.packagesCount} L</h2>
+                <span className="text-white small fw-bold opacity-90" style={{ fontSize: '12px' }}>v2.0 Core</span>
               </div>
-              {/* प्योर वाइट सर्कल विथ कलर्ड आइकॉन */}
-              <div className="bg-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" 
-                   style={{ width: '52px', height: '52px', minWidth: '52px' }}>
-                <Box size={24} style={{ color: '#d97706' }} />
+              <div className="bg-white rounded-circle d-flex align-items-center justify-content-center shadow-sm d-none d-sm-flex"
+                style={{ width: '46px', height: '46px', minWidth: '46px' }}>
+                <Box size={20} style={{ color: '#d97706' }} />
               </div>
             </div>
           </div>
@@ -205,8 +203,8 @@ export default function DashboardHome() {
                 <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorCluster" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#3b00a8" stopOpacity={0.25}/>
-                      <stop offset="95%" stopColor="#3b00a8" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#3b00a8" stopOpacity={0.25} />
+                      <stop offset="95%" stopColor="#3b00a8" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#cbd5e1" />
@@ -244,7 +242,7 @@ export default function DashboardHome() {
                         <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
                       ))
                     ) : (
-                      <Cell fill="#e2e8f0" /> 
+                      <Cell fill="#e2e8f0" />
                     )}
                   </Pie>
                   <Tooltip enabled={orders.length > 0} />
@@ -300,11 +298,10 @@ export default function DashboardHome() {
                       ₹{Number(order.finalPayableAmount || 0).toLocaleString("en-IN")}
                     </td>
                     <td className="py-3 text-end pe-0">
-                      <span className={`badge px-3 py-2 rounded-pill fw-bold bg-opacity-10 ${
-                        order.orderStatus === 'Completed' ? 'bg-success text-success' :
-                        order.orderStatus === 'Pending' ? 'bg-warning text-warning' :
-                        order.orderStatus === 'Cancelled' ? 'bg-danger text-danger' : 'bg-primary text-primary'
-                      }`} style={{ fontSize: '11px' }}>
+                      <span className={`badge px-3 py-2 rounded-pill fw-bold bg-opacity-10 ${order.orderStatus === 'Completed' ? 'bg-success text-success' :
+                          order.orderStatus === 'Pending' ? 'bg-warning text-warning' :
+                            order.orderStatus === 'Cancelled' ? 'bg-danger text-danger' : 'bg-primary text-primary'
+                        }`} style={{ fontSize: '11px' }}>
                         {order.orderStatus || 'New'}
                       </span>
                     </td>
