@@ -338,14 +338,14 @@ export default function Header() {
                       </div>
                       <Link
                         href="/dashboard"
-                        className="dropdown-item py-1.5 px-3 text-dark small d-block text-decoration-none"
+                        className="dropdown-item py-1 my-2 px-3 text-dark small d-block text-decoration-none"
                         onClick={() => setShowDropdown(false)}
                         style={{ fontSize: '0.78rem' }}
                       >
                         Dashboard
                       </Link>
                       <button
-                        className="dropdown-item py-1.5 px-3 text-danger small d-block w-100 border-0 bg-transparent text-start fw-semibold"
+                        className="dropdown-item py-1 my-2 px-3 text-danger small d-block w-100 border-0 bg-transparent text-start fw-semibold"
                         onClick={handleLogout}
                         style={{ fontSize: '0.78rem' }}
                       >
