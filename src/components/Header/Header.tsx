@@ -180,14 +180,13 @@ export default function Header() {
       <header
         className="fixed-top p-0"
         style={{
-          zIndex: 1050,
           backgroundColor: '#0a2240',
           boxShadow: isScrolled ? '0 4px 15px rgba(0, 0, 0, 0.25)' : 'none',
         }}
       >
         <div className="container-fluid d-flex align-items-center justify-content-between px-3 px-md-4" style={{ height: '70px' }}>
 
-          {/* Branding Left - Bigger Logo */}
+          {/* Branding Left */}
           <div className="d-flex align-items-center flex-shrink-0">
             <Link href="/" className="text-decoration-none d-flex align-items-center" aria-label="WebGrow Home">
               <Image
@@ -268,10 +267,9 @@ export default function Header() {
 
               {isSearchFocused && filteredSuggestions.length > 0 && (
                 <div
-                  className="position-absolute start-0 py-1 mt-1   text-start shadow-lg"
+                  className="position-absolute start-0 py-1 mt-1 text-start shadow-lg"
                   style={{
                     backgroundColor: '#ffffff',
-                    zIndex: 1100,
                     borderRadius: '8px',
                     width: '260px',
                     top: '100%',
@@ -303,14 +301,14 @@ export default function Header() {
               <i className={showMobileSearchRow ? "bi bi-x-lg text-danger bg-white rounded-1" : "bi bi-search"}></i>
             </button>
 
-            {/* Auth Dropdown Input Endpoint - Fixed Mobile Clickability */}
-            <div ref={dropdownRef} className="position-relative" style={{ zIndex: 1300 }}>
+            {/* HIGH Z-INDEX ONLY ON TARGET DROP DOWN */}
+            <div ref={dropdownRef} className="position-relative" style={{ zIndex: 99999 }}>
               {user ? (
                 <>
                   <button
                     onClick={() => setShowDropdown(!showDropdown)}
                     className="btn p-0 border-0 d-flex align-items-center justify-content-center rounded-circle"
-                    style={{ width: '34px', height: '34px', position: 'relative', zIndex: 1350 }}
+                    style={{ width: '34px', height: '34px' }}
                   >
                     <Image
                       src={user.profileImage || "/icons/logo.png"}
@@ -323,13 +321,16 @@ export default function Header() {
 
                   {showDropdown && (
                     <div
-                      className="position-absolute end-0 z-3 py-1 text-start shadow-lg"
+                      className="position-fixed text-start shadow-lg"
                       style={{
                         backgroundColor: '#ffffff',
                         minWidth: '160px',
                         borderRadius: '8px',
-                        top: 'calc(100% + 8px)',
-                        border: '1px solid rgba(0,0,0,0.08)'
+                        /* FIX: position-fixed कर दिया और टॉप-राइट अलाइन किया ताकि बाहर निकले */
+                        top: '62px', 
+                        right: '15px',
+                        border: '1px solid rgba(0,0,0,0.08)',
+                        zIndex: 99999
                       }}
                     >
                       <div className="px-3 py-1 text-dark fw-bold border-bottom text-truncate" style={{ fontSize: '0.78rem' }}>
@@ -357,11 +358,6 @@ export default function Header() {
                 <Link
                   href="/login"
                   className="btn btn-primary d-inline-flex align-items-center justify-content-center gap-2 rounded-pill text-white border-0 px-4 py-2 text-decoration-none transition-all fw-semibold"
-                  style={{
-                    position: 'relative',
-                    zIndex: 1350,
-                    boxShadow: '0 4px 12px rgba(13, 110, 253, 0.25)'
-                  }}
                   aria-label="Login Panel"
                 >
                   <i className="bi bi-person-circle" style={{ fontSize: '1.2rem', lineHeight: 1 }}></i>
@@ -397,7 +393,7 @@ export default function Header() {
                 {isSearchFocused && filteredSuggestions.length > 0 && (
                   <div
                     className="position-absolute start-0 py-1 mt-1 text-start shadow-lg w-100"
-                    style={{ backgroundColor: '#ffffff', zIndex: 1100, borderRadius: '8px', border: '1px solid rgba(0,0,0,0.08)' }}
+                    style={{ backgroundColor: '#ffffff', borderRadius: '8px', border: '1px solid rgba(0,0,0,0.08)' }}
                   >
                     {filteredSuggestions.map((item, index) => (
                       <div
@@ -429,7 +425,6 @@ export default function Header() {
         className="position-fixed end-0 m-3 d-flex flex-column align-items-center justify-content-center shadow border-0"
         style={{
           bottom: '58px',
-          zIndex: 1040,
           backgroundColor: 'rgba(0, 54, 105, 0.9)',
           color: '#ffbc00',
           outline: '1px solid rgba(255,255,255,0.2)',
@@ -453,7 +448,6 @@ export default function Header() {
         className="fixed-bottom d-block d-lg-none"
         style={{
           backgroundColor: '#0a2240',
-          zIndex: 1050,
           borderTop: '1px solid rgba(255, 255, 255, 0.08)',
           height: '48px'
         }}
