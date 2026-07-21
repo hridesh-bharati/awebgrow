@@ -129,9 +129,7 @@ export default function DashboardHome() {
         </div>
       </div>
 
-      {/* प्रीमियम कलरफुल कार्ड्स (मोबाइल रिस्पॉन्सिव ग्रिड) */}
       <div className="row g-3 mb-4">
-        {/* 1st Card: Mobile full, Desktop col-4 */}
         <div className="col-12 col-md-4">
           <div className="card border-0 shadow-sm rounded-4 p-3 p-sm-4 text-white h-100"
             style={{ background: 'linear-gradient(135deg, #6366f1 0%, #3b00a8 100%)' }}>
