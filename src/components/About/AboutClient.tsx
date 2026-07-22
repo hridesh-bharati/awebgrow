@@ -57,126 +57,70 @@ export default function AboutClient() {
   ];
 
   const coreValues = [
-    { 
-      icon: "bi-shield-check", 
-      title: "Uncompromising Security", 
+    {
+      icon: "bi-shield-check",
+      title: "Uncompromising Security",
       desc: "Top-tier data encryption, tokenized auth, and hardened server setups.",
       accentGradient: "linear-gradient(135deg, #ff0080 0%, #7928ca 100%)",
       glowColor: "rgba(255, 0, 128, 0.25)",
-      borderColor: "rgba(255, 0, 128, 0.4)"
+      borderColor: "rgba(255, 0, 128, 0.3)"
     },
-    { 
-      icon: "bi-lightning-charge-fill", 
-      title: "Lightning Velocity", 
+    {
+      icon: "bi-lightning-charge-fill",
+      title: "Lightning Velocity",
       desc: "Sub-second load times optimized for Google Core Web Vitals.",
       accentGradient: "linear-gradient(135deg, #00f2fe 0%, #4facfe 100%)",
       glowColor: "rgba(0, 242, 254, 0.25)",
-      borderColor: "rgba(0, 242, 254, 0.4)"
+      borderColor: "rgba(0, 242, 254, 0.3)"
     },
-    { 
-      icon: "bi-people-fill", 
-      title: "Client-Centric Approach", 
+    {
+      icon: "bi-people-fill",
+      title: "Client-Centric Approach",
       desc: "100% transparent development pipelines and weekly project updates.",
       accentGradient: "linear-gradient(135deg, #a855f7 0%, #3b82f6 100%)",
       glowColor: "rgba(168, 85, 247, 0.25)",
-      borderColor: "rgba(168, 85, 247, 0.4)"
+      borderColor: "rgba(168, 85, 247, 0.3)"
     },
-    { 
-      icon: "bi-graph-up-arrow", 
-      title: "Measurable ROI", 
+    {
+      icon: "bi-graph-up-arrow",
+      title: "Measurable ROI",
       desc: "Digital products built specifically to increase conversions and sales.",
       accentGradient: "linear-gradient(135deg, #f97316 0%, #ff0080 100%)",
       glowColor: "rgba(249, 115, 22, 0.25)",
-      borderColor: "rgba(249, 115, 22, 0.4)"
+      borderColor: "rgba(249, 115, 22, 0.3)"
     }
   ];
 
   return (
     <div className="bg-theme-main text-theme-primary overflow-hidden">
       
-      {/* PURE BORDER ANIMATION CSS (ZERO CARD BACKGROUND BLEED) */}
-      <style jsx global>{`
-        @keyframes rotateBorderGlow {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-
-        .tech-card-wrapper {
-          position: relative;
-          border-radius: 16px;
-          overflow: hidden;
-          padding: 2px; /* Border Width */
-          background: transparent;
-        }
-
-        .tech-card-wrapper::before {
-          content: '';
-          position: absolute;
-          width: 300%;
-          height: 300%;
-          top: -100%;
-          left: -100%;
-          background: conic-gradient(
-            #ff0080,
-            #a855f7,
-            #00f2fe,
-            #10b981,
-            #ff0080
-          );
-          animation: rotateBorderGlow 4s linear infinite;
-          z-index: 1;
-        }
-
-        .tech-card-body {
-          position: relative;
-          z-index: 2;
-          background-color: var(--bg-card, #0a0a0c) !important;
-          border-radius: 14px;
-          width: 100%;
-          height: 100%;
-        }
-
-        /* COLORFUL HEADING UTILITIES */
-        .colorful-heading-pink-orange {
-          background: linear-gradient(135deg, #ff0080 0%, #f97316 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-
-        .colorful-heading-purple-blue {
-          background: linear-gradient(135deg, #c084fc 0%, #818cf8 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-      `}</style>
-
       {/* ============================================ */}
       {/* 1. HERO BANNER */}
       {/* ============================================ */}
-      <section 
+      <section
         className="position-relative overflow-hidden border-bottom"
-        style={{ 
-          marginTop: '65px',
-          paddingTop: '90px',
+        style={{
+          paddingTop: '120px',
           paddingBottom: '90px',
-          borderColor: 'var(--border-subtle)'
+          borderColor: 'var(--border-subtle)',
+          zIndex: 1
         }}
         aria-label="About AWebGrow"
       >
-        <div 
-          className="position-absolute rounded-circle pointer-events-none glow-sphere-1" 
+        <div
+          className="position-absolute rounded-circle pointer-events-none glow-sphere-1"
           style={{ width: '500px', height: '500px', top: '-10%', left: '-5%' }}
         />
-        <div 
-          className="position-absolute rounded-circle pointer-events-none glow-sphere-2" 
+        <div
+          className="position-absolute rounded-circle pointer-events-none glow-sphere-2"
           style={{ width: '500px', height: '500px', bottom: '-10%', right: '-5%' }}
         />
 
         <div className="container position-relative z-2">
           <div className="row align-items-center justify-content-center text-center">
             <div className="col-lg-10">
-              
-              <div 
+
+              <div
                 className="d-inline-flex align-items-center gap-2 px-3.5 py-1.5 rounded-pill mb-3"
                 style={{
                   background: 'rgba(255, 0, 128, 0.08)',
@@ -191,7 +135,7 @@ export default function AboutClient() {
                 </span>
               </div>
 
-              <h1 
+              <h1
                 className="display-4 fw-black text-theme-primary mb-3"
                 style={{
                   fontSize: 'clamp(2.4rem, 5.5vw, 4.2rem)',
@@ -201,15 +145,15 @@ export default function AboutClient() {
                 }}
               >
                 Crafting Digital Growth with <br className="d-none d-md-block" />
-                <span 
-                  className="colorful-heading-pink-orange" 
+                <span
+                  className="text-gradient-pink-orange"
                   style={{ fontWeight: 900, filter: 'drop-shadow(0 0 25px rgba(255, 0, 128, 0.35))' }}
                 >
                   Engineering &amp; Creative Excellence
                 </span>
               </h1>
 
-              <p 
+              <p
                 className="mx-auto mb-0 text-theme-secondary"
                 style={{
                   fontSize: 'clamp(1rem, 1.2vw, 1.15rem)',
@@ -238,7 +182,7 @@ export default function AboutClient() {
                 WHAT WE DO BEST
               </span>
             </div>
-            
+
             <h2 className="display-6 fw-black text-theme-primary mb-2" style={{ fontWeight: 900 }}>
               Complete Digital Solutions Under One Roof
             </h2>
@@ -250,7 +194,7 @@ export default function AboutClient() {
           <div className="row g-4">
             {servicesList.map((service, idx) => (
               <div className="col-md-6 col-lg-3" key={idx} data-aos="fade-up" data-aos-delay={idx * 100}>
-                <div 
+                <div
                   className="p-4 h-100 rounded-4 border position-relative overflow-hidden"
                   style={{
                     backgroundColor: 'var(--bg-card)',
@@ -259,7 +203,7 @@ export default function AboutClient() {
                     transition: 'transform 0.3s ease'
                   }}
                 >
-                  <div 
+                  <div
                     className="d-inline-flex align-items-center justify-content-center mb-3 rounded-3 text-white"
                     style={{
                       width: '52px',
@@ -272,10 +216,9 @@ export default function AboutClient() {
                     <i className={`bi ${service.icon}`}></i>
                   </div>
 
-                  {/* VIBRANT INDIVIDUAL GRADIENT HEADER */}
-                  <h3 
-                    className="fw-black fs-5 mb-2" 
-                    style={{ 
+                  <h3
+                    className="fw-black fs-5 mb-2"
+                    style={{
                       fontWeight: 900,
                       background: service.headerGradient,
                       WebkitBackgroundClip: 'text',
@@ -302,9 +245,9 @@ export default function AboutClient() {
         <div className="container py-4">
           <div className="row align-items-center g-5">
             <div className="col-lg-6" data-aos="fade-right">
-              <div 
+              <div
                 className="position-relative overflow-hidden rounded-4 border"
-                style={{ 
+                style={{
                   borderColor: 'var(--border-subtle)',
                   boxShadow: '0 20px 40px var(--shadow-color)'
                 }}
@@ -317,7 +260,7 @@ export default function AboutClient() {
                   className="w-100"
                   style={{ objectFit: 'cover' }}
                 />
-                <div 
+                <div
                   className="position-absolute border rounded-4 p-3.5"
                   style={{
                     bottom: '20px',
@@ -327,7 +270,7 @@ export default function AboutClient() {
                     borderColor: 'var(--border-subtle)'
                   }}
                 >
-                  <div className="colorful-heading-pink-orange fw-black" style={{ fontSize: '2rem', fontWeight: 900 }}>150+</div>
+                  <div className="text-gradient-pink-orange fw-black" style={{ fontSize: '2rem', fontWeight: 900 }}>150+</div>
                   <div className="text-theme-secondary fw-semibold" style={{ fontSize: '0.8rem' }}>Projects Launched Worldwide</div>
                 </div>
               </div>
@@ -339,15 +282,15 @@ export default function AboutClient() {
                   ✦ ABOUT OUR JOURNEY
                 </span>
               </div>
-              
+
               <h2 className="display-6 fw-black mb-3 text-theme-primary" style={{ fontWeight: 900 }}>
-                Transforming Ideas into High-Performance <span className="colorful-heading-pink-orange" style={{ fontWeight: 900 }}>Digital Products</span>
+                Transforming Ideas into High-Performance <span className="text-gradient-pink-orange" style={{ fontWeight: 900 }}>Digital Products</span>
               </h2>
-              
+
               <p className="text-theme-secondary" style={{ lineHeight: '1.8', fontWeight: 500 }}>
                 Founded in 2026, <strong>AWebGrow</strong> started with a mission to bridge technical gaps for scaling startups and enterprises. Headquartered in <strong>Nichlaul, Uttar Pradesh</strong> with direct presence in <strong>Noida</strong>, we deliver custom web apps, mobile solutions, and SEO strategies.
               </p>
-              
+
               <p className="text-theme-secondary" style={{ lineHeight: '1.8', fontWeight: 500 }}>
                 Whether it is building custom Web Applications using <strong>Next.js &amp; Node.js</strong>, crafting <strong>Native Mobile Apps</strong>, or scaling search rankings through technical SEO, we ensure your business grows systematically.
               </p>
@@ -373,37 +316,37 @@ export default function AboutClient() {
       </section>
 
       {/* ============================================ */}
-      {/* 4. TECH STACK (GRADIENT HEADING + CLEAN ROTATING BORDER) */}
+      {/* 4. TECH STACK GRID */}
       {/* ============================================ */}
       <section className="py-5 position-relative border-bottom" style={{ borderColor: 'var(--border-subtle)' }}>
         <div className="container py-3">
-          
-          {/* COLORFUL GRADIENT HEADING */}
+
           <div className="text-center mb-5" data-aos="fade-up">
             <h2 className="display-6 fw-black text-theme-primary mb-2" style={{ fontWeight: 900 }}>
-              Powered by <span className="colorful-heading-purple-blue" style={{ fontWeight: 900 }}>Modern Technologies</span>
+              Powered by <span className="text-gradient-purple-blue" style={{ fontWeight: 900 }}>Modern Technologies</span>
             </h2>
             <p className="text-theme-secondary fw-medium mx-auto" style={{ maxWidth: '580px' }}>
               We leverage production-proven frameworks and cloud infrastructure for speed, security &amp; unlimited scale.
             </p>
           </div>
 
-          {/* ROTATING NEON BORDER GRID */}
           <div className="row g-3 justify-content-center" data-aos="fade-up" data-aos-delay="100">
             {techCategories.map((tech, idx) => (
               <div className="col-6 col-sm-4 col-md-3 col-lg-2" key={idx}>
-                
-                {/* ROTATING BORDER WRAPPER */}
-                <div className="tech-card-wrapper h-100">
-                  {/* SOLID CARD CONTENT (DARK BACKGROUND, NO BLEED) */}
-                  <div className="tech-card-body p-3 text-center d-flex flex-column align-items-center justify-content-center gap-2">
-                    <i className={`bi ${tech.icon} fs-3`} style={{ color: tech.color, filter: `drop-shadow(0 0 8px ${tech.color}80)` }}></i>
-                    <span className="fw-black text-theme-primary small" style={{ fontSize: '0.82rem', fontWeight: 800 }}>
-                      {tech.name}
-                    </span>
-                  </div>
+                <div
+                  className="p-3 rounded-4 border text-center h-100 d-flex flex-column align-items-center justify-content-center gap-2"
+                  style={{
+                    backgroundColor: 'var(--bg-card)',
+                    borderColor: 'var(--border-subtle)',
+                    boxShadow: '0 8px 20px var(--shadow-color)',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  <i className={`bi ${tech.icon} fs-3`} style={{ color: tech.color, filter: `drop-shadow(0 0 10px ${tech.color}80)` }}></i>
+                  <span className="fw-black text-theme-primary small" style={{ fontSize: '0.82rem', fontWeight: 800 }}>
+                    {tech.name}
+                  </span>
                 </div>
-
               </div>
             ))}
           </div>
@@ -418,7 +361,7 @@ export default function AboutClient() {
         <div className="container py-4">
           <div className="text-center mb-5" data-aos="fade-up">
             <h2 className="display-6 fw-black text-theme-primary mb-2" style={{ fontWeight: 900 }}>
-              Why Clients <span className="colorful-heading-pink-orange" style={{ fontWeight: 900 }}>Trust Us</span>
+              Why Clients <span className="text-gradient-pink-orange" style={{ fontWeight: 900 }}>Trust Us</span>
             </h2>
             <p className="text-theme-secondary fw-semibold">Built on principles that ensure engineering clarity and reliable delivery.</p>
           </div>
@@ -426,7 +369,7 @@ export default function AboutClient() {
           <div className="row g-4">
             {coreValues.map((val, idx) => (
               <div className="col-md-6 col-lg-3" key={idx} data-aos="fade-up" data-aos-delay={idx * 100}>
-                <div 
+                <div
                   className="p-4 h-100 rounded-4 border text-center text-md-start position-relative overflow-hidden"
                   style={{
                     backgroundColor: 'var(--bg-card)',
@@ -435,8 +378,8 @@ export default function AboutClient() {
                     transition: 'all 0.3s ease'
                   }}
                 >
-                  <div 
-                    className="position-absolute top-0 start-0 w-100 h-100 pointer-events-none" 
+                  <div
+                    className="position-absolute top-0 start-0 w-100 h-100 pointer-events-none"
                     style={{
                       background: val.accentGradient,
                       opacity: 0.08,
@@ -444,7 +387,7 @@ export default function AboutClient() {
                     }}
                   />
 
-                  <div 
+                  <div
                     className="d-inline-flex align-items-center justify-content-center mb-3 rounded-3 text-white fs-3"
                     style={{
                       width: '52px',
@@ -479,15 +422,15 @@ export default function AboutClient() {
         <div className="container py-3">
           <div className="text-center mb-4" data-aos="fade-up">
             <h2 className="fw-black mb-2 text-theme-primary" style={{ fontWeight: 900 }}>
-              Where We <span className="colorful-heading-purple-blue" style={{ fontWeight: 900 }}>Operate</span>
+              Where We <span className="text-gradient-purple-blue" style={{ fontWeight: 900 }}>Operate</span>
             </h2>
             <p className="text-theme-secondary fw-semibold">Reach out to our offices in India for project discussions.</p>
           </div>
-          
+
           <div className="row g-4">
             {/* Noida Office - Sushant Rai Tag */}
             <div className="col-md-6" data-aos="fade-up">
-              <div 
+              <div
                 className="p-4 rounded-4 border h-100 d-flex flex-column justify-content-between position-relative overflow-hidden"
                 style={{
                   backgroundColor: 'var(--bg-card)',
@@ -497,8 +440,8 @@ export default function AboutClient() {
               >
                 <div>
                   <div className="d-flex align-items-center gap-3 mb-3">
-                    <div 
-                      className="d-flex align-items-center justify-content-center flex-shrink-0 text-white fs-4 rounded-3" 
+                    <div
+                      className="d-flex align-items-center justify-content-center flex-shrink-0 text-white fs-4 rounded-3"
                       style={{ width: '50px', height: '50px', background: 'linear-gradient(135deg, #ec4899, #f97316)' }}
                     >
                       <i className="bi bi-geo-alt-fill"></i>
@@ -512,7 +455,7 @@ export default function AboutClient() {
                   </div>
                 </div>
 
-                <div 
+                <div
                   className="p-3 rounded-3 border mt-3 d-flex align-items-center gap-3"
                   style={{
                     backgroundColor: 'var(--bg-pill)',
@@ -543,7 +486,7 @@ export default function AboutClient() {
 
             {/* Nichlaul HQ - hridesh Tag */}
             <div className="col-md-6" data-aos="fade-up" data-aos-delay="100">
-              <div 
+              <div
                 className="p-4 rounded-4 border h-100 d-flex flex-column justify-content-between position-relative overflow-hidden"
                 style={{
                   backgroundColor: 'var(--bg-card)',
@@ -553,14 +496,14 @@ export default function AboutClient() {
               >
                 <div>
                   <div className="d-flex align-items-center gap-3 mb-3">
-                    <div 
-                      className="d-flex align-items-center justify-content-center flex-shrink-0 text-white fs-4 rounded-3" 
+                    <div
+                      className="d-flex align-items-center justify-content-center flex-shrink-0 text-white fs-4 rounded-3"
                       style={{ width: '50px', height: '50px', background: 'linear-gradient(135deg, #a855f7, #3b82f6)' }}
                     >
                       <i className="bi bi-geo-alt-fill"></i>
                     </div>
                     <div>
-                      <h3 className="fw-black mb-0 text-theme-primary" style={{ fontSize: '1.15rem', fontWeight: 800 }}>Nichlaul HQ</h3>
+                      <h3 className="fw-black mb-0 text-theme-primary" style={{ fontSize: '1.15rem', fontWeight:800 }}>Nichlaul HQ</h3>
                       <p className="mb-0 text-theme-secondary" style={{ fontSize: '0.85rem', fontWeight: 500 }}>
                         Nichlaul, Maharajganj, Uttar Pradesh - 273304, India
                       </p>
@@ -568,7 +511,7 @@ export default function AboutClient() {
                   </div>
                 </div>
 
-                <div 
+                <div
                   className="p-3 rounded-3 border mt-3 d-flex align-items-center gap-3"
                   style={{
                     backgroundColor: 'var(--bg-pill)',
@@ -606,13 +549,13 @@ export default function AboutClient() {
       <section className="py-5 position-relative">
         <div className="container text-center py-4">
           <h2 className="display-6 fw-black text-theme-primary mb-3" style={{ fontWeight: 900 }}>
-            Have a Web, App, or SEO <span className="colorful-heading-pink-orange" style={{ fontWeight: 900 }}>Requirement?</span>
+            Have a Web, App, or SEO <span className="text-gradient-pink-orange" style={{ fontWeight: 900 }}>Requirement?</span>
           </h2>
           <p className="mb-4 mx-auto text-theme-secondary" style={{ maxWidth: '580px', fontWeight: 500 }}>
             Let's build a custom web solution or feature-packed mobile application for your business today.
           </p>
           <div className="d-flex justify-content-center gap-3 flex-wrap">
-            <Link 
+            <Link
               href="/contact"
               className="btn-neon-cta py-3 px-4 fs-6"
             >

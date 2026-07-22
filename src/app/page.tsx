@@ -39,7 +39,7 @@ const schemas = [
       "addressCountry": "IN"
     }
   },
-  
+
   // ✅ LOCAL BUSINESS SCHEMA (Important for local SEO)
   {
     "@context": "https://schema.org",
@@ -63,7 +63,7 @@ const schemas = [
       "closes": "18:00"
     }
   },
-  
+
   // WebSite Schema
   {
     "@context": "https://schema.org",
@@ -80,7 +80,7 @@ const schemas = [
       "query-input": "required name=search_term_string"
     }
   },
-  
+
   // ✅ SERVICE SCHEMA
   {
     "@context": "https://schema.org",
@@ -125,7 +125,7 @@ const schemas = [
       ]
     }
   },
-  
+
   // ✅ BREADCRUMB SCHEMA
   {
     "@context": "https://schema.org",
@@ -145,11 +145,11 @@ export default function Home() {
       {/* ✅ ALL SCHEMAS INJECTED */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ 
-          __html: JSON.stringify(schemas) 
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(schemas)
         }}
       />
-      
+
       <CustomCursor>
         <Header />
         <main>

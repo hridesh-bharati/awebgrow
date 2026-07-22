@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState } from 'react';
+import Footer from '../Footer/Footer';
 
-// 🌈 हर कैटेगरी के लिए कस्टमाइज्ड आइकन्स और वाइब्रेंट कलर क्लासेस
 const categories = [
-  { id: 'services', name: 'Services', icon: 'bi-briefcase', activeClass: 'act-services', inactiveClass: 'inact-services' },
-  { id: 'stack', name: 'Technology Stack', icon: 'bi-layers', activeClass: 'act-stack', inactiveClass: 'inact-stack' },
-  { id: 'process', name: 'Development Process', icon: 'bi-gear', activeClass: 'act-process', inactiveClass: 'inact-process' },
-  { id: 'devops', name: 'Security & Performance', icon: 'bi-shield-check', activeClass: 'act-devops', inactiveClass: 'inact-devops' },
-  { id: 'business', name: 'Business & Pricing', icon: 'bi-cash-coin', activeClass: 'act-business', inactiveClass: 'inact-business' },
-  { id: 'seo', name: 'SEO & Marketing', icon: 'bi-graph-up-arrow', activeClass: 'act-seo', inactiveClass: 'inact-seo' }
+  { id: 'services', name: 'Services', icon: 'bi-briefcase', activeBg: 'linear-gradient(135deg, #2563eb, #1d4ed8)', activeColor: '#2563eb' },
+  { id: 'stack', name: 'Technology Stack', icon: 'bi-layers', activeBg: 'linear-gradient(135deg, #7c3aed, #6d28d9)', activeColor: '#7c3aed' },
+  { id: 'process', name: 'Development Process', icon: 'bi-gear', activeBg: 'linear-gradient(135deg, #059669, #047857)', activeColor: '#059669' },
+  { id: 'devops', name: 'Security & Performance', icon: 'bi-shield-check', activeBg: 'linear-gradient(135deg, #dc2626, #b91c1c)', activeColor: '#dc2626' },
+  { id: 'business', name: 'Business & Pricing', icon: 'bi-cash-coin', activeBg: 'linear-gradient(135deg, #d97706, #b45309)', activeColor: '#d97706' },
+  { id: 'seo', name: 'SEO & Marketing', icon: 'bi-graph-up-arrow', activeBg: 'linear-gradient(135deg, #db2777, #be185d)', activeColor: '#db2777' }
 ];
 
 const faqs = [
@@ -149,45 +149,68 @@ export default function FAQ() {
     }))
   };
 
-  const getActiveColor = () => {
-    switch(activeCategory) {
-      case 'services': return '#2563eb';
-      case 'stack': return '#7c3aed';
-      case 'process': return '#059669';
-      case 'devops': return '#dc2626';
-      case 'business': return '#d97706';
-      case 'seo': return '#db2777';
-      default: return '#0d6efd';
-    }
-  };
+  const currentCategory = categories.find(c => c.id === activeCategory);
 
   return (
-    <section className="py-5 position-relative overflow-hidden w-100" id="faq" style={{ background: '#f8fafc', borderTop: '1px solid #e2e8f0' }}>
-      
+    <section 
+      className="py-5 position-relative overflow-hidden w-100 bg-theme-main text-theme-primary border-top" 
+      id="faq" 
+      style={{ borderColor: 'var(--border-subtle)' }}
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
       />
 
-      <div className="container px-4">
+      {/* AMBIENT BACKGROUND GLOWS */}
+      <div 
+        className="position-absolute rounded-circle pointer-events-none glow-sphere-1" 
+        style={{ width: '500px', height: '500px', top: '10%', left: '-5%' }} 
+      />
+      <div 
+        className="position-absolute rounded-circle pointer-events-none glow-sphere-2" 
+        style={{ width: '500px', height: '500px', bottom: '10%', right: '-5%' }} 
+      />
+
+      <div className="container px-4 position-relative z-1">
         
         {/* Modern Section Header */}
         <div className="text-center mb-5" data-aos="fade-up">
-          <span className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2 mb-2 fw-semibold text-uppercase tracking-wider small">
-            Knowledge Base
-          </span>
-          <h2 className="fw-bold tracking-tight mb-2" style={{ color: '#0f172a', fontSize: '2.25rem' }}>
-            Frequently Asked <span className="text-primary">Questions</span>
+          <div 
+            className="d-inline-flex align-items-center gap-2 px-3.5 py-1.5 rounded-pill mb-3"
+            style={{
+              background: 'rgba(255, 0, 128, 0.08)',
+              border: '1.5px solid rgba(255, 0, 128, 0.35)',
+              backdropFilter: 'blur(10px)',
+              boxShadow: '0 0 15px rgba(255, 0, 128, 0.15)'
+            }}
+          >
+            <span style={{ width: '7px', height: '7px', backgroundColor: '#ff0080', borderRadius: '50%', boxShadow: '0 0 10px #ff0080' }} />
+            <span className="fw-black text-uppercase" style={{ fontSize: '0.72rem', letterSpacing: '0.14em', color: '#ff77bc', fontWeight: 800 }}>
+              💡 KNOWLEDGE BASE
+            </span>
+          </div>
+
+          <h2 className="display-5 fw-black mb-3 text-theme-primary" style={{ fontWeight: 900, letterSpacing: '-0.03em' }}>
+            Frequently Asked{' '}
+            <span className="text-gradient-pink-orange" style={{ fontWeight: 900, filter: 'drop-shadow(0 0 25px rgba(255, 0, 128, 0.35))' }}>
+              Questions
+            </span>
           </h2>
-          <p className="mx-auto text-muted" style={{ maxWidth: '600px', fontSize: '0.95rem' }}>
+
+          <p className="mx-auto text-theme-secondary fs-6" style={{ maxWidth: '600px', fontWeight: 500 }}>
             Explore our ecosystem specific guides and quick responses curated for next-gen digital transformation.
           </p>
         </div>
 
-        {/* 💻📱 डिफ़ॉल्ट रूप से पूरी तरह कलरफुल प्रीमियम टैब लेआउट */}
+        {/* Dynamic Category Pill Tabs */}
         <div className="row justify-content-center mb-5">
           <div className="col-lg-10">
-            <div className="p-3 bg-white rounded-4 border d-flex flex-wrap justify-content-center align-items-center gap-3 custom-navbar-card shadow-sm" data-aos="fade-up">
+            <div 
+              className="p-3 rounded-4 border d-flex flex-wrap justify-content-center align-items-center gap-2.5 shadow-sm" 
+              data-aos="fade-up"
+              style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-subtle)' }}
+            >
               {categories.map((category) => {
                 const isActive = activeCategory === category.id;
                 return (
@@ -197,10 +220,16 @@ export default function FAQ() {
                       setActiveCategory(category.id);
                       setOpenIndex(null);
                     }}
-                    className={`btn px-4 py-2 rounded-pill d-inline-flex align-items-center gap-2 fw-semibold tracking-wide border transition-all tab-pill-btn ${
-                      isActive ? `${category.activeClass} active-shadow text-white` : `${category.inactiveClass}`
+                    className={`btn px-4 py-2 m-1 rounded-pill d-inline-flex align-items-center gap-2 fw-black tracking-wide border-0 transition-all ${
+                      isActive ? 'text-white shadow-sm' : 'text-theme-secondary'
                     }`}
-                    style={{ fontSize: '0.925rem' }}
+                    style={{ 
+                      fontSize: '0.88rem',
+                      fontWeight: 800,
+                      background: isActive ? category.activeBg : 'var(--bg-pill)',
+                      transform: isActive ? 'scale(1.03)' : 'scale(1)',
+                      transition: 'all 0.3s ease'
+                    }}
                   >
                     <i className={`bi ${category.icon} d-flex fs-6`}></i>
                     <span>{category.name}</span>
@@ -216,122 +245,61 @@ export default function FAQ() {
           <div className="col-lg-8" data-aos="fade-up" data-aos-delay="100">
             {filteredFaqs.map((faq, index) => {
               const isOpen = openIndex === index;
+              const activeColor = currentCategory?.activeColor || '#3b82f6';
+
               return (
-                <div key={index} className="card modern-faq-card border-0 mb-3" style={{ borderColor: isOpen ? `${getActiveColor()}40` : 'rgba(226, 232, 240, 0.7)' }}>
-                  
+                <div 
+                  key={index} 
+                  className="rounded-4 border mb-3 overflow-hidden" 
+                  style={{ 
+                    backgroundColor: 'var(--bg-card)',
+                    borderColor: isOpen ? activeColor : 'var(--border-subtle)',
+                    boxShadow: isOpen ? `0 10px 30px ${activeColor}20` : '0 4px 15px var(--shadow-color)',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
                   <h3 className="m-0">
                     <button
-                      className="btn text-decoration-none w-100 p-4 d-flex justify-content-between align-items-center faq-trigger-btn"
+                      className="btn text-decoration-none w-100 p-4 d-flex justify-content-between align-items-center border-0 shadow-none"
                       onClick={() => toggleFAQ(index)}
                       aria-expanded={isOpen}
                     >
-                      <span className="fw-semibold text-start text-dark" style={{ fontSize: '1.025rem', letterSpacing: '-0.01em' }}>
+                      <span className="fw-black text-start text-theme-primary" style={{ fontSize: '1.025rem', letterSpacing: '-0.01em', fontWeight: 800 }}>
                         {faq.question}
                       </span>
                       <div 
-                        className="faq-icon-holder ms-3 d-flex align-items-center justify-content-center"
+                        className="ms-3 d-flex align-items-center justify-content-center rounded-circle flex-shrink-0"
                         style={{ 
-                          background: isOpen ? getActiveColor() : '#f1f5f9',
-                          color: isOpen ? '#ffffff' : '#64748b',
-                          transform: isOpen ? 'rotate(180deg)' : 'none'
+                          width: '32px',
+                          height: '32px',
+                          background: isOpen ? activeColor : 'var(--bg-pill)',
+                          color: isOpen ? '#ffffff' : 'var(--text-secondary)',
+                          transform: isOpen ? 'rotate(180deg)' : 'none',
+                          transition: 'all 0.3s ease'
                         }}
                       >
-                        <i className={`bi ${isOpen ? 'bi-dash' : 'bi-plus'} d-flex`} style={{ fontSize: '18px' }}></i>
+                        <i className={`bi ${isOpen ? 'bi-dash' : 'bi-plus'} d-flex fs-5`}></i>
                       </div>
                     </button>
                   </h3>
 
-                  <div className={`faq-collapse-panel ${isOpen ? 'panel-expanded' : ''}`}>
-                    <div className="card-body p-4 pt-0">
-                      <p className="m-0 text-secondary" style={{ lineHeight: '1.65', fontSize: '0.95rem' }}>
+                  {/* Expandable Accordion Body */}
+                  {isOpen && (
+                    <div className="px-4 pb-4 pt-0">
+                      <p className="m-0 text-theme-secondary small lh-base" style={{ fontSize: '0.92rem', fontWeight: 500 }}>
                         {faq.answer}
                       </p>
                     </div>
-                  </div>
+                  )}
 
                 </div>
               );
             })}
           </div>
         </div>
+
       </div>
-
-      <style jsx>{`
-        .custom-navbar-card {
-          border-color: rgba(226, 232, 240, 0.8) !important;
-        }
-        .tab-pill-btn {
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        }
-        
-        /* 🔵 SERVICES - Active & Inactive Colors */
-        .act-services { background: linear-gradient(135deg, #2563eb, #1d4ed8) !important; border-color: #1d4ed8 !important; }
-        .inact-services { background: #eff6ff !important; color: #2563eb !important; border-color: rgba(37, 99, 235, 0.15) !important; }
-        .inact-services:hover { background: #dbeafe !important; }
-
-        /* 🟣 TECH STACK - Active & Inactive Colors */
-        .act-stack { background: linear-gradient(135deg, #7c3aed, #6d28d9) !important; border-color: #6d28d9 !important; }
-        .inact-stack { background: #f5f3ff !important; color: #7c3aed !important; border-color: rgba(124, 58, 237, 0.15) !important; }
-        .inact-stack:hover { background: #ede9fe !important; }
-
-        /* 🟢 PROCESS - Active & Inactive Colors */
-        .act-process { background: linear-gradient(135deg, #059669, #047857) !important; border-color: #047857 !important; }
-        .inact-process { background: #ecfdf5 !important; color: #059669 !important; border-color: rgba(5, 150, 105, 0.15) !important; }
-        .inact-process:hover { background: #d1fae5 !important; }
-
-        /* 🔴 DEVOPS & SECURITY - Active & Inactive Colors */
-        .act-devops { background: linear-gradient(135deg, #dc2626, #b91c1c) !important; border-color: #b91c1c !important; }
-        .inact-devops { background: #fef2f2 !important; color: #dc2626 !important; border-color: rgba(220, 38, 38, 0.15) !important; }
-        .inact-devops:hover { background: #fee2e2 !important; }
-
-        /* 🟠 BUSINESS & PRICING - Active & Inactive Colors */
-        .act-business { background: linear-gradient(135deg, #d97706, #b45309) !important; border-color: #b45309 !important; }
-        .inact-business { background: #fffbeb !important; color: #d97706 !important; border-color: rgba(217, 119, 6, 0.15) !important; }
-        .inact-business:hover { background: #fef3c7 !important; }
-
-        /* 💗 SEO & MARKETING - Active & Inactive Colors */
-        .act-seo { background: linear-gradient(135deg, #db2777, #be185d) !important; border-color: #be185d !important; }
-        .inact-seo { background: #fdf2f8 !important; color: #db2777 !important; border-color: rgba(219, 39, 119, 0.15) !important; }
-        .inact-seo:hover { background: #fce7f3 !important; }
-        
-        .active-shadow {
-          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
-          transform: scale(1.02);
-        }
-
-        .modern-faq-card {
-          background: #ffffff !important;
-          border-radius: 16px !important;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.015) !important;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-          border: 1px solid transparent;
-        }
-        .faq-trigger-btn {
-          box-shadow: none !important;
-          border: 0 !important;
-          background: transparent !important;
-        }
-        .faq-icon-holder {
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          flex-shrink: 0;
-          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        }
-        
-        .faq-collapse-panel {
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
-          opacity: 0;
-        }
-        .panel-expanded {
-          max-height: 350px;
-          opacity: 1;
-        }
-        .tracking-wider { letter-spacing: 0.05em; }
-        .tracking-tight { letter-spacing: -0.02em; }
-      `}</style>
+      <Footer />
     </section>
   );
 }

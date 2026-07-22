@@ -37,7 +37,7 @@ export default function Footer() {
           {/* COLUMN 1: Brand & Identity */}
           <div className="col-lg-4 col-md-6">
             <h2 className="fw-extrabold text-gradient-pink-orange mb-3" style={{ fontSize: '1.75rem', fontWeight: 900 }}>
-              WebGrow
+              AWebGrow
             </h2>
             <p className="small mb-4 text-theme-secondary" style={{ maxWidth: '320px', lineHeight: '1.65', fontSize: '0.88rem' }}>
               High-performance custom web applications built with modern engineering standards and optimized for ultra-fast performance.
@@ -54,7 +54,7 @@ export default function Footer() {
               <a href="#" className="btn-secondary-glow rounded-circle p-0 justify-content-center" style={{ width: '38px', height: '38px' }} aria-label="LinkedIn">
                 <i className="bi bi-linkedin"></i>
               </a>
-              <a href="https://www.instagram.com/2webdeveloper" className="btn-secondary-glow rounded-circle p-0 justify-content-center" style={{ width: '38px', height: '38px' }} aria-label="Instagram">
+              <a href="https://www.instagram.com/awebgrow_official" className="btn-secondary-glow rounded-circle p-0 justify-content-center" style={{ width: '38px', height: '38px' }} aria-label="Instagram">
                 <i className="bi bi-instagram"></i>
               </a>
             </div>
