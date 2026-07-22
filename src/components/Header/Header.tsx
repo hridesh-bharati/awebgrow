@@ -125,22 +125,9 @@ export default function Header() {
     <>
       <header className="fixed-top custom-header py-2 px-3 px-md-4">
         <div className="container-fluid max-width-xl d-flex align-items-center justify-content-between">
-          
           {/* BRAND LOGO */}
-          <Link href="/" className="text-decoration-none d-flex align-items-center gap-2">
-            <div 
-              className="d-flex align-items-center justify-content-center rounded-3 p-1"
-              style={{
-                background: 'linear-gradient(135deg, #a855f7, #ec4899, #f97316)',
-                width: '36px',
-                height: '36px'
-              }}
-            >
-              <div className="bg-dark w-100 h-100 rounded-3 d-flex align-items-center justify-content-center">
-                <Image src="/icons/logo.png" alt="AWEBGROW Logo" width={20} height={22} className="object-fit-contain" priority />
-              </div>
-            </div>
-            <span className="text-gradient-purple fs-4 fw-extrabold text-uppercase tracking-tight">AWEBGROW</span>
+          <Link href="/" className="text-decoration-none d-flex align-items-center m-0 p-0">
+            <Image src="/icons/awebgrow-logo.png" alt="AWEBGROW Logo" width={120} height={50} className="object-fit-contain  m-0 p-0 ms-1" priority />
           </Link>
 
           {/* DESKTOP NAVIGATION (Pill Container) */}
@@ -157,7 +144,7 @@ export default function Header() {
 
           {/* RIGHT ACTIONS */}
           <div className="d-flex align-items-center gap-2 gap-md-3">
-            
+
             {/* SEARCH */}
             <div className="position-relative d-none d-md-block" ref={searchRef} style={{ width: '150px' }}>
               <div className="position-relative d-flex align-items-center">
@@ -234,26 +221,91 @@ export default function Header() {
         </div>
       </header>
 
-      {/* MOBILE DRAWER */}
+      {/* MOBILE DRAWER / OFFCANVAS (Styled with Cyberpunk Theme) */}
       {showSidebar && (
-        <div className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 z-3" onClick={() => setShowSidebar(false)} />
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 z-3"
+          style={{ backgroundColor: 'rgba(2, 2, 5, 0.75)', backdropFilter: 'blur(8px)' }}
+          onClick={() => setShowSidebar(false)}
+        />
       )}
-      <div 
-        className="position-fixed top-0 start-0 h-100 bg-dark text-white p-4 d-flex flex-column z-3" 
-        style={{ width: '280px', transition: 'transform 0.3s ease', transform: showSidebar ? 'translateX(0)' : 'translateX(-100%)' }}
+      <div
+        className="position-fixed top-25 start-0 h-100 text-white p-4 d-flex flex-column z-3 mobile-sidebar-drawer"
+        style={{
+          width: '300px',
+          backgroundColor: 'var(--bg-card, #0f101a)',
+          borderRight: '1px solid var(--border-subtle, rgba(255,255,255,0.08))',
+          boxShadow: '10px 0 30px rgba(0,0,0,0.8)',
+          transition: 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+          transform: showSidebar ? 'translateX(0)' : 'translateX(-100%)'
+        }}
       >
-        <div className="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
-          <span className="fw-bold fs-5 text-gradient-purple">AWEBGROW</span>
-          <button onClick={() => setShowSidebar(false)} className="btn-close btn-close-white" />
+        <div className="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom" style={{ borderColor: 'var(--border-subtle)' }}>
+          <div className="d-flex align-items-center gap-2">
+            AWebGrow  ~ A Digital Solution
+          </div>
+          <button onClick={() => setShowSidebar(false)} className="btn-close btn-close-white shadow-none" />
         </div>
-        <div className="d-flex flex-column gap-3">
-          {navLinks.map((link) => (
-            <Link key={link.path} href={link.path} onClick={() => setShowSidebar(false)} className="text-decoration-none fw-semibold text-light fs-6 py-1">
-              {link.label}
-            </Link>
-          ))}
+
+        {/* Mobile Search Bar inside Drawer */}
+        <div className="mb-4">
+          <div className="position-relative d-flex align-items-center">
+            <input
+              type="text"
+              placeholder="Search site..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="form-control search-input-dark w-100 py-2"
+              style={{ fontSize: '0.85rem' }}
+            />
+            <i className="bi bi-search position-absolute end-0 pe-3 text-secondary" style={{ fontSize: '0.8rem' }}></i>
+          </div>
+          {searchQuery.trim() !== '' && filteredSuggestions.length > 0 && (
+            <div className="mt-2 rounded-3 border p-1" style={{ backgroundColor: 'var(--bg-pill)', borderColor: 'var(--border-subtle)' }}>
+              {filteredSuggestions.map((item, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => { router.push(item.path); setShowSidebar(false); setSearchQuery(''); }}
+                  className="p-2 small text-light rounded cursor-pointer text-truncate"
+                  style={{ cursor: 'pointer', fontSize: '0.8rem' }}
+                >
+                  {item.label}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Navigation Links */}
+        <div className="d-flex flex-column gap-2 flex-grow-1">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.path;
+            return (
+              <Link
+                key={link.path}
+                href={link.path}
+                onClick={() => setShowSidebar(false)}
+                className={`text-decoration-none fw-semibold fs-6 py-2.5 px-3 rounded-3 d-flex align-items-center justify-content-between transition-all ${isActive ? 'text-white' : 'text-secondary'}`}
+                style={{
+                  backgroundColor: isActive ? 'rgba(168, 85, 247, 0.15)' : 'transparent',
+                  border: isActive ? '1px solid rgba(168, 85, 247, 0.3)' : '1px solid transparent',
+                  color: isActive ? '#fff' : 'var(--text-secondary)'
+                }}
+              >
+                <span>{link.label}</span>
+                <i className={`bi bi-chevron-right small ${isActive ? 'text-purple' : 'opacity-50'}`} style={{ fontSize: '0.7rem' }}></i>
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Drawer Footer Info */}
+        <div className="pt-3 border-top mt-auto text-center" style={{ borderColor: 'var(--border-subtle)' }}>
+          <p className="text-secondary small m-0" style={{ fontSize: '0.75rem' }}>© 2026 AWebGrow. All rights reserved.</p>
         </div>
       </div>
     </>
   );
 }
+
+/* Header Specific Styling */

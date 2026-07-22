@@ -175,7 +175,7 @@ export default function Hero() {
         </div>
 
         {/* STATS STRIP */}
-        <div className="row g-2 mt-4 pt-1">
+        <div className="row g-2 my-4 pt-1">
           <div className="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
             <div className="stat-card-glow text-center" style={{ borderBottom: '3px solid #3b82f6' }}>
               <div className="d-flex align-items-center justify-content-center gap-1.5 mb-0.5">

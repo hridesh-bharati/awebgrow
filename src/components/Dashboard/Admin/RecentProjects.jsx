@@ -165,10 +165,10 @@ export default function RecentProjects() {
   };
 
   return (
-    <div className="container-fluid px-0">
+    <div className="container-fluid px-2 px-md-3 position-relative" style={{ zIndex: 1 }}>
       <div className="row g-3 m-0">
         {/* Dynamic Form: Add / Edit Project */}
-        <div className="col-12 col-xl-7 ps-0">
+        <div className="col-12 col-xl-8 ps-0">
           <div 
             className="rounded-4 p-4 border" 
             style={{ 
@@ -272,7 +272,7 @@ export default function RecentProjects() {
         </div>
 
         {/* Deployments List View */}
-        <div className="col-12 col-xl-5 pe-0">
+        <div className="col-12 col-xl-4 pe-0">
           <div 
             className="rounded-4 p-4 border" 
             style={{ 

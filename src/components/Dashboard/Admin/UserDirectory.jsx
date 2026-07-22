@@ -74,7 +74,7 @@ export default function UserDirectory({ users = [] }) {
       <Toaster position="top-right" richColors />
 
       {/* Header & Search Bar */}
-      <div className="p-4 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-3" style={{ borderColor: 'var(--border-subtle)' }}>
+      <div className="p-3 p-md-4 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-3" style={{ borderColor: 'var(--border-subtle)' }}>
         <div>
           <h5 className="fw-black m-0 text-theme-primary" style={{ fontWeight: 800 }}>User System Registry</h5>
           <span className="text-theme-secondary small" style={{ fontWeight: 500 }}>Realtime Database User Management</span>
@@ -83,19 +83,19 @@ export default function UserDirectory({ users = [] }) {
         <input
           type="text"
           placeholder="Search user..."
-          className="form-control text-theme-primary border rounded-pill px-3 py-2"
+          className="form-control text-theme-primary border rounded-pill px-3 py-2 w-100 w-md-auto"
           style={STYLES.pillInput}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
 
-      {/* Custom Theme-Aware Table */}
+      {/* Responsive Container */}
       <div className="w-100 overflow-auto">
-        <div style={{ minWidth: "600px" }}>
+        <div style={{ minWidth: "100%" }}>
 
-          {/* Table Header (UID Removed) */}
-          <div className="d-flex align-items-center px-4 py-3 border-bottom text-theme-secondary fw-bold small" style={STYLES.headerRow}>
+          {/* Table Header (Hidden on small screens) */}
+          <div className="d-none d-md-flex align-items-center px-4 py-3 border-bottom text-theme-secondary fw-bold small" style={STYLES.headerRow}>
             <div style={{ width: '15%' }}>AVATAR</div>
             <div style={{ width: '30%' }}>NAME</div>
             <div style={{ width: '35%' }}>EMAIL</div>
@@ -103,7 +103,7 @@ export default function UserDirectory({ users = [] }) {
             <div style={{ width: '8%' }} className="text-end">ACTION</div>
           </div>
 
-          {/* Table Body */}
+          {/* Table Body / Mobile Cards */}
           {filtered.length > 0 ? (
             filtered.map((u, index) => {
               const isAdmin = ADMIN_EMAILS.has(u.email?.toLowerCase());
@@ -111,56 +111,68 @@ export default function UserDirectory({ users = [] }) {
               return (
                 <div
                   key={u.uid || u.email || index}
-                  className="d-flex align-items-center px-4 py-3 border-bottom text-theme-primary"
+                  className="d-flex flex-column flex-md-row align-md-items-center px-3 px-md-4 py-3 border-bottom text-theme-primary gap-3 gap-md-0"
                   style={{
                     borderColor: 'var(--border-subtle)',
                     transition: 'background-color 0.2s ease',
                     fontSize: '0.88rem'
                   }}
                 >
-                  {/* Avatar */}
-                  <div style={{ width: '15%' }}>
-                    <img
-                      src={u.profileImage || "/images/default-avatar.jpg"}
-                      alt="avatar"
-                      className="rounded-circle border"
-                      style={{ width: "38px", height: "38px", objectFit: "cover", borderColor: 'var(--border-subtle)' }}
-                    />
-                  </div>
+                  {/* Mobile Top Row / Desktop Columns */}
+                  <div className="d-flex align-items-center justify-content-between w-100 d-md-contents">
+                    
+                    {/* Avatar & Name Group for Mobile */}
+                    <div className="d-flex align-items-center gap-3 w-100 w-md-auto" style={{ width: '45%' }}>
+                      <div style={{ minWidth: '38px' }}>
+                        <img
+                          src={u.profileImage || "/images/default-avatar.jpg"}
+                          alt="avatar"
+                          className="rounded-circle border"
+                          style={{ width: "38px", height: "38px", objectFit: "cover", borderColor: 'var(--border-subtle)' }}
+                        />
+                      </div>
+                      <div className="d-flex flex-column text-truncate">
+                        <div className="fw-bold text-theme-primary text-truncate">
+                          {u.name || "Anonymous User"}
+                        </div>
+                        {/* Email displayed underneath on mobile screens */}
+                        <div className="text-theme-secondary small text-truncate d-md-none">
+                          {u.email || "No Email"}
+                        </div>
+                      </div>
+                    </div>
 
-                  {/* Name */}
-                  <div style={{ width: '30%' }} className="fw-bold text-theme-primary text-truncate pe-2">
-                    {u.name || "Anonymous User"}
-                  </div>
+                    {/* Desktop Email Column */}
+                    <div className="d-none d-md-block text-theme-secondary text-truncate pe-2" style={{ width: '35%' }}>
+                      {u.email || "No Email"}
+                    </div>
 
-                  {/* Email */}
-                  <div style={{ width: '35%' }} className="text-theme-secondary text-truncate pe-2">
-                    {u.email || "No Email"}
-                  </div>
+                    {/* Role & Action (Mobile Header Right / Desktop Separate Columns) */}
+                    <div className="d-flex align-items-center justify-content-between justify-content-md-start w-100 w-md-auto mt-2 mt-md-0">
+                      <div style={{ width: 'auto' }} className="d-md-block" style={{ width: '100%', maxWidth: '100px' }}>
+                        <span
+                          className={`badge px-2.5 py-1.5 fw-bold rounded-pill text-white ${
+                            isAdmin ? "bg-danger bg-opacity-20" : "bg-success bg-opacity-20"
+                          }`}
+                          style={{ fontSize: '0.68rem' }}
+                        >
+                          {isAdmin ? "System Admin" : "Active Client"}
+                        </span>
+                      </div>
 
-                  {/* Role */}
-                  <div style={{ width: '12%' }}>
-                    <span
-                      className={`badge px-2.5 py-1.5 fw-bold rounded-pill text-white ${
-                        isAdmin ? "bg-danger bg-opacity-20" : "bg-success bg-opacity-20"
-                      }`}
-                      style={{ fontSize: '0.68rem' }}
-                    >
-                      {isAdmin ? "System Admin" : "Active Client"}
-                    </span>
-                  </div>
+                      <div className="text-end" style={{ width: 'auto' }}>
+                        {!isAdmin && (
+                          <button
+                            className="btn btn-sm btn-outline-danger rounded-pill px-3 py-1 fw-bold"
+                            style={{ fontSize: '0.72rem' }}
+                            onClick={() => handleDelete(u)}
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </div>
+                    </div>
 
-                  {/* Action */}
-                  <div style={{ width: '8%' }} className="text-end">
-                    {!isAdmin && (
-                      <button
-                        className="btn btn-sm btn-outline-danger rounded-pill px-2.5 py-1 fw-bold"
-                        style={{ fontSize: '0.72rem' }}
-                        onClick={() => handleDelete(u)}
-                      >
-                        Delete
-                      </button>
-                    )}
                   </div>
                 </div>
               );
