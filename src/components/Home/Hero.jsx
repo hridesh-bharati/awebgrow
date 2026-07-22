@@ -113,6 +113,9 @@ export default function Hero() {
           <div className="col-12 col-lg-5 text-center" data-aos="zoom-in" data-aos-delay="300">
             <div className="orbit-wrapper rounded-circle">
               
+              {/* BACK SHADOW GLOW LAYER FOR CIRCLE */}
+              <div className="orbit-back-glow" />
+
               <div className="center-brand-box">
                 <Image
                   src="/images/home-circle-image.png"
@@ -125,45 +128,45 @@ export default function Hero() {
               </div>
 
               <div className="orbit-circle-path">
-                <div className="orbit-node-item node-pos-1" style={{ border: '1px solid rgba(59,130,246,0.6)', boxShadow: '0 0 10px rgba(59,130,246,0.4)' }}>
+                <div className="orbit-node-item node-pos-1" style={{ border: '1px solid rgba(59,130,246,0.6)', boxShadow: '0 0 12px rgba(59,130,246,0.5)' }}>
                   <div className="orbit-node-inner">
-                    <i className="bi bi-code-slash text-info" style={{ fontSize: '0.8rem' }}></i>
-                    <span style={{ fontSize: '0.45rem', color: '#e4e4e7', fontWeight: 600 }}>Web Dev</span>
+                    <i className="bi bi-code-slash text-info" style={{ fontSize: '1rem' }}></i>
+                    <span style={{ fontSize: '0.55rem', color: '#e4e4e7', fontWeight: 700, marginTop: '2px' }}>Web Dev</span>
                   </div>
                 </div>
 
-                <div className="orbit-node-item node-pos-2" style={{ border: '1px solid rgba(168,85,247,0.6)', boxShadow: '0 0 10px rgba(168,85,247,0.4)' }}>
+                <div className="orbit-node-item node-pos-2" style={{ border: '1px solid rgba(168,85,247,0.6)', boxShadow: '0 0 12px rgba(168,85,247,0.5)' }}>
                   <div className="orbit-node-inner">
-                    <i className="bi bi-search-heart" style={{ color: '#a855f7', fontSize: '0.8rem' }}></i>
-                    <span style={{ fontSize: '0.45rem', color: '#e4e4e7', fontWeight:600 }}>SEO</span>
+                    <i className="bi bi-search-heart" style={{ color: '#a855f7', fontSize: '1rem' }}></i>
+                    <span style={{ fontSize: '0.55rem', color: '#e4e4e7', fontWeight: 700, marginTop: '2px' }}>SEO</span>
                   </div>
                 </div>
 
-                <div className="orbit-node-item node-pos-3" style={{ border: '1px solid rgba(16,185,129,0.6)', boxShadow: '0 0 10px rgba(16,185,129,0.4)' }}>
+                <div className="orbit-node-item node-pos-3" style={{ border: '1px solid rgba(16,185,129,0.6)', boxShadow: '0 0 12px rgba(16,185,129,0.5)' }}>
                   <div className="orbit-node-inner">
-                    <i className="bi bi-phone-fill text-success" style={{ fontSize: '0.8rem' }}></i>
-                    <span style={{ fontSize: '0.45rem', color: '#e4e4e7', fontWeight:600 }}>App Dev</span>
+                    <i className="bi bi-phone-fill text-success" style={{ fontSize: '1rem' }}></i>
+                    <span style={{ fontSize: '0.55rem', color: '#e4e4e7', fontWeight: 700, marginTop: '2px' }}>App Dev</span>
                   </div>
                 </div>
 
-                <div className="orbit-node-item node-pos-4" style={{ border: '1px solid rgba(249,115,22,0.6)', boxShadow: '0 0 10px rgba(249,115,22,0.4)' }}>
+                <div className="orbit-node-item node-pos-4" style={{ border: '1px solid rgba(249,115,22,0.6)', boxShadow: '0 0 12px rgba(249,115,22,0.5)' }}>
                   <div className="orbit-node-inner">
-                    <i className="bi bi-google text-warning" style={{ fontSize: '0.8rem' }}></i>
-                    <span style={{ fontSize: '0.42rem', color: '#e4e4e7', fontWeight:600 }}>Google Ads</span>
+                    <i className="bi bi-google text-warning" style={{ fontSize: '0.95rem' }}></i>
+                    <span style={{ fontSize: '0.52rem', color: '#e4e4e7', fontWeight: 700, marginTop: '2px' }}>Google Ads</span>
                   </div>
                 </div>
 
-                <div className="orbit-node-item node-pos-5" style={{ border: '1px solid rgba(236,72,153,0.6)', boxShadow: '0 0 10px rgba(236,72,153,0.4)' }}>
+                <div className="orbit-node-item node-pos-5" style={{ border: '1px solid rgba(236,72,153,0.6)', boxShadow: '0 0 12px rgba(236,72,153,0.5)' }}>
                   <div className="orbit-node-inner">
-                    <i className="bi bi-infinity" style={{ color: '#ec4899', fontSize: '0.85rem' }}></i>
-                    <span style={{ fontSize: '0.42rem', color: '#e4e4e7', fontWeight:600 }}>Meta Ads</span>
+                    <i className="bi bi-infinity" style={{ color: '#ec4899', fontSize: '1rem' }}></i>
+                    <span style={{ fontSize: '0.52rem', color: '#e4e4e7', fontWeight: 700, marginTop: '2px' }}>Meta Ads</span>
                   </div>
                 </div>
 
-                <div className="orbit-node-item node-pos-6" style={{ border: '1px solid rgba(239,68,68,0.6)', boxShadow: '0 0 10px rgba(239,68,68,0.4)' }}>
+                <div className="orbit-node-item node-pos-6" style={{ border: '1px solid rgba(239,68,68,0.6)', boxShadow: '0 0 12px rgba(239,68,68,0.5)' }}>
                   <div className="orbit-node-inner">
-                    <i className="bi bi-cpu-fill text-danger" style={{ fontSize: '0.8rem' }}></i>
-                    <span style={{ fontSize: '0.42rem', color: '#e4e4e7', fontWeight:600 }}>AI Solutions</span>
+                    <i className="bi bi-cpu-fill text-danger" style={{ fontSize: '1rem' }}></i>
+                    <span style={{ fontSize: '0.52rem', color: '#e4e4e7', fontWeight: 700, marginTop: '2px' }}>AI Solutions</span>
                   </div>
                 </div>
               </div>
