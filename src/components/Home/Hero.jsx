@@ -111,7 +111,7 @@ export default function Hero() {
           </div>
 
           {/* RIGHT COLUMN: CIRCULAR ORBIT (SCROLL DOWN BELOW 100VH ON MOBILE) */}
-          <div className="col-12 col-lg-5 text-center" data-aos="zoom-in" data-aos-delay="300">
+          <div className="col-12 col-lg-5 text-center mt-0 pt-0" data-aos="zoom-in" data-aos-delay="300">
             <div className="orbit-wrapper">
               
               <div className="center-brand-box">

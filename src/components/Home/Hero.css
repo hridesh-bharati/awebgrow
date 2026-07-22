@@ -268,7 +268,7 @@
 @media (max-width: 991.98px) {
   /* Left Content block fills full 100vh (subtracting header height) */
   .hero-left-content {
-    min-height: calc(75vh - 65px) !important;
+    min-height: calc(65vh - 65px) !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
