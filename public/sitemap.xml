@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
-  <!-- ============================================ -->
-  <!-- HOMEPAGE - Highest Priority -->
-  <!-- ============================================ -->
+  <!-- HOMEPAGE -->
   <url>
     <loc>https://awebgrowhb.com</loc>
     <lastmod>2026-07-22</lastmod>
@@ -13,9 +9,7 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- ============================================ -->
-  <!-- SERVICES PAGES -->
-  <!-- ============================================ -->
+  <!-- SERVICES -->
   <url>
     <loc>https://awebgrowhb.com/services</loc>
     <lastmod>2026-07-22</lastmod>
@@ -23,51 +17,7 @@
     <priority>0.9</priority>
   </url>
 
-  <url>
-    <loc>https://awebgrowhb.com/services/web-development</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://awebgrowhb.com/services/mobile-app-development</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://awebgrowhb.com/services/seo-services</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://awebgrowhb.com/services/ui-ux-design</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://awebgrowhb.com/services/digital-marketing</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://awebgrowhb.com/services/ecommerce-development</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- ============================================ -->
-  <!-- PORTFOLIO PAGE -->
-  <!-- ============================================ -->
+  <!-- PORTFOLIO -->
   <url>
     <loc>https://awebgrowhb.com/portfolio</loc>
     <lastmod>2026-07-22</lastmod>
@@ -75,9 +25,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- ============================================ -->
-  <!-- ABOUT & TEAM PAGES -->
-  <!-- ============================================ -->
+  <!-- ABOUT -->
   <url>
     <loc>https://awebgrowhb.com/about</loc>
     <lastmod>2026-07-22</lastmod>
@@ -85,16 +33,7 @@
     <priority>0.7</priority>
   </url>
 
-  <url>
-    <loc>https://awebgrowhb.com/team</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- ============================================ -->
-  <!-- CONTACT & BOOKING PAGES -->
-  <!-- ============================================ -->
+  <!-- CONTACT -->
   <url>
     <loc>https://awebgrowhb.com/contact</loc>
     <lastmod>2026-07-22</lastmod>
@@ -102,16 +41,7 @@
     <priority>0.8</priority>
   </url>
 
-  <url>
-    <loc>https://awebgrowhb.com/booking</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- ============================================ -->
-  <!-- FAQ & BLOG PAGES -->
-  <!-- ============================================ -->
+  <!-- FAQ -->
   <url>
     <loc>https://awebgrowhb.com/faq</loc>
     <lastmod>2026-07-22</lastmod>
@@ -119,16 +49,8 @@
     <priority>0.6</priority>
   </url>
 
-  <url>
-    <loc>https://awebgrowhb.com/blog</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
 
-  <!-- ============================================ -->
-  <!-- PRIVACY & TERMS PAGES -->
-  <!-- ============================================ -->
+  <!-- PRIVACY POLICY -->
   <url>
     <loc>https://awebgrowhb.com/privacy-policy</loc>
     <lastmod>2026-07-22</lastmod>
@@ -136,15 +58,9 @@
     <priority>0.3</priority>
   </url>
 
+  <!-- TERMS AND CONDITIONS -->
   <url>
     <loc>https://awebgrowhb.com/terms-and-conditions</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-  <url>
-    <loc>https://awebgrowhb.com/refund-policy</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
