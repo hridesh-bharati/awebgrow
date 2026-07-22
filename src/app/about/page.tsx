@@ -1,6 +1,6 @@
 // src/app/about/page.tsx
 import type { Metadata } from 'next';
-import AboutClient from './AboutClient';
+import AboutClient from '@/components/About/AboutClient';
 
 export const metadata: Metadata = {
   title: "About Us | AWebGrow - Web Development Company India",

@@ -1,9 +1,6 @@
-// page.jsx - This is a Server Component by default (no "use client" at top)
-
-import Header from "@/components/Header/Header";
 import OurTeam from "@/components/Team/OurTeam";  
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://webgrowhs.vercel.app/';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.awebgrow.com';
 
 export const metadata = {
   title: "Meet Our Expert Team | WebGrow",
@@ -42,9 +39,8 @@ export const metadata = {
 
 export default function TeamPage() {
   return (
-    <>
-      <Header />
+    <main className="bg-theme-main text-theme-primary overflow-hidden min-vh-100">
       <OurTeam />
-    </>
+    </main>
   );
 }

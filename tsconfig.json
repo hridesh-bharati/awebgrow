@@ -29,7 +29,7 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "src/components/Dashboard/Admin/DashboardHome.jsx", "src/components/Dashboard/Admin/DashboardHome.jsx"  ],
+, "src/components/Dashboard/Admin/DashboardHome.jsx", "src/components/Dashboard/Admin/DashboardHome.jsx", "src/app/team/page.jsx"  ],
   "exclude": ["node_modules"],
   
 }

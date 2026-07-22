@@ -6,6 +6,7 @@ import 'aos/dist/aos.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import './Hero.css';
+import WebServicesSection  from './WebServicesSection.jsx';
 
 export default function Hero() {
   useEffect(() => {
@@ -221,6 +222,7 @@ export default function Hero() {
         </div>
 
       </div>
+      <WebServicesSection />
     </section>
   );
 }
