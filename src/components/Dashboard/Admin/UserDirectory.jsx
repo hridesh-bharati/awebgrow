@@ -149,7 +149,7 @@ export default function UserDirectory({ users = [] }) {
 
                     {/* Role & Action (Mobile Header Right / Desktop Separate Columns) */}
                     <div className="d-flex align-items-center justify-content-between justify-content-md-start w-100 w-md-auto mt-2 mt-md-0">
-                      <div style={{ width: 'auto' }} className="d-md-block" style={{ width: '100%', maxWidth: '100px' }}>
+                      <div  className="d-md-block" style={{ width: '100%', maxWidth: '100px' }}>
                         <span
                           className={`badge px-2.5 py-1.5 fw-bold rounded-pill text-white ${
                             isAdmin ? "bg-danger bg-opacity-20" : "bg-success bg-opacity-20"
