@@ -1,24 +1,23 @@
-/* src/app/theme.css */
+/* src/app/globals.css */
 
-/* ========================================================= */
-/* 1. RESET & GLOBAL SETUP (SCROLL BUG FIXED) */
-/* ========================================================= */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-tap-highlight-color: transparent;
 }
 
 html, body {
-  background-color: #090a0f !important;
-  color: #ffffff;
-  /* Sirf Body pe hidden lagega taaki inner boxes scroll na karein */
-  overflow-x: hidden; 
+  overflow-x: hidden;
   scroll-behavior: smooth;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+body {
+  background-color: #020203 !important; /* Premium Deep Black */
+  color: #ffffff;
 }
 
 html::-webkit-scrollbar, 
@@ -31,154 +30,11 @@ body::-webkit-scrollbar,
 
 @media screen and (max-width: 768px) {
   input, select, textarea {
-    font-size: 16px !important; /* PWA Zoom Prevent */
+    font-size: 16px !important; /* Prevents mobile browser zoom on focus */
   }
 }
 
 :root {
   --status-bar-height: env(safe-area-inset-top);
   --safe-area-bottom: env(safe-area-inset-bottom);
-}
-
-/* ========================================================= */
-/* 2. REUSABLE TYPOGRAPHY & GRADIENTS */
-/* ========================================================= */
-.text-gradient-purple-blue {
-  background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-pink-orange {
-  background: linear-gradient(135deg, #ec4899 0%, #f97316 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* ========================================================= */
-/* 3. REUSABLE BUTTONS */
-/* ========================================================= */
-.btn-neon-cta {
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f97316 100%);
-  color: #ffffff !important;
-  font-size: 0.82rem;
-  font-weight: 700;
-  border-radius: 50px;
-  padding: 8px 20px;
-  border: none;
-  box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-}
-
-.btn-neon-cta:hover {
-  transform: translateY(-1px) scale(1.02);
-  box-shadow: 0 0 25px rgba(236, 72, 153, 0.6);
-}
-
-.btn-secondary-glow {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  font-size: 0.85rem;
-  backdrop-filter: blur(8px);
-  color: #ffffff !important;
-  padding: 9px 22px;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.btn-secondary-glow:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
-}
-
-/* ========================================================= */
-/* 4. HEADER / NAVBAR STYLES */
-/* ========================================================= */
-.custom-header {
-  background-color: rgba(9, 10, 15, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all 0.3s ease-in-out;
-}
-
-.brand-text {
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f97316 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-}
-
-.nav-capsule {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 50px;
-  padding: 4px 12px;
-}
-
-.nav-link-custom {
-  color: #a1a1aa;
-  font-size: 0.85rem;
-  font-weight: 500;
-  padding: 6px 14px !important;
-  border-radius: 20px;
-  transition: all 0.2s ease;
-  text-decoration: none;
-}
-
-.nav-link-custom:hover, .nav-link-custom.active {
-  color: #ffffff !important;
-  background-color: rgba(255, 255, 255, 0.15);
-}
-
-.search-input-dark {
-  background-color: rgba(255, 255, 255, 0.06) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  color: #ffffff !important;
-  font-size: 0.8rem;
-  border-radius: 30px;
-  padding-left: 16px;
-  padding-right: 35px;
-  height: 36px;
-  transition: all 0.3s ease;
-}
-
-.search-input-dark:focus {
-  border-color: #a855f7 !important;
-  box-shadow: 0 0 10px rgba(168, 85, 247, 0.3) !important;
-  outline: none;
-}
-
-.search-suggestions-box {
-  background-color: #12131c;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  top: 100%;
-  right: 0;
-  width: 250px;
-}
-
-.suggestion-item {
-  color: #d4d4d8;
-  font-size: 0.78rem;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.suggestion-item:hover {
-  background-color: rgba(168, 85, 247, 0.2);
-  color: #ffffff;
 }

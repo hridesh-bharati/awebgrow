@@ -1,0 +1,94 @@
+/* src/app/theme.css */
+
+/* ========================================================= */
+/* DYNAMIC THEME COLOR VARIABLES */
+/* ========================================================= */
+
+/* DEFAULT DARK THEME (Deep Black + Neon) */
+:root, [data-bs-theme="dark"] {
+  --bg-main: #020203;
+  --bg-card: rgba(18, 19, 28, 0.7);
+  --bg-header: rgba(2, 2, 3, 0.85);
+  --bg-pill: rgba(255, 255, 255, 0.05);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+/* LIGHT THEME OVERRIDES (Clean White/Slate) */
+[data-bs-theme="light"] {
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-header: rgba(255, 255, 255, 0.9);
+  --bg-pill: rgba(0, 0, 0, 0.04);
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --shadow-color: rgba(0, 0, 0, 0.06);
+}
+
+/* Global Application */
+html, body {
+  background-color: var(--bg-main) !important;
+  color: var(--text-primary) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Universal Classes using CSS Variables */
+.bg-theme-main {
+  background-color: var(--bg-main) !important;
+}
+
+.text-theme-primary {
+  color: var(--text-primary) !important;
+}
+
+.text-theme-secondary {
+  color: var(--text-secondary) !important;
+}
+
+/* Gradients work in both Light & Dark */
+.text-gradient-purple {
+  background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-pink {
+  background: linear-gradient(135deg, #ec4899 0%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Buttons */
+.btn-neon-cta {
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f97316 100%);
+  color: #ffffff !important;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 50px;
+  padding: 8px 22px;
+  border: none;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.btn-secondary-glow {
+  background: var(--bg-pill);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.85rem;
+  backdrop-filter: blur(8px);
+  color: var(--text-primary) !important;
+  padding: 9px 22px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}

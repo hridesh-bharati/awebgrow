@@ -1,5 +1,4 @@
 // src/app/about/page.tsx
-// ⚠️ "use client" MAT lagao yahan
 import type { Metadata } from 'next';
 import AboutClient from './AboutClient';
 

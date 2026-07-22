@@ -1,37 +1,76 @@
-/* src/components/Home/Hero.css */
+/* ========================================================= */
+/* HERO SECTION: DEEP BLACK + NEON PINK/PURPLE (WITH THEME)  */
+/* ========================================================= */
+
+/* Light Mode Overrides */
+[data-bs-theme="light"] .hero-section {
+  background-color: #f8fafc !important;
+}
+[data-bs-theme="light"] .hero-section h1 {
+  color: #0f172a !important;
+}
+[data-bs-theme="light"] .hero-section p, 
+[data-bs-theme="light"] .hero-section .text-secondary {
+  color: #475569 !important;
+}
+[data-bs-theme="light"] .stat-card-glow {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.06) !important;
+}
+[data-bs-theme="light"] .center-brand-box {
+  background: #ffffff !important;
+}
+[data-bs-theme="light"] .orbit-node-item {
+  background: #ffffff !important;
+}
+[data-bs-theme="light"] .orbit-node-inner span {
+  color: #0f172a !important;
+}
+
+/* --- YOUR ORIGINAL DARK THEME CORE STYLES --- */
 
 .hero-section {
-  background-color: #090a0f;
+  background-color: #020203; 
   margin-top: 65px;
   position: relative;
   overflow: visible !important;
   padding-top: 25px;
   padding-bottom: 40px;
+  transition: background-color 0.3s ease;
 }
 
-/* Background Glow */
-.glow-sphere-1, .glow-sphere-2 {
-  width: 450px;
-  height: 450px;
-  filter: blur(70px);
+/* 1. HIGH-CONTRAST NEON GLOW SPHERES */
+.glow-sphere-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 0, 128, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+  top: -10%;
+  left: -5%;
+  filter: blur(80px);
   pointer-events: none;
   position: absolute;
-}
-.glow-sphere-1 {
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
-  top: -5%; left: -5%;
-}
-.glow-sphere-2 {
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.18) 0%, rgba(0, 0, 0, 0) 70%);
-  bottom: 0%; right: -5%;
+  z-index: 0;
 }
 
-/* Hero Badge */
+.glow-sphere-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+  bottom: -5%;
+  right: -5%;
+  filter: blur(80px);
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+/* 2. BADGE & BUTTONS STYLING */
 .hero-badge {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 0, 128, 0.05);
+  border: 1px solid rgba(255, 0, 128, 0.2);
   backdrop-filter: blur(10px);
-  padding: 5px 14px;
+  padding: 6px 16px;
   border-radius: 50px;
   display: inline-flex;
   align-items: center;
@@ -39,21 +78,58 @@
 }
 
 .badge-dot-pink {
-  width: 6px; height: 6px;
-  background-color: #ec4899;
+  width: 6px;
+  height: 6px;
+  background-color: #ff0080;
   border-radius: 50%;
-  box-shadow: 0 0 8px #ec4899;
+  box-shadow: 0 0 10px #ff0080, 0 0 20px #ff0080;
 }
 
 .badge-text-glow {
   font-size: 0.65rem;
   letter-spacing: 0.15em;
-  color: #e4e4e7;
+  color: #fce7f3;
   font-weight: 700;
   text-transform: uppercase;
 }
 
-/* Orbit System */
+/* Typography Gradient */
+.text-gradient-purple-blue {
+  background: linear-gradient(135deg, #c084fc 0%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-pink-orange {
+  background: linear-gradient(135deg, #ff0080 0%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glassmorphism Secondary Button */
+.btn-secondary-glow {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.85rem;
+  backdrop-filter: blur(8px);
+  color: #ffffff !important;
+  padding: 9px 22px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-secondary-glow:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 0, 128, 0.5);
+  box-shadow: 0 0 20px rgba(255, 0, 128, 0.2);
+  transform: translateY(-2px);
+}
+
+/* 3. CENTER LOGO & ORBIT SYSTEM */
 .orbit-wrapper {
   position: relative;
   width: 100%;
@@ -76,9 +152,9 @@
   z-index: 2;
   position: absolute;
   overflow: hidden;
-  box-shadow: 0 0 45px rgba(168, 85, 247, 0.5);
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
-  background: #090a0f;
+  background: #050505;
+  box-shadow: 0 0 40px rgba(255, 0, 128, 0.4), inset 0 0 20px rgba(168, 85, 247, 0.2);
+  border: 1px solid rgba(255, 0, 128, 0.3);
 }
 
 .brand-image-fit {
@@ -102,7 +178,7 @@
   height: 320px;
   position: absolute;
   border-radius: 50%;
-  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border: 1px dashed rgba(255, 255, 255, 0.15); 
   animation: spinOrbit 24s linear infinite;
   z-index: 3;
   overflow: visible !important;
@@ -116,19 +192,20 @@
   position: absolute;
   width: 60px; 
   height: 60px;
-  background: #12131c;
+  background: #0a0a0c;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: -30px;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 4;
 }
 
 .orbit-node-item:hover {
   transform: scale(1.15);
+  background: #111116;
 }
 
 .orbit-node-inner {
@@ -143,7 +220,6 @@
   animation-play-state: paused;
 }
 
-/* Orbit Node Positioning */
 .node-pos-1 { top: 0%; left: 50%; }
 .node-pos-2 { top: 25%; left: 93.3%; }
 .node-pos-3 { top: 75%; left: 93.3%; }
@@ -151,19 +227,32 @@
 .node-pos-5 { top: 75%; left: 6.7%; }
 .node-pos-6 { top: 25%; left: 6.7%; }
 
-/* Stats Strip */
+/* 4. STATS STRIP */
 .stat-card-glow {
-  background: rgba(18, 19, 28, 0.7);
+  background: rgba(10, 10, 12, 0.85);
   backdrop-filter: blur(12px);
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   padding: 14px 10px;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card-glow::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  opacity: 0.5;
 }
 
 .stat-card-glow:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  background: rgba(15, 15, 20, 0.95);
+  border-color: rgba(255, 0, 128, 0.2);
+  box-shadow: 0 10px 25px rgba(255, 0, 128, 0.15);
 }
 
 .stat-number {

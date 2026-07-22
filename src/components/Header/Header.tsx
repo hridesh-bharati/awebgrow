@@ -4,21 +4,21 @@ import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-// import './Header.css'; // Apne custom css file se link rakhein
+import './Header.css';
 
 const SEARCH_INDEX = [
   { label: "View Pricing & Packages", path: "/#pricing", keywords: ["price", "cost", "pricing", "budget"] },
   { label: "Our Portfolio & Live Projects", path: "/#portfolio", keywords: ["project", "portfolio", "work", "apps"] },
   { label: "Web & App Development Services", path: "/services", keywords: ["website", "app", "ui", "ux", "services"] },
   { label: "Contact Us", path: "/contact", keywords: ["contact", "hire", "phone", "email"] },
-  { label: "About Our Core Expert Team", path: "/team", keywords: ["team", "developer", "hridesh"] },
+  { label: "About Our Core Expert Team", path: "/team", keywords: ["team", "developer"] },
   { label: "FAQ & Help", path: "/faq", keywords: ["faq", "help"] }
 ];
 
 export default function Header() {
   const [mounted, setMounted] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -32,16 +32,18 @@ export default function Header() {
 
   useEffect(() => {
     setMounted(true);
+    const savedTheme = (localStorage.getItem('app-theme') as 'dark' | 'light') || 'dark';
+    setTheme(savedTheme);
+    document.documentElement.setAttribute('data-bs-theme', savedTheme);
   }, []);
 
-  useEffect(() => {
-    if (!mounted) return;
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [mounted]);
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    localStorage.setItem('app-theme', nextTheme);
+    document.documentElement.setAttribute('data-bs-theme', nextTheme);
+  };
 
-  // Sync User Auth State
   useEffect(() => {
     if (!mounted) return;
     let isCurrent = true;
@@ -66,7 +68,6 @@ export default function Header() {
     return () => { isCurrent = false; };
   }, [pathname, mounted]);
 
-  // Outside click listener for dropdown & search
   useEffect(() => {
     if (!mounted) return;
     const handleClickOutside = (event: MouseEvent) => {
@@ -81,7 +82,6 @@ export default function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [mounted]);
 
-  // Filter Search
   useEffect(() => {
     if (searchQuery.trim() === '') {
       setFilteredSuggestions([]);
@@ -114,15 +114,12 @@ export default function Header() {
     { path: '/', label: 'Home' },
     { path: '/about', label: 'About Us' },
     { path: '/services', label: 'Services' },
-    // { path: '/#portfolio', label: 'Portfolio' },
     { path: '/team', label: 'Team' },
     { path: '/faq', label: 'FAQ' },
     { path: '/contact', label: 'Contact' },
   ];
 
-  if (!mounted) {
-    return <header className="fixed-top w-100" style={{ height: '70px', backgroundColor: '#090a0f' }} />;
-  }
+  if (!mounted) return <header className="fixed-top w-100" style={{ height: '65px', background: '#020203' }} />;
 
   return (
     <>
@@ -135,45 +132,34 @@ export default function Header() {
               className="d-flex align-items-center justify-content-center rounded-3 p-1"
               style={{
                 background: 'linear-gradient(135deg, #a855f7, #ec4899, #f97316)',
-                width: '38px',
-                height: '38px'
+                width: '36px',
+                height: '36px'
               }}
             >
               <div className="bg-dark w-100 h-100 rounded-3 d-flex align-items-center justify-content-center">
-                <Image
-                  src="/icons/logo.png"
-                  alt="AWEBGROW Logo"
-                  width={22}
-                  height={22}
-                  className="object-fit-contain"
-                  priority
-                />
+                <Image src="/icons/logo.png" alt="AWEBGROW Logo" width={20} height={22} className="object-fit-contain" priority />
               </div>
             </div>
-            <span className="brand-text fs-4 text-uppercase">AWEBGROW</span>
+            <span className="text-gradient-purple fs-4 fw-extrabold text-uppercase tracking-tight">AWEBGROW</span>
           </Link>
 
-          {/* DESKTOP NAVIGATION (NAV CAPSULE) */}
-          <nav className="d-none d-lg-flex align-items-center nav-capsule gap-1">
+          {/* DESKTOP NAVIGATION (Pill Container) */}
+          <nav className="d-none d-lg-flex align-items-center nav-capsule">
             {navLinks.map((link) => {
               const isActive = pathname === link.path;
               return (
-                <Link
-                  key={link.path}
-                  href={link.path}
-                  className={`nav-link-custom ${isActive ? 'active' : ''}`}
-                >
+                <Link key={link.path} href={link.path} className={`nav-link-custom ${isActive ? 'active' : ''}`}>
                   {link.label}
                 </Link>
               );
             })}
           </nav>
 
-          {/* RIGHT SIDE ACTIONS */}
-          <div className="d-flex align-items-center gap-3">
+          {/* RIGHT ACTIONS */}
+          <div className="d-flex align-items-center gap-2 gap-md-3">
             
-            {/* SEARCH BOX */}
-            <div className="position-relative d-none d-md-block" ref={searchRef} style={{ width: '160px' }}>
+            {/* SEARCH */}
+            <div className="position-relative d-none d-md-block" ref={searchRef} style={{ width: '150px' }}>
               <div className="position-relative d-flex align-items-center">
                 <input
                   type="text"
@@ -183,20 +169,17 @@ export default function Header() {
                   onFocus={() => setIsSearchFocused(true)}
                   className="form-control search-input-dark"
                 />
-                <i className="bi bi-search position-absolute end-0 pe-3 text-secondary" style={{ fontSize: '0.75rem' }}></i>
+                <i className="bi bi-search position-absolute end-0 pe-3 text-secondary" style={{ fontSize: '0.72rem' }}></i>
               </div>
 
-              {/* SEARCH SUGGESTIONS */}
               {isSearchFocused && filteredSuggestions.length > 0 && (
-                <div className="position-absolute search-suggestions-box p-2 mt-2 z-3">
+                <div className="position-absolute bg-dark border p-2 mt-2 end-0 rounded-3 shadow-lg z-3" style={{ width: '220px' }}>
                   {filteredSuggestions.map((item, idx) => (
                     <div
                       key={idx}
-                      onClick={() => {
-                        router.push(item.path);
-                        setIsSearchFocused(false);
-                      }}
-                      className="suggestion-item"
+                      onClick={() => { router.push(item.path); setIsSearchFocused(false); }}
+                      className="p-2 small text-light rounded cursor-pointer"
+                      style={{ cursor: 'pointer', fontSize: '0.78rem' }}
                     >
                       {item.label}
                     </div>
@@ -205,79 +188,72 @@ export default function Header() {
               )}
             </div>
 
-            {/* USER LOGIN / PROFILE SECTION */}
+            {/* THEME SWITCHER */}
+            <button
+              onClick={toggleTheme}
+              className="btn btn-icon-glow rounded-circle d-flex align-items-center justify-content-center border-0"
+              style={{ width: '36px', height: '36px' }}
+              title="Toggle Theme"
+            >
+              <i className={`bi ${theme === 'dark' ? 'bi-sun-fill' : 'bi-moon-stars-fill'}`} style={{ fontSize: '0.9rem' }}></i>
+            </button>
+
+            {/* AUTH / USER AVATAR */}
             <div ref={dropdownRef} className="position-relative">
               {user ? (
                 <>
-                  <button
-                    onClick={() => setShowDropdown(!showDropdown)}
-                    className="btn p-0 border-0 d-flex align-items-center justify-content-center rounded-circle"
-                    style={{ width: '38px', height: '38px' }}
-                  >
-                    <Image
-                      src={user.profileImage || "/icons/logo.png"}
-                      alt="User Avatar"
-                      width={38}
-                      height={38}
-                      className="rounded-circle object-fit-cover border border-2 border-primary"
-                    />
+                  <button onClick={() => setShowDropdown(!showDropdown)} className="btn p-0 border-0 rounded-circle" style={{ width: '36px', height: '36px' }}>
+                    <Image src={user.profileImage || "/icons/logo.png"} alt="User Avatar" width={36} height={36} className="rounded-circle object-fit-cover border border-2 border-danger" />
                   </button>
 
-                  {/* USER DROPDOWN */}
                   {showDropdown && (
-                    <div
-                      className="position-absolute text-start shadow-lg p-2 mt-2 end-0"
-                      style={{
-                        backgroundColor: '#12131c',
-                        minWidth: '170px',
-                        borderRadius: '12px',
-                        border: '1px solid rgba(255,255,255,0.1)',
-                        zIndex: 99999
-                      }}
-                    >
-                      <div className="px-3 py-2 text-white fw-bold border-bottom border-secondary text-truncate" style={{ fontSize: '0.8rem' }}>
-                        {user.name}
-                      </div>
-                      <Link
-                        href="/dashboard"
-                        className="dropdown-item py-2 px-3 text-white small d-block text-decoration-none rounded-2 mt-1"
-                        onClick={() => setShowDropdown(false)}
-                        style={{ fontSize: '0.8rem' }}
-                      >
-                        <i className="bi bi-speedometer2 me-2"></i>Dashboard
+                    <div className="position-absolute bg-dark border text-start shadow-lg p-2 mt-2 end-0 rounded-3 z-3" style={{ minWidth: '160px' }}>
+                      <div className="px-3 py-1.5 fw-bold border-bottom text-truncate text-white" style={{ fontSize: '0.78rem' }}>{user.name}</div>
+                      <Link href="/dashboard" className="dropdown-item py-1.5 px-3 small text-white d-block rounded-2 mt-1" onClick={() => setShowDropdown(false)}>
+                        Dashboard
                       </Link>
-                      <button
-                        className="dropdown-item py-2 px-3 text-danger small d-block w-100 border-0 bg-transparent text-start fw-semibold rounded-2"
-                        onClick={handleLogout}
-                        style={{ fontSize: '0.8rem' }}
-                      >
-                        <i className="bi bi-box-arrow-right me-2"></i>Logout
+                      <button className="dropdown-item py-1.5 px-3 text-danger small w-100 border-0 bg-transparent text-start fw-semibold rounded-2" onClick={handleLogout}>
+                        Logout
                       </button>
                     </div>
                   )}
                 </>
               ) : (
-                /* LOGIN BUTTON */
                 <Link href="/login" className="btn-neon-cta">
-                  <i className="bi bi-person-fill"></i>
                   <span>Login</span>
                 </Link>
               )}
             </div>
 
             {/* MOBILE MENU TOGGLE */}
-            <button
-              onClick={() => setShowSidebar(!showSidebar)}
-              className="btn p-0 border-0 text-white d-lg-none ms-1"
-              aria-label="Toggle Navigation"
-            >
-              <i className={`bi ${showSidebar ? 'bi-x-lg' : 'bi-list'} fs-2`}></i>
+            <button onClick={() => setShowSidebar(true)} className="btn p-0 border-0 text-white d-lg-none ms-1">
+              <i className="bi bi-list fs-2"></i>
             </button>
 
           </div>
-
         </div>
       </header>
+
+      {/* MOBILE DRAWER */}
+      {showSidebar && (
+        <div className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 z-3" onClick={() => setShowSidebar(false)} />
+      )}
+      <div 
+        className="position-fixed top-0 start-0 h-100 bg-dark text-white p-4 d-flex flex-column z-3" 
+        style={{ width: '280px', transition: 'transform 0.3s ease', transform: showSidebar ? 'translateX(0)' : 'translateX(-100%)' }}
+      >
+        <div className="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
+          <span className="fw-bold fs-5 text-gradient-purple">AWEBGROW</span>
+          <button onClick={() => setShowSidebar(false)} className="btn-close btn-close-white" />
+        </div>
+        <div className="d-flex flex-column gap-3">
+          {navLinks.map((link) => (
+            <Link key={link.path} href={link.path} onClick={() => setShowSidebar(false)} className="text-decoration-none fw-semibold text-light fs-6 py-1">
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      </div>
     </>
   );
 }
