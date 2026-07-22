@@ -29,10 +29,21 @@ export const metadata = {
 
   description: "AWebGrow is a leading web development company in India offering custom website development, eCommerce solutions, mobile app development, UI/UX design, SEO services, digital marketing, and enterprise software development. Hire expert Next.js, React & MERN stack developers.",
 
-  // ✅ 500+ KEYWORDS FROM SEO DATABASE
   keywords: allKeywords,
 
-  authors: [{ name: "Hridesh Bharati", url: "https://github.com/hrideshbharati" }],
+  // ✅ Multiple Authors with variations
+  authors: [
+    { name: "Hridesh Bharati", url: "https://github.com/hrideshbharati" },
+    { name: "Hridesh" },
+    { name: "Hridesh Nichlaul" },
+    { name: "Hrideh Bharati" },
+    { name: "Sushant Rai" },
+    { name: "Sushant" },
+    { name: "Sushant Noida" },
+    { name: "Sushant Delhi" },
+    { name: "Sushil Kandu" },
+    { name: "Sushil" },
+  ],
   creator: "AWebGrow Team",
   publisher: "AWebGrow Digital Agency",
 
@@ -102,6 +113,7 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
+// ✅ Organization Schema with Noida + Nichlaul locations
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -113,17 +125,115 @@ const organizationSchema = {
     "https://linkedin.com/company/AWebGrow",
     "https://twitter.com/AWebGrow"
   ],
-  "description": "Leading web development company in India offering website, app development, UI/UX design, SEO and digital marketing services.",
+  "description": "Leading web development company in India offering website, app development, UI/UX design, SEO and digital marketing services. Serving clients in Noida, Nichlaul, and across India.",
+
+  // ✅ Founders
+  "founder": [
+    {
+      "@type": "Person",
+      "name": "Hridesh Bharati",
+      "url": "https://github.com/hrideshbharati"
+    },
+    {
+      "@type": "Person",
+      "name": "Hridesh"
+    },
+    {
+      "@type": "Person",
+      "name": "Hrideh Bharati"
+    },
+    {
+      "@type": "Person",
+      "name": "Sushant Rai"
+    },
+    {
+      "@type": "Person",
+      "name": "Sushil Kandu"
+    }
+  ],
+
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "+91-7267995307",
     "contactType": "customer service",
     "availableLanguage": ["English", "Hindi"]
   },
+
+  // ✅ Multiple Locations
+  "address": [
+    {
+      "@type": "PostalAddress",
+      "addressLocality": "Noida",
+      "addressRegion": "Uttar Pradesh",
+      "addressCountry": "IN"
+    },
+    {
+      "@type": "PostalAddress",
+      "addressLocality": "Nichlaul",
+      "addressRegion": "Uttar Pradesh",
+      "addressCountry": "IN"
+    }
+  ],
+
+  // ✅ Service Areas
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Noida"
+    },
+    {
+      "@type": "City",
+      "name": "Nichlaul"
+    },
+    {
+      "@type": "Country",
+      "name": "India"
+    }
+  ]
+};
+
+// ✅ LocalBusiness Schema for Noida
+const localBusinessSchemaNoida = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "AWebGrow - Web Development Company in Noida",
+  "url": BASE_URL,
+  "logo": `${BASE_URL}/images/logo.png`,
+  "description": "AWebGrow is a top web development company in Noida offering website development, mobile app development, SEO services, and digital marketing.",
+  "telephone": "+91-7267995307",
   "address": {
     "@type": "PostalAddress",
+    "addressLocality": "Noida",
+    "addressRegion": "Uttar Pradesh",
     "addressCountry": "IN"
-  }
+  },
+  "sameAs": [
+    "https://github.com/hrideshbharati",
+    "https://linkedin.com/company/AWebGrow",
+    "https://twitter.com/AWebGrow"
+  ]
+};
+
+// ✅ LocalBusiness Schema for Nichlaul
+const localBusinessSchemaNichlaul = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "AWebGrow - Web Development Company in Nichlaul",
+  "url": BASE_URL,
+  "logo": `${BASE_URL}/images/logo.png`,
+  "description": "AWebGrow is a trusted web development company in Nichlaul offering custom website design, app development, SEO, and digital marketing solutions.",
+  "telephone": "+91-7267995307",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Nichlaul",
+    "addressRegion": "Uttar Pradesh",
+    "addressCountry": "IN"
+  },
+  "sameAs": [
+    "https://github.com/hrideshbharati",
+    "https://linkedin.com/company/AWebGrow",
+    "https://twitter.com/AWebGrow"
+  ]
 };
 
 export default function RootLayout({
@@ -136,15 +246,22 @@ export default function RootLayout({
       <head>
         <meta name="google-site-verification" content="Zce3KX6aOJA6UHKpJVkl9JUMIFTLtLankJbNCvTT0Rw" />
 
+        {/* ✅ All 3 Schemas */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([
+              organizationSchema,
+              localBusinessSchemaNoida,
+              localBusinessSchemaNichlaul
+            ])
+          }}
         />
 
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/x-icon" href="/icons/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body

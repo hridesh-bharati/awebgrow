@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-
+// src\app\manifest.ts
 export default function manifest(): MetadataRoute.Manifest {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://awebgrowhb.com';
   
