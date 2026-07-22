@@ -4,10 +4,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "aos/dist/aos.css";
 import "./globale.css";
-// src\app\layout.tsx
 import { Toaster } from 'sonner';
-import { Viewport } from 'next';
+import type { Viewport } from 'next';
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
+
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
@@ -15,33 +15,55 @@ const inter = Inter({
   display: 'swap',
 });
 
-// Single Fallback URL Variable for safety
-const FALLBACK_URL = 'https://webgrowhb.vercel.app';
+const FALLBACK_URL = 'https://awebgrowhb.com';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL;
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL),
+  metadataBase: new URL(BASE_URL),
+  
+  // ✅ IMPROVED TITLE for Indian market
   title: {
-    default: "AWebGrow | Next-Gen Web & App Development Agency",
+    default: "Web Development Company India | Website & App Development Services | AWebGrow",
     template: "%s | AWebGrow"
   },
-  manifest: "/manifest.json",
-  description:
-    "AWebGrow builds high-performance custom web applications, mobile apps, and scalable digital tech ecosystems. Explore our flexible software solution packages.",
+  
+  // ✅ IMPROVED DESCRIPTION with keywords
+  description: "AWebGrow is a leading web development company in India offering custom website development, eCommerce solutions, mobile app development, UI/UX design, SEO services, and enterprise software development. Hire expert Next.js & MERN stack developers.",
+  
+  // ✅ EXPANDED KEYWORDS with local SEO
   keywords: [
-    "AWebGrow", "AWebGrow India", "Next-Gen Web Applications",
-    "Full-Stack Software Development", "Mobile App Development Agency",
-    "UI/UX Design Services", "Affordable Website Packages",
-    "MERN Stack Developers", "Next.js Development Agency",
-    "Hridesh Bharati", "Web Development Agency India"
+    "web development company India",
+    "website development services",
+    "mobile app development agency",
+    "Next.js developers India",
+    "MERN stack development",
+    "React developers India",
+    "eCommerce website development",
+    "UI/UX design services",
+    "SEO company India",
+    "software development company",
+    "digital agency India",
+    "web design company",
+    "custom website development",
+    "AWebGrow India",
+    "Hridesh Bharati",
+    "affordable website packages",
+    "website developer India",
+    "web agency India"
   ],
+  
   authors: [{ name: "Hridesh Bharati", url: "https://github.com/hrideshbharati" }],
   creator: "AWebGrow Team",
   publisher: "AWebGrow Digital Agency",
+  
+  manifest: "/manifest.json",
+  
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
+  
   robots: {
     index: true,
     follow: true,
@@ -53,41 +75,46 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
+  
+  // ✅ FIXED VERIFICATION - Direct code
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || "gma_OXLu0vgVhM9yr9T2fn7qO1yM2nzeiQpDAIahuBs",
+    google: "Zce3KX6aOJA6UHKpJVkl9JUMIFTLtLankJbNCvTT0Rw",
   },
+  
+  // ✅ IMPROVED OPEN GRAPH
   openGraph: {
-    title: "AWebGrow | Next-Gen Web & App Development Agency",
-    description:
-      "Transform your business with high-performance custom websites, Android/iOS apps, and enterprise-grade tech stacks.",
-    url: process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL,
+    title: "Web Development Company India | Website & App Development | AWebGrow",
+    description: "Transform your business with India's leading web development company. Custom websites, mobile apps, eCommerce solutions & digital marketing services.",
+    url: BASE_URL,
     siteName: "AWebGrow",
     images: [
       {
         url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "AWebGrow Digital Agency",
+        alt: "AWebGrow - Leading Web Development Company in India",
       },
     ],
-    locale: "en_US",
+    locale: "en_IN",
     type: "website",
   },
+  
+  // ✅ IMPROVED TWITTER CARD
   twitter: {
     card: "summary_large_image",
-    title: "AWebGrow | Next-Gen Web & App Development Agency",
-    description:
-      "Accelerate your digital transformation with AWebGrow's professional developers.",
+    title: "Web Development Company India | AWebGrow",
+    description: "India's trusted web & app development agency. Custom solutions for startups & enterprises.",
     images: ["/images/twitter-image.jpg"],
     creator: "@AWebGrow",
   },
+  
   alternates: {
-    canonical: process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL,
+    canonical: BASE_URL,
   },
+  
   category: "technology",
 };
 
-// Viewport layout ke andar hi rakhna safe aur clean hai
 export const viewport: Viewport = {
   themeColor: '#00378a',
   colorScheme: 'light',
@@ -98,6 +125,31 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
+// ✅ ORGANIZATION SCHEMA for Root Layout
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "AWebGrow",
+  "url": BASE_URL,
+  "logo": `${BASE_URL}/images/logo.png`,
+  "sameAs": [
+    "https://github.com/hrideshbharati",
+    "https://linkedin.com/company/AWebGrow",
+    "https://twitter.com/AWebGrow"
+  ],
+  "description": "Leading web development company in India offering website, app development, UI/UX design, and digital marketing services.",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+91-7267995307",
+    "contactType": "customer service",
+    "availableLanguage": ["English", "Hindi"]
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "IN"
+  }
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -105,6 +157,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
+      <head>
+        {/* ✅ GOOGLE VERIFICATION HTML FILE FALLBACK */}
+        <meta name="google-site-verification" content="Zce3KX6aOJA6UHKpJVkl9JUMIFTLtLankJbNCvTT0Rw" />
+        
+        {/* ✅ STRUCTURED DATA */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        
+        {/* ✅ FAVICONS */}
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body
         style={{ fontFamily: "var(--font-inter), sans-serif" }}
         suppressHydrationWarning
@@ -113,7 +182,6 @@ export default function RootLayout({
         <PWAInstallPrompt />
         <Toaster position="top-center" richColors closeButton />
         
-        {/* Bootstrap - CDN Loading fallback parameters removed to avoid integrity mismatch */}
         <Script 
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
           strategy="afterInteractive"

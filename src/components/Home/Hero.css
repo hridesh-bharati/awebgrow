@@ -1,39 +1,36 @@
 /* ========================================================= */
-/* HERO SECTION CORE STYLES - FIXED CLIPPING & SPACING */
+/* HERO SECTION CORE STYLES - ZERO CLIPPING & NO SCROLL BUG */
 /* ========================================================= */
 
 .hero-section {
   background-color: #090a0f;
-  margin-top: 65px; /* Navbar space */
-  min-height: calc(100vh - 65px);
-  display: flex;
-  align-items: center;
+  margin-top: 65px;
   position: relative;
-  /* CRITICAL FIX: Overflow hidden hatakar visible kiya taaki nodes katein nahi */
-  overflow: visible !important; 
-  padding-top: 15px;
-  padding-bottom: 25px;
+  /* CRITICAL FIX: Overflow visible taaki icons na katein aur layout scroll na kare */
+  overflow: visible !important;
+  padding-top: 25px;
+  padding-bottom: 40px;
 }
 
 /* Background Glow Effects */
 .glow-sphere-1 {
-  width: 400px;
-  height: 400px;
+  width: 450px;
+  height: 450px;
   background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
   top: -5%;
   left: -5%;
-  filter: blur(60px);
+  filter: blur(70px);
   pointer-events: none;
   position: absolute;
 }
 
 .glow-sphere-2 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.18) 0%, rgba(0, 0, 0, 0) 70%);
   bottom: 0%;
   right: -5%;
-  filter: blur(60px);
+  filter: blur(70px);
   pointer-events: none;
   position: absolute;
 }
@@ -86,7 +83,7 @@
   font-size: 0.85rem;
   backdrop-filter: blur(8px);
   color: #ffffff !important;
-  padding: 8px 20px;
+  padding: 9px 22px;
   border-radius: 50px;
   transition: all 0.3s ease;
   text-decoration: none;
@@ -102,14 +99,14 @@
 }
 
 /* ========================================================= */
-/* ORBIT ANIMATION & NODE STYLES - FIXED SIZING */
+/* CENTER LOGO & FULL UNCLIPPED ORBIT SYSTEM */
 /* ========================================================= */
 
 .orbit-wrapper {
   position: relative;
   width: 100%;
-  max-width: 320px; /* Reduced container to prevent overflowing screen */
-  height: 320px;
+  max-width: 440px;  
+  height: 450px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -117,17 +114,26 @@
   overflow: visible !important;
 }
 
-.center-rocket-box {
-  width: 95px;
-  height: 95px;
-  background: linear-gradient(135deg, #a855f7, #ec4899, #f97316);
-  box-shadow: 0 0 35px rgba(236, 72, 153, 0.5);
-  border-radius: 22px;
+/* Center Brand Image Frame (Slightly Bigger Picture) */
+.center-brand-box {
+  width: 175px; /* Increased image frame size */
+  height: 175px;
+  border-radius: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
   position: absolute;
+  overflow: hidden;
+  box-shadow: 0 0 45px rgba(168, 85, 247, 0.5);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background: #090a0f;
+}
+
+.brand-image-fit {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 @keyframes spinOrbit {
@@ -141,12 +147,12 @@
 }
 
 .orbit-circle-path {
-  width: 230px; /* Perfectly fitting radius */
-  height: 230px;
+  width: 320px; /* Perfect orbit diameter for 175px central box */
+  height: 320px;
   position: absolute;
   border-radius: 50%;
   border: 1px dashed rgba(255, 255, 255, 0.2);
-  animation: spinOrbit 22s linear infinite;
+  animation: spinOrbit 24s linear infinite;
   z-index: 3;
   overflow: visible !important;
 }
@@ -157,14 +163,14 @@
 
 .orbit-node-item {
   position: absolute;
-  width: 52px;
-  height: 52px;
+  width: 60px; /* Node Box */
+  height: 60px;
   background: #12131c;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: -26px; /* Offset to align exactly on orbit circle */
+  margin: -30px;
   cursor: pointer;
   transition: transform 0.2s ease;
   z-index: 4;
@@ -179,14 +185,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  animation: counterSpin 22s linear infinite;
+  animation: counterSpin 24s linear infinite;
 }
 
 .orbit-circle-path:hover .orbit-node-inner {
   animation-play-state: paused;
 }
 
-/* 6 Items Exact Placement */
+/* 6 Orbit Positions around circle */
 .node-pos-1 { top: 0%; left: 50%; }
 .node-pos-2 { top: 25%; left: 93.3%; }
 .node-pos-3 { top: 75%; left: 93.3%; }
@@ -201,9 +207,9 @@
 .stat-card-glow {
   background: rgba(18, 19, 28, 0.7);
   backdrop-filter: blur(12px);
-  border-radius: 14px;
+  border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 10px 8px; /* Compact padding to keep everything inside 100vh */
+  padding: 14px 10px;
   transition: all 0.3s ease;
 }
 
@@ -213,25 +219,23 @@
 }
 
 .stat-number {
-  font-size: 1.35rem;
+  font-size: 1.45rem;
   font-weight: 800;
   margin-bottom: 0;
 }
 
-/* Mobile Adjustments */
 @media (max-width: 991.98px) {
-  .hero-section {
-    min-height: auto;
-    padding-top: 20px;
-    padding-bottom: 30px;
-  }
   .orbit-wrapper {
-    max-width: 280px;
-    height: 280px;
-    margin-top: 15px;
+    max-width: 320px;
+    height: 320px;
+    margin-top: 20px;
   }
   .orbit-circle-path {
-    width: 200px;
-    height: 200px;
+    width: 240px;
+    height: 240px;
+  }
+  .center-brand-box {
+    width: 130px;
+    height: 130px;
   }
 }

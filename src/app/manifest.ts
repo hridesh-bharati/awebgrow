@@ -1,14 +1,24 @@
 import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://awebgrowhb.com';
+  
   return {
-    name: "WebGrow Digital Agency",
+    name: "AWebGrow - Web Development Company India",
     short_name: "AWebGrow",
-    description: "Grow your business digitally with WebGrow",
+    description: "Leading web development company in India offering website, app development & digital marketing services.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
     theme_color: "#00378a",
+    orientation: "portrait-primary",
+    scope: "/",
+    lang: "en-IN",
+    categories: ["business", "development", "technology"],
+    
+    // ✅ PREFER RELATED APPLICATIONS (optional)
+    prefer_related_applications: false,
+    
     icons: [
       {
         src: "/icons/icon-192x192.png",
@@ -41,24 +51,27 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: "any",
       },
       {
-        src: "/icons/favicon.ico", 
+        src: "/icons/favicon.ico",
         sizes: "48x48",
         type: "image/x-icon",
-        purpose: "any",
       },
     ],
+    
+    // ✅ SCREENSHOTS for PWA install prompt
     screenshots: [
       {
         src: "/screenshots/mobile.png",
-        sizes: "1080x2400", 
+        sizes: "1080x2400",
         type: "image/png",
         form_factor: "narrow",
+        label: "AWebGrow mobile experience",
       },
       {
         src: "/screenshots/desktop.png",
-        sizes: "1920x1080", 
+        sizes: "1920x1080",
         type: "image/png",
         form_factor: "wide",
+        label: "AWebGrow desktop experience",
       },
     ],
   };
