@@ -3,13 +3,34 @@
 import { useState, useEffect } from "react";
 import { ref, remove } from "firebase/database";
 import { rtdb } from "@/lib/firebase";
-import { toast, Toaster } from "sonner"; 
+import { toast, Toaster } from "sonner";
 
-const ADMIN_EMAILS = [
+const ADMIN_EMAILS = new Set([
   "sushantkumar867695@gmail.com",
   "hridesh027@gmail.com",
   "kandusushil9@gmail.com"
-];
+]);
+
+// Helper styles (DRY Principle)
+const STYLES = {
+  card: {
+    backgroundColor: 'var(--bg-card)',
+    borderColor: 'var(--border-subtle)',
+    boxShadow: '0 10px 30px var(--shadow-color)'
+  },
+  pillInput: {
+    maxWidth: "260px",
+    backgroundColor: 'var(--bg-pill)',
+    borderColor: 'var(--border-subtle)',
+    color: 'var(--text-primary)'
+  },
+  headerRow: {
+    borderColor: 'var(--border-subtle)',
+    backgroundColor: 'var(--bg-pill)',
+    fontSize: '0.75rem',
+    letterSpacing: '0.05em'
+  }
+};
 
 export default function UserDirectory({ users = [] }) {
   const [search, setSearch] = useState("");
@@ -19,15 +40,17 @@ export default function UserDirectory({ users = [] }) {
     setLocalUsers(users);
   }, [users]);
 
+  const searchLower = search.toLowerCase();
   const filtered = localUsers.filter(
     (u) =>
-      u.name?.toLowerCase().includes(search.toLowerCase()) ||
-      u.email?.toLowerCase().includes(search.toLowerCase())
+      u.name?.toLowerCase().includes(searchLower) ||
+      u.email?.toLowerCase().includes(searchLower)
   );
 
   const handleDelete = async (user) => {
     const userEmailClean = user.email?.toLowerCase();
-    if (ADMIN_EMAILS.includes(userEmailClean)) {
+    
+    if (ADMIN_EMAILS.has(userEmailClean)) {
       toast.error("Admin account cannot be deleted.");
       return;
     }
@@ -47,87 +70,109 @@ export default function UserDirectory({ users = [] }) {
   };
 
   return (
-    <div className="card border-0 shadow-sm rounded-3 bg-white">
+    <div className="rounded-4 border overflow-hidden text-theme-primary position-relative z-2" style={STYLES.card}>
       <Toaster position="top-right" richColors />
 
-      <div className="p-4 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-2">
+      {/* Header & Search Bar */}
+      <div className="p-4 border-bottom d-flex justify-content-between align-items-center flex-wrap gap-3" style={{ borderColor: 'var(--border-subtle)' }}>
         <div>
-          <h5 className="fw-bold m-0">User System Registry</h5>
-          <span className="text-secondary small">Realtime Database User Management</span>
+          <h5 className="fw-black m-0 text-theme-primary" style={{ fontWeight: 800 }}>User System Registry</h5>
+          <span className="text-theme-secondary small" style={{ fontWeight: 500 }}>Realtime Database User Management</span>
         </div>
 
         <input
           type="text"
           placeholder="Search user..."
-          className="form-control border-secondary-subtle"
-          style={{ maxWidth: "250px" }}
+          className="form-control text-theme-primary border rounded-pill px-3 py-2"
+          style={STYLES.pillInput}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
 
-      <div className="table-responsive">
-        <table className="table table-hover align-middle m-0">
-          <thead className="table-light text-secondary small">
-            <tr>
-              <th className="px-4">AVATAR</th>
-              <th>NAME</th>
-              <th>EMAIL</th>
-              <th>UID</th>
-              <th>ROLE</th>
-              <th className="text-end px-4">ACTION</th>
-            </tr>
-          </thead>
+      {/* Custom Theme-Aware Table */}
+      <div className="w-100 overflow-auto">
+        <div style={{ minWidth: "600px" }}>
 
-          <tbody>
-            {filtered.length > 0 ? (
-              filtered.map((u) => {
-                const isAdmin = ADMIN_EMAILS.includes(u.email?.toLowerCase());
+          {/* Table Header (UID Removed) */}
+          <div className="d-flex align-items-center px-4 py-3 border-bottom text-theme-secondary fw-bold small" style={STYLES.headerRow}>
+            <div style={{ width: '15%' }}>AVATAR</div>
+            <div style={{ width: '30%' }}>NAME</div>
+            <div style={{ width: '35%' }}>EMAIL</div>
+            <div style={{ width: '12%' }}>ROLE</div>
+            <div style={{ width: '8%' }} className="text-end">ACTION</div>
+          </div>
 
-                return (
-                  <tr key={u.uid || u.email}>
-                    <td className="px-4">
-                      <img
-                        src={u.profileImage || "/images/default-avatar.jpg"}
-                        alt="avatar"
-                        className="rounded-circle border"
-                        style={{ width: "40px", height: "40px", objectFit: "cover" }}
-                      />
-                    </td>
-                    <td className="fw-medium text-dark">{u.name || "Anonymous User"}</td>
-                    <td className="text-secondary">{u.email}</td>
-                    <td>
-                      <code className="bg-light border text-dark rounded px-2 py-1 small">{u.uid}</code>
-                    </td>
-                    <td>
-                      <span className={`badge px-2 py-1.5 fw-normal rounded ${isAdmin ? "bg-danger-subtle text-danger border border-danger-subtle" : "bg-success-subtle text-success border border-success-subtle"}`}>
-                        {isAdmin ? "System Admin" : "Active Client"}
-                      </span>
-                    </td>
-                    <td className="text-end px-4">
-                      {!isAdmin && (
-                        <button className="btn btn-sm btn-outline-danger px-3" onClick={() => handleDelete(u)}>
-                          Delete
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
-              <tr>
-                <td colSpan="6" className="text-center py-5 text-secondary">No users found</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+          {/* Table Body */}
+          {filtered.length > 0 ? (
+            filtered.map((u, index) => {
+              const isAdmin = ADMIN_EMAILS.has(u.email?.toLowerCase());
+
+              return (
+                <div
+                  key={u.uid || u.email || index}
+                  className="d-flex align-items-center px-4 py-3 border-bottom text-theme-primary"
+                  style={{
+                    borderColor: 'var(--border-subtle)',
+                    transition: 'background-color 0.2s ease',
+                    fontSize: '0.88rem'
+                  }}
+                >
+                  {/* Avatar */}
+                  <div style={{ width: '15%' }}>
+                    <img
+                      src={u.profileImage || "/images/default-avatar.jpg"}
+                      alt="avatar"
+                      className="rounded-circle border"
+                      style={{ width: "38px", height: "38px", objectFit: "cover", borderColor: 'var(--border-subtle)' }}
+                    />
+                  </div>
+
+                  {/* Name */}
+                  <div style={{ width: '30%' }} className="fw-bold text-theme-primary text-truncate pe-2">
+                    {u.name || "Anonymous User"}
+                  </div>
+
+                  {/* Email */}
+                  <div style={{ width: '35%' }} className="text-theme-secondary text-truncate pe-2">
+                    {u.email || "No Email"}
+                  </div>
+
+                  {/* Role */}
+                  <div style={{ width: '12%' }}>
+                    <span
+                      className={`badge px-2.5 py-1.5 fw-bold rounded-pill text-white ${
+                        isAdmin ? "bg-danger bg-opacity-20" : "bg-success bg-opacity-20"
+                      }`}
+                      style={{ fontSize: '0.68rem' }}
+                    >
+                      {isAdmin ? "System Admin" : "Active Client"}
+                    </span>
+                  </div>
+
+                  {/* Action */}
+                  <div style={{ width: '8%' }} className="text-end">
+                    {!isAdmin && (
+                      <button
+                        className="btn btn-sm btn-outline-danger rounded-pill px-2.5 py-1 fw-bold"
+                        style={{ fontSize: '0.72rem' }}
+                        onClick={() => handleDelete(u)}
+                      >
+                        Delete
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <div className="text-center py-5 text-theme-secondary fw-medium">
+              No users found in database registry.
+            </div>
+          )}
+
+        </div>
       </div>
-
-      <style jsx>{`
-        .table th, .table td {
-          padding: 14px 12px;
-        }
-      `}</style>
     </div>
   );
 }

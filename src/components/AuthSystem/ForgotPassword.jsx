@@ -37,26 +37,31 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center w-100 bg-light" style={{ minHeight: '100vh', padding: '0px' }}>
+    <div className="d-flex justify-content-center align-items-center w-100 position-relative overflow-hidden shell-wrapper" style={{ minHeight: '100vh', backgroundColor: '#020205', padding: '10px' }}>
       
-      {/* Pure Native App Feel Layout Engine Styles */}
+      {/* AMBIENT BACKGROUND NEON SPHERES */}
+      <div className="position-absolute rounded-circle pointer-events-none glow-sphere-1" style={{ width: '500px', height: '500px', top: '-10%', left: '-5%', zIndex: 0, background: 'radial-gradient(circle, rgba(255, 0, 128, 0.15) 0%, transparent 70%)', filter: 'blur(80px)' }} />
+      <div className="position-absolute rounded-circle pointer-events-none glow-sphere-2" style={{ width: '500px', height: '500px', bottom: '-10%', right: '-5%', zIndex: 0, background: 'radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%)', filter: 'blur(80px)' }} />
+
+      {/* Cyberpunk Theme Stylesheet */}
       <style dangerouslySetInnerHTML={{__html: `
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
         .custom-card {
           width: 100% !important;
-          border-radius: 0px;
+          max-width: 520px !important;
+          border-radius: 24px !important;
+          background-color: var(--bg-card, rgba(15, 16, 26, 0.85)) !important;
+          border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+          backdrop-filter: blur(20px);
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6) !important;
+          z-index: 2;
         }
         
-        /* Desktop/PC View Layout Config */
         @media (min-width: 768px) {
           .custom-card {
-            width: 60% !important;
-            max-width: 900px !important;
-            border-radius: 40px !important;
-            min-height: auto !important;
-            box-shadow: 0 15px 35px rgba(59, 0, 168, 0.08) !important;
+            border-radius: 32px !important;
           }
           .pc-label-align {
             text-align: left !important;
@@ -72,48 +77,49 @@ export default function ForgotPassword() {
         }
         .input-icon-wrapper svg {
           position: absolute;
-          left: 15px;
-          color: #6c757d;
+          left: 16px;
+          color: var(--text-secondary, #9ca3af);
           font-size: 1.1rem;
           z-index: 10;
         }
         .input-icon-wrapper .form-control {
-          padding-left: 45px !important;
+          padding-left: 48px !important;
+          background-color: var(--bg-pill, rgba(255, 255, 255, 0.03)) !important;
+          color: var(--text-primary, #ffffff) !important;
+          border-color: var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
         }
         .input-icon-wrapper .form-control:focus {
-          border-color: #3b00a8 !important;
-          box-shadow: 0 0 0 0.25rem rgba(59, 0, 168, 0.15) !important;
+          border-color: #a855f7 !important;
+          box-shadow: 0 0 0 0.25rem rgba(168, 85, 247, 0.2) !important;
+          background-color: var(--bg-pill, rgba(255, 255, 255, 0.05)) !important;
+        }
+        .input-icon-wrapper .form-control::placeholder {
+          color: rgba(255, 255, 255, 0.3);
         }
       `}} />
 
       {/* Main Structural Native Canvas Container */}
-      <div className="position-relative bg-white border-0 overflow-hidden custom-card d-flex flex-column">
+      <div className="position-relative overflow-hidden custom-card d-flex flex-column my-4">
         
-        {/* Top Header Section with True Native SVG Smooth Path */}
-        <div className="position-relative w-100" style={{ height: '180px', flexShrink: 0 }}>
-          <div className="position-absolute top-0 start-0 w-100 h-100" style={{ zIndex: 1 }}>
-            <svg viewBox="0 0 500 180" preserveAspectRatio="none" style={{ height: '100%', width: '100%' }}>
-              <path d="M0,0 L500,0 L500,110 C380,185 120,85 0,160 Z" style={{ stroke: 'none', fill: '#3b00a8' }}></path>
-            </svg>
-          </div>
-
-          <div className="position-absolute w-100 h-100 d-flex flex-column justify-content-center px-4" style={{ zIndex: 2 }}>
-            <h1 className="fw-bold text-white m-0" style={{ fontSize: '2.3rem', letterSpacing: '-0.5px' }}>Reset Password</h1>
-            <p className="text-white-50 small mt-1 mb-0" style={{ fontSize: '0.95rem' }}>Enter your registered email to receive a recovery link</p>
+        {/* Top Header Section with Neon Gradient Accent */}
+        <div className="position-relative w-100 py-4 px-4 border-bottom" style={{ borderColor: 'var(--border-subtle)', background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(255, 0, 128, 0.05) 100%)' }}>
+          <div className="d-flex flex-column justify-content-center">
+            <h1 className="fw-black text-white m-0" style={{ fontSize: '2rem', fontWeight: 900, letterSpacing: '-0.5px' }}>Reset Password</h1>
+            <p className="text-theme-secondary small mt-1 mb-0" style={{ fontSize: '0.9rem', color: '#9ca3af', fontWeight: 500 }}>Enter your registered email to receive a recovery link</p>
           </div>
         </div>
 
         {/* Content Operations Body */}
-        <div className="px-4 pt-5 pb-4 flex-grow-1 no-scrollbar" style={{ zIndex: 3 }}>
+        <div className="px-4 pt-4 pb-4 flex-grow-1 no-scrollbar">
           
           <form onSubmit={handleReset} className="d-flex flex-column gap-3">
             
             {/* Email Field Row */}
-            <div className="row align-items-center g-2 g-md-3 mx-0">
-              <div className="col-12 col-md-3 px-0 pc-label-align">
-                <label className="form-label small fw-bold text-dark mb-0">Email Address</label>
+            <div className="row align-items-center g-2 mx-0">
+              <div className="col-12 px-0 mb-1">
+                <label className="form-label small fw-bold text-theme-secondary" style={{ color: '#9ca3af' }}>Email Address</label>
               </div>
-              <div className="col-12 col-md-9 px-0">
+              <div className="col-12 px-0">
                 <div className="input-icon-wrapper">
                   <FiMail />
                   <input 
@@ -121,7 +127,7 @@ export default function ForgotPassword() {
                     placeholder="your-email@example.com" 
                     className="form-control" 
                     value={email}
-                    style={{ height: '50px', borderRadius: '10px', border: '1px solid #ced4da', fontSize: '0.95rem' }} 
+                    style={{ height: '50px', borderRadius: '12px', fontSize: '0.9rem' }} 
                     required 
                     onChange={e => setEmail(e.target.value)} 
                   />
@@ -130,17 +136,19 @@ export default function ForgotPassword() {
             </div>
 
             {/* Submit Action Button */}
-            <div className="row mt-4 mx-0">
-              <div className="col-12 offset-md-3 col-md-9 px-0">
+            <div className="row mt-3 mx-0">
+              <div className="col-12 px-0">
                 <button 
                   type="submit" 
-                  className="btn d-flex align-items-center justify-content-center w-100 rounded-pill fw-bold text-white" 
+                  className="btn d-flex align-items-center justify-content-center w-100 rounded-pill fw-black text-white" 
                   style={{ 
                     height: '50px', 
-                    backgroundColor: '#F59E0B', 
+                    background: 'linear-gradient(135deg, #a855f7 0%, #ff0080 100%)',
                     border: 'none',
                     fontSize: '1rem',
-                    letterSpacing: '0.5px'
+                    fontWeight: 800,
+                    letterSpacing: '0.5px',
+                    boxShadow: '0 0 20px rgba(168, 85, 247, 0.4)'
                   }} 
                   disabled={loading}
                 >
@@ -150,18 +158,10 @@ export default function ForgotPassword() {
             </div>
           </form>
 
-          <div className="text-center mt-5">
-            <Link href="/login" className="small fw-semibold text-primary text-decoration-none">Back to Login</Link>
+          <div className="text-center mt-4 mb-2">
+            <Link href="/login" className="small fw-bold text-decoration-none" style={{ color: '#00f2fe' }}>Back to Login</Link>
           </div>
 
-        </div>
-
-        {/* Bottom Double Wave Fluid Graphics */}
-        <div className="position-relative w-100 mt-auto" style={{ height: '75px', flexShrink: 0, zIndex: 1 }}>
-          <svg viewBox="0 0 500 100" preserveAspectRatio="none" className="position-absolute bottom-0 start-0 w-100 h-100">
-            <path d="M0,45 C150,95 350,15 500,55 L500,100 L0,100 Z" style={{ stroke: 'none', fill: '#DCEBFE' }}></path>
-            <path d="M0,65 C150,25 300,95 500,45 L500,100 L0,100 Z" style={{ stroke: 'none', fill: '#2563EB' }}></path>
-          </svg>
         </div>
 
       </div>

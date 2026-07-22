@@ -8,6 +8,7 @@ import "./theme.css";
 import { Toaster } from 'sonner';
 import type { Viewport } from 'next';
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
+import VisitorTracker from "@/components/VisitorTracker"; // ✅ Added Visitor Tracker component
 import { allKeywords } from "@/app/data/seo-keywords";
 
 const inter = Inter({
@@ -32,12 +33,11 @@ export const metadata = {
 
   keywords: allKeywords,
 
-  // ✅ Multiple Authors with variations
   authors: [
-    { name: "Hridesh Bharati", url: "https://github.com/hrideshbharati" },
-    { name: "Hridesh" },
-    { name: "Hridesh Nichlaul" },
-    { name: "Hrideh Bharati" },
+    { name: "hridesh", url: "https://github.com/hrideshbharati" },
+    { name: "hridesh" },
+    { name: "hridesh Nichlaul" },
+    { name: "hrideh Bharati" },
     { name: "Sushant Rai" },
     { name: "Sushant" },
     { name: "Sushant Noida" },
@@ -114,7 +114,6 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
-// ✅ Organization Schema with Noida + Nichlaul locations
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -128,20 +127,19 @@ const organizationSchema = {
   ],
   "description": "Leading web development company in India offering website, app development, UI/UX design, SEO and digital marketing services. Serving clients in Noida, Nichlaul, and across India.",
 
-  // ✅ Founders
   "founder": [
     {
       "@type": "Person",
-      "name": "Hridesh Bharati",
+      "name": "hridesh",
       "url": "https://github.com/hrideshbharati"
     },
     {
       "@type": "Person",
-      "name": "Hridesh"
+      "name": "hridesh"
     },
     {
       "@type": "Person",
-      "name": "Hrideh Bharati"
+      "name": "hrideh Bharati"
     },
     {
       "@type": "Person",
@@ -160,7 +158,6 @@ const organizationSchema = {
     "availableLanguage": ["English", "Hindi"]
   },
 
-  // ✅ Multiple Locations
   "address": [
     {
       "@type": "PostalAddress",
@@ -176,7 +173,6 @@ const organizationSchema = {
     }
   ],
 
-  // ✅ Service Areas
   "areaServed": [
     {
       "@type": "City",
@@ -193,7 +189,6 @@ const organizationSchema = {
   ]
 };
 
-// ✅ LocalBusiness Schema for Noida
 const localBusinessSchemaNoida = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
@@ -215,7 +210,6 @@ const localBusinessSchemaNoida = {
   ]
 };
 
-// ✅ LocalBusiness Schema for Nichlaul
 const localBusinessSchemaNichlaul = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
@@ -247,7 +241,6 @@ export default function RootLayout({
       <head>
         <meta name="google-site-verification" content="Zce3KX6aOJA6UHKpJVkl9JUMIFTLtLankJbNCvTT0Rw" />
 
-        {/* ✅ All 3 Schemas */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -269,6 +262,7 @@ export default function RootLayout({
         style={{ fontFamily: "var(--font-inter), sans-serif" }}
         suppressHydrationWarning
       >
+        <VisitorTracker /> {/* ✅ Active Live Visitor Tracking Initialized */}
         {children}
         <PWAInstallPrompt />
         <Toaster position="top-center" richColors closeButton />

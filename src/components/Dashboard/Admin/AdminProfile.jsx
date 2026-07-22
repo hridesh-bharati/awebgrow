@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { rtdb, auth } from '@/lib/firebase'; 
 import { ref, onValue, update } from 'firebase/database';
@@ -30,6 +30,9 @@ export default function AdminProfile({ session }) {
   const [showResetModal, setShowResetModal] = useState(false);
   const [resetSent, setResetSent] = useState(false);
 
+  // Hidden File Input Ke Liye Ref
+  const fileInputRef = useRef(null);
+
   const defaultAdminUid = "hridesh027_gmail_com"; 
   const activeUid = session?.uid || defaultAdminUid;
 
@@ -40,7 +43,7 @@ export default function AdminProfile({ session }) {
     const unsubscribe = onValue(userRef, (snapshot) => {
       const data = snapshot.val();
       
-      setName(data?.name || session?.name || 'Hridesh');
+      setName(data?.name || session?.name || 'hridesh');
       setEmail(data?.email || session?.email || 'hridesh027@gmail.com');
       setPhone(data?.phone || session?.phone || '');
       setProfileImage(data?.profileImage || session?.profileImage || "/images/default-avatar.jpg");
@@ -51,15 +54,31 @@ export default function AdminProfile({ session }) {
     return () => unsubscribe();
   }, [activeUid, session]);
 
+  // Image Upload Handler (Base64 Conversion)
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) { // 2MB Limit Check
+        alert("Image size should be less than 2MB");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSave = async () => {
     setSaveLoading(true);
     try {
       await update(ref(rtdb, `users/${activeUid}`), { 
         name: name,
-        phone: phone.trim()
+        phone: phone.trim(),
+        profileImage: profileImage // Database me Profile Image Save ki ja rahi hai
       });
       setIsEditing(false);
-      // Show success feedback
     } catch (error) {
       alert("Update failed!");
     } finally {
@@ -86,46 +105,58 @@ export default function AdminProfile({ session }) {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center align-items-center vh-100 bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="d-flex justify-content-center align-items-center vh-100 bg-theme-main text-theme-primary">
         <div className="text-center">
           <div className="spinner-border text-primary" style={{ width: '3rem', height: '3rem' }} role="status">
             <span className="visually-hidden">Loading...</span>
           </div>
-          <p className="mt-3 text-muted">Loading profile...</p>
+          <p className="mt-3 text-theme-secondary fw-semibold">Loading profile...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container py-5">
+    <div className="container py-4">
       <div className="row justify-content-center">
         <div className="col-lg-8 col-md-10">
-          <div className="card shadow-sm border-0 rounded-4 overflow-hidden">
-            {/* Header with gradient */}
-            <div className="card-header bg-gradient-primary text-white p-4 border-0" style={{ 
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-            }}>
+          <div 
+            className="rounded-4 overflow-hidden border"
+            style={{
+              backgroundColor: 'var(--bg-card)',
+              borderColor: 'var(--border-subtle)',
+              boxShadow: '0 10px 30px var(--shadow-color)'
+            }}
+          >
+            {/* Header */}
+            <div 
+              className="p-4 border-bottom text-white" 
+              style={{ 
+                background: 'linear-gradient(135deg, #a855f7 0%, #ff0080 100%)',
+                borderColor: 'var(--border-subtle)'
+              }}
+            >
               <div className="d-flex align-items-center justify-content-between">
                 <div>
-                  <h4 className="fw-bold mb-0 text-white">Profile</h4>
-                  <p className="text-white-50 small mb-0">Manage your personal information</p>
+                  <h4 className="fw-black mb-0 text-white" style={{ fontWeight: 900 }}>Admin Profile</h4>
+                  <p className="text-white-50 small mb-0 fw-medium">Manage your personal credentials &amp; contact info</p>
                 </div>
                 {!isEditing && (
                   <button 
                     onClick={() => setIsEditing(true)} 
-                    className="btn btn-light btn-sm rounded-pill px-4 py-2 fw-semibold shadow-sm hover-lift"
+                    className="btn btn-light btn-sm rounded-pill px-4 py-2 fw-black shadow-sm"
+                    style={{ fontWeight: 800 }}
                   >
-                    <Edit2 size={16} className="me-2" />
+                    <Edit2 size={15} className="me-1.5" />
                     Edit Profile
                   </button>
                 )}
               </div>
             </div>
 
-            <div className="card-body p-4 p-md-5">
-              {/* Profile Header */}
-              <div className="d-flex align-items-center gap-4 mb-4 pb-4 border-bottom">
+            <div className="p-4 p-md-5">
+              {/* Profile Avatar Header */}
+              <div className="d-flex align-items-center gap-4 mb-4 pb-4 border-bottom" style={{ borderColor: 'var(--border-subtle)' }}>
                 <div className="position-relative">
                   <img 
                     src={profileImage} 
@@ -134,13 +165,35 @@ export default function AdminProfile({ session }) {
                     width="80" 
                     height="80" 
                   />
-                  <div className="position-absolute bottom-0 end-0 bg-primary rounded-circle p-1 border border-2 border-white">
+                  
+                  {/* Camera Icon Button & Hidden File Input */}
+                  <input 
+                    type="file" 
+                    ref={fileInputRef} 
+                    onChange={handleImageChange} 
+                    accept="image/*" 
+                    style={{ display: 'none' }} 
+                    disabled={!isEditing}
+                  />
+                  <div 
+                    onClick={() => isEditing && fileInputRef.current.click()}
+                    className="position-absolute bottom-0 end-0 rounded-circle p-1" 
+                    style={{ 
+                      background: '#ff0080', 
+                      cursor: isEditing ? 'pointer' : 'not-allowed',
+                      opacity: isEditing ? 1 : 0.6
+                    }}
+                    title={isEditing ? "Click to change photo" : "Click Edit Profile first"}
+                  >
                     <Camera size={14} className="text-white" />
                   </div>
                 </div>
                 <div>
-                  <h5 className="fw-bold mb-1">{name}</h5>
-                  <span className="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2">
+                  <h5 className="fw-black mb-1 text-theme-primary" style={{ fontWeight: 800 }}>{name}</h5>
+                  <span 
+                    className="badge rounded-pill px-3 py-1.5 text-white"
+                    style={{ background: 'linear-gradient(135deg, #a855f7, #3b82f6)', fontSize: '0.7rem' }}
+                  >
                     <Shield size={12} className="me-1" />
                     Super Administrator
                   </span>
@@ -153,15 +206,19 @@ export default function AdminProfile({ session }) {
                   <div className="form-floating">
                     <input 
                       type="text" 
-                      className={`form-control ${isEditing ? 'bg-white' : 'bg-light'}`}
+                      className="form-control text-theme-primary border"
                       id="nameInput"
                       placeholder="Full Name"
                       value={name} 
                       disabled={!isEditing} 
                       onChange={(e) => setName(e.target.value)}
-                      style={{ borderColor: isEditing ? '#667eea' : 'transparent' }}
+                      style={{ 
+                        backgroundColor: 'var(--bg-pill)',
+                        borderColor: isEditing ? '#a855f7' : 'var(--border-subtle)',
+                        color: 'var(--text-primary)'
+                      }}
                     />
-                    <label htmlFor="nameInput" className="text-muted">
+                    <label htmlFor="nameInput" className="text-theme-secondary">
                       <User size={16} className="me-2" />
                       Full Name
                     </label>
@@ -172,15 +229,19 @@ export default function AdminProfile({ session }) {
                   <div className="form-floating">
                     <input 
                       type="tel" 
-                      className={`form-control ${isEditing ? 'bg-white' : 'bg-light'}`}
+                      className="form-control text-theme-primary border"
                       id="phoneInput"
                       placeholder="Mobile Number"
                       value={phone} 
                       disabled={!isEditing} 
                       onChange={(e) => setPhone(e.target.value)}
-                      style={{ borderColor: isEditing ? '#667eea' : 'transparent' }}
+                      style={{ 
+                        backgroundColor: 'var(--bg-pill)',
+                        borderColor: isEditing ? '#a855f7' : 'var(--border-subtle)',
+                        color: 'var(--text-primary)'
+                      }}
                     />
-                    <label htmlFor="phoneInput" className="text-muted">
+                    <label htmlFor="phoneInput" className="text-theme-secondary">
                       <Phone size={16} className="me-2" />
                       Mobile Number
                     </label>
@@ -191,14 +252,19 @@ export default function AdminProfile({ session }) {
                   <div className="form-floating">
                     <input 
                       type="email" 
-                      className="form-control bg-light"
+                      className="form-control text-theme-primary border"
                       id="emailInput"
                       placeholder="Email Address"
                       value={email} 
                       disabled 
-                      style={{ borderColor: 'transparent' }}
+                      style={{ 
+                        backgroundColor: 'var(--bg-pill)',
+                        borderColor: 'var(--border-subtle)',
+                        opacity: 0.7,
+                        color: 'var(--text-primary)'
+                      }}
                     />
-                    <label htmlFor="emailInput" className="text-muted">
+                    <label htmlFor="emailInput" className="text-theme-secondary">
                       <Mail size={16} className="me-2" />
                       Email Address
                     </label>
@@ -206,34 +272,34 @@ export default function AdminProfile({ session }) {
                 </div>
               </div>
 
-              {/* Password Reset Section */}
-              <div className="mt-4 pt-3 border-top">
+              {/* Password Reset Trigger */}
+              <div className="mt-4 pt-3 border-top" style={{ borderColor: 'var(--border-subtle)' }}>
                 <button 
                   onClick={() => setShowResetModal(true)} 
                   type="button" 
-                  className="btn btn-outline-primary btn-sm rounded-pill px-4 py-2"
+                  className="btn-secondary-glow"
                 >
-                  <Key size={16} className="me-2" />
+                  <Key size={16} />
                   Reset Password
                 </button>
               </div>
 
-              {/* Action Buttons */}
+              {/* Action Buttons when editing */}
               {isEditing && (
-                <div className="d-flex gap-3 justify-content-end mt-4 pt-3 border-top">
+                <div className="d-flex gap-3 justify-content-end mt-4 pt-3 border-top" style={{ borderColor: 'var(--border-subtle)' }}>
                   <button 
                     onClick={() => setIsEditing(false)} 
                     type="button" 
-                    className="btn btn-light rounded-pill px-4 py-2"
+                    className="btn btn-secondary-glow rounded-pill px-4"
                     disabled={saveLoading}
                   >
-                    <X size={18} className="me-2" />
+                    <X size={18} className="me-1.5" />
                     Cancel
                   </button>
                   <button 
                     onClick={handleSave} 
                     type="button" 
-                    className="btn btn-primary rounded-pill px-4 py-2 shadow-sm hover-lift"
+                    className="btn-neon-cta py-2 px-4 fs-6"
                     disabled={saveLoading}
                   >
                     {saveLoading ? (
@@ -257,50 +323,66 @@ export default function AdminProfile({ session }) {
 
       {/* Reset Password Modal */}
       {showResetModal && (
-        <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+        <div 
+          className="modal show d-block p-3" 
+          tabIndex={-1} 
+          style={{ 
+            backgroundColor: 'rgba(0,0,0,0.75)',
+            backdropFilter: 'blur(10px)'
+          }}
+        >
           <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content rounded-4 border-0 shadow-lg">
+            <div 
+              className="modal-content rounded-4 border text-theme-primary"
+              style={{
+                backgroundColor: 'var(--bg-card)',
+                borderColor: 'var(--border-subtle)',
+                boxShadow: '0 20px 60px var(--shadow-color)'
+              }}
+            >
               <div className="modal-header border-0 pb-0">
-                <h5 className="modal-title fw-bold">
+                <h5 className="modal-title fw-black text-theme-primary d-flex align-items-center" style={{ fontWeight: 800 }}>
                   <Key size={20} className="me-2 text-primary" />
                   Reset Password
                 </h5>
                 <button 
                   type="button" 
-                  className="btn-close" 
+                  className="btn-close btn-close-white" 
                   onClick={() => {
                     setShowResetModal(false);
                     setResetSent(false);
                   }}
                 ></button>
               </div>
+              
               <div className="modal-body">
                 {resetSent ? (
                   <div className="text-center py-4">
                     <CheckCircle size={48} className="text-success mb-3" />
-                    <h6 className="fw-bold">Check Your Email</h6>
-                    <p className="text-muted small">
+                    <h6 className="fw-black text-theme-primary" style={{ fontWeight: 800 }}>Check Your Email</h6>
+                    <p className="text-theme-secondary small">
                       A password reset link has been sent to <strong>{email}</strong>
                     </p>
                   </div>
                 ) : (
                   <>
-                    <p className="text-muted">
-                      We'll send a password reset link to your registered email address.
+                    <p className="text-theme-secondary small mb-3" style={{ fontWeight: 500 }}>
+                      We will send an official password reset email link to your registered address.
                     </p>
-                    <div className="alert alert-info bg-light border-0 rounded-3">
-                      <Mail size={16} className="me-2" />
-                      <strong>{email}</strong>
+                    <div className="p-3 rounded-3 border d-flex align-items-center" style={{ backgroundColor: 'var(--bg-pill)', borderColor: 'var(--border-subtle)' }}>
+                      <Mail size={16} className="me-2 text-theme-secondary" />
+                      <strong className="text-theme-primary">{email}</strong>
                     </div>
                   </>
                 )}
               </div>
+
               <div className="modal-footer border-0 pt-0">
                 {!resetSent && (
                   <>
                     <button 
                       type="button" 
-                      className="btn btn-light rounded-pill px-4" 
+                      className="btn btn-secondary-glow rounded-pill px-4" 
                       onClick={() => {
                         setShowResetModal(false);
                         setResetSent(false);
@@ -310,7 +392,7 @@ export default function AdminProfile({ session }) {
                     </button>
                     <button 
                       type="button" 
-                      className="btn btn-primary rounded-pill px-4 shadow-sm" 
+                      className="btn-neon-cta py-2 px-4" 
                       onClick={handlePasswordReset}
                       disabled={resetLoading}
                     >
@@ -328,7 +410,7 @@ export default function AdminProfile({ session }) {
                 {resetSent && (
                   <button 
                     type="button" 
-                    className="btn btn-primary rounded-pill px-4" 
+                    className="btn-neon-cta py-2 px-4" 
                     onClick={() => {
                       setShowResetModal(false);
                       setResetSent(false);
@@ -342,44 +424,6 @@ export default function AdminProfile({ session }) {
           </div>
         </div>
       )}
-
-      {/* Custom CSS */}
-      <style jsx>{`
-        .bg-gradient-primary {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .hover-lift {
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .hover-lift:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-        .form-control {
-          transition: all 0.3s ease;
-          padding: 0.75rem 1rem;
-        }
-        .form-control:disabled {
-          opacity: 0.7;
-        }
-        .form-control:focus {
-          border-color: #667eea;
-          box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-        }
-        .form-floating label {
-          padding: 0.75rem 1rem;
-        }
-        .form-floating .form-control:disabled ~ label {
-          opacity: 0.6;
-        }
-        .modal {
-          animation: fadeIn 0.3s ease;
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
-        }
-      `}</style>
     </div>
   );
 }

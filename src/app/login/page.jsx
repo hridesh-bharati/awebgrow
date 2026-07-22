@@ -8,10 +8,8 @@ export const metadata = {
 
 export default function LoginPage() {
   return (
-    <main className="d-flex align-items-center justify-content-center bg-light">
-      <section className="w-100 p-0 container">
+    <main >
         <Login />
-      </section>
     </main>
   );
 }

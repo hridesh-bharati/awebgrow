@@ -74,34 +74,40 @@ export default function Login() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center w-100 bg-white border shadow shell-wrapper">
+    <div className="d-flex justify-content-center align-items-center w-100 position-relative overflow-hidden shell-wrapper" style={{ minHeight: '100vh', backgroundColor: '#020205' }}>
       
-      {/* Dynamic style layout strictly modified for 100% full-width on PC & Mobile */}
+      {/* AMBIENT BACKGROUND NEON SPHERES */}
+      <div className="position-absolute rounded-circle pointer-events-none glow-sphere-1" style={{ width: '500px', height: '500px', top: '-10%', left: '-5%', zIndex: 0, background: 'radial-gradient(circle, rgba(255, 0, 128, 0.15) 0%, transparent 70%)', filter: 'blur(80px)' }} />
+      <div className="position-absolute rounded-circle pointer-events-none glow-sphere-2" style={{ width: '500px', height: '500px', bottom: '-10%', right: '-5%', zIndex: 0, background: 'radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%)', filter: 'blur(80px)' }} />
+
       <style dangerouslySetInnerHTML={{__html: `
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
         .custom-card {
           width: 100% !important;
-          max-width: 100% !important;
-          border-radius: 0px !important;
-          border: none !important;
+          max-width: 520px !important;
+          border-radius: 24px !important;
+          background-color: var(--bg-card, rgba(15, 16, 26, 0.85)) !important;
+          border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+          backdrop-filter: blur(20px);
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6) !important;
+          z-index: 2;
         }
         
         .content-padding {
-          padding-left: 20px !important;
-          padding-right: 20px !important;
+          padding-left: 30px !important;
+          padding-right: 30px !important;
         }
         
-        /* Desktop/PC View Layout Engine - Kept fully stretched */
         @media (min-width: 768px) {
           .pc-label-align {
             text-align: left !important;
             white-space: nowrap;
           }
           .content-padding {
-            padding-left: 80px !important;
-            padding-right: 80px !important;
+            padding-left: 45px !important;
+            padding-right: 45px !important;
           }
         }
         
@@ -113,64 +119,62 @@ export default function Login() {
         }
         .input-icon-wrapper svg {
           position: absolute;
-          left: 15px;
-          color: #6c757d;
+          left: 16px;
+          color: var(--text-secondary, #9ca3af);
           font-size: 1.1rem;
           z-index: 10;
         }
         .input-icon-wrapper .form-control {
-          padding-left: 45px !important;
+          padding-left: 48px !important;
+          background-color: var(--bg-pill, rgba(255, 255, 255, 0.03)) !important;
+          color: var(--text-primary, #ffffff) !important;
+          border-color: var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
         }
         .input-icon-wrapper .form-control:focus {
-          border-color: #3b00a8 !important;
-          box-shadow: 0 0 0 0.25rem rgba(59, 0, 168, 0.15) !important;
+          border-color: #a855f7 !important;
+          box-shadow: 0 0 0 0.25rem rgba(168, 85, 247, 0.2) !important;
+          background-color: var(--bg-pill, rgba(255, 255, 255, 0.05)) !important;
+        }
+        .input-icon-wrapper .form-control::placeholder {
+          color: rgba(255, 255, 255, 0.3);
         }
       `}} />
 
       {/* Main Wide Card Element */}
-      <div className="position-relative bg-white overflow-hidden custom-card d-flex flex-column">
+      <div className="position-relative overflow-hidden custom-card d-flex flex-column my-4">
         
-        {/* Top Header Section with True Native SVG Smooth Path Stretched */}
-        <div className="position-relative w-100" style={{ height: '180px', flexShrink: 0 }}>
-          <div className="position-absolute top-0 start-0 w-100 h-100" style={{ zIndex: 1 }}>
-            <svg viewBox="0 0 500 180" preserveAspectRatio="none" style={{ height: '100%', width: '100%' }}>
-              <path d="M0,0 L500,0 L500,110 C380,185 120,85 0,160 Z" style={{ stroke: 'none', fill: '#3b00a8' }}></path>
-            </svg>
+        {/* Top Header Section with Neon Gradient Accent */}
+        <div className="position-relative w-100 py-4 px-4 border-bottom" style={{ borderColor: 'var(--border-subtle)', background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(255, 0, 128, 0.05) 100%)' }}>
+          <div className="d-flex flex-column justify-content-center">
+            <h1 className="fw-black text-white m-0 d-flex align-items-center gap-2" style={{ fontSize: '2rem', fontWeight: 900, letterSpacing: '-0.5px' }}> 
+              <Link href="/" className="text-decoration-none text-white d-inline-flex align-items-center p-2 rounded-circle" style={{ fontSize: '1.4rem', backgroundColor: 'rgba(255,255,255,0.05)' }}>
+                <i className="bi bi-house"></i>
+              </Link>
+              <span>Welcome Back</span>
+            </h1>
+            <p className="text-theme-secondary mt-2 mb-0" style={{ fontSize: '0.9rem', color: '#9ca3af', fontWeight: 500 }}>
+              Sign in to access your administrative pipeline
+            </p>
           </div>
-
-         <div className="position-absolute w-100 h-100 d-flex flex-column justify-content-center content-padding" style={{ zIndex: 2 }}>
-  
-  {/* Flexbox की मदद से आइकॉन और टेक्स्ट को एक लाइन में परफेक्टली अलाइन किया */}
-  <h1 className="fw-bold text-white m-0 d-flex align-items-center gap-2" style={{ fontSize: '2.5rem', letterSpacing: '-0.5px' }}> 
-    <Link href="/" className="text-decoration-none text-white d-inline-flex align-items-center" style={{ fontSize: '2rem' }}>
-      <i className="bi bi-house"></i>
-    </Link>
-    <span>Welcome Back</span>
-  </h1>
-  
-  <p className="text-white-50 mt-1 mb-0" style={{ fontSize: '0.95rem' }}>
-    Sign in to your account
-  </p>
-</div>
         </div>
 
         {/* Form Content Area */}
-        <div className="pt-5 pb-2 flex-grow-1 no-scrollbar content-padding" style={{ zIndex: 3 }}>
+        <div className="py-4 flex-grow-1 no-scrollbar content-padding">
           <form onSubmit={handleSmartLogin} className="d-flex flex-column gap-3">
             
             {/* Email / Mobile input line */}
-            <div className="row align-items-center g-2 g-md-3 mx-0">
-              <div className="col-12 col-md-2 px-0 pc-label-align">
-                <label className="form-label small fw-bold text-dark mb-0">Email / Mobile</label>
+            <div className="row align-items-center g-2 mx-0">
+              <div className="col-12 px-0 mb-1">
+                <label className="form-label small fw-bold text-theme-secondary" style={{ color: '#9ca3af' }}>Email / Mobile</label>
               </div>
-              <div className="col-12 col-md-10 px-0">
+              <div className="col-12 px-0">
                 <div className="input-icon-wrapper">
                   <FiMail />
                   <input 
                     type="text" 
                     placeholder="name@company.com or 98765..."
                     className="form-control" 
-                    style={{ height: '52px', borderRadius: '10px', border: '1px solid #ced4da', fontSize: '0.95rem' }} 
+                    style={{ height: '50px', borderRadius: '12px', fontSize: '0.9rem' }} 
                     required 
                     onChange={e => setIdentifier(e.target.value)} 
                   />
@@ -179,18 +183,21 @@ export default function Login() {
             </div>
             
             {/* Password input line */}
-            <div className="row align-items-center g-2 g-md-3 mx-0">
-              <div className="col-12 col-md-2 px-0 pc-label-align">
-                <label className="form-label small fw-bold text-dark mb-0">Password</label>
+            <div className="row align-items-center g-2 mx-0 mt-2">
+              <div className="col-12 px-0 mb-1 d-flex justify-content-between align-items-center">
+                <label className="form-label small fw-bold text-theme-secondary mb-0" style={{ color: '#9ca3af' }}>Password</label>
+                <Link href="/forgot-password" className="text-decoration-none fw-semibold" style={{ fontSize: '0.85krem', color: '#c084fc' }}>
+                  Forgot Password?
+                </Link>
               </div>
-              <div className="col-12 col-md-10 px-0">
+              <div className="col-12 px-0">
                 <div className="input-icon-wrapper">
                   <FiLock />
                   <input 
                     type="password" 
                     placeholder="••••••••"
                     className="form-control" 
-                    style={{ height: '52px', borderRadius: '10px', border: '1px solid #ced4da', fontSize: '0.95rem' }} 
+                    style={{ height: '50px', borderRadius: '12px', fontSize: '0.9rem' }} 
                     required 
                     onChange={e => setPassword(e.target.value)} 
                   />
@@ -198,27 +205,20 @@ export default function Login() {
               </div>
             </div>
 
-            {/* Forgot Password Anchor link */}
-            <div className="row mx-0">
-              <div className="col-12 offset-md-2 col-md-10 px-0 text-end">
-                <Link href="/forgot-password" className="text-decoration-none text-primary fw-semibold" style={{ fontSize: '0.9rem' }}>
-                  Forgot Password?
-                </Link>
-              </div>
-            </div>
-
             {/* Wide Primary Operation Submit Trigger */}
-            <div className="row mt-3 mx-0">
-              <div className="col-12 offset-md-2 col-md-10 px-0">
+            <div className="row mt-4 mx-0">
+              <div className="col-12 px-0">
                 <button 
                   type="submit" 
-                  className="btn w-100 rounded-pill py-2 fw-bold text-white" 
+                  className="btn w-100 rounded-pill py-2 fw-black text-white" 
                   style={{ 
-                    height: '52px', 
-                    backgroundColor: '#F59E0B', 
+                    height: '50px', 
+                    background: 'linear-gradient(135deg, #a855f7 0%, #ff0080 100%)',
                     border: 'none',
-                    fontSize: '1.05rem',
-                    letterSpacing: '0.5px'
+                    fontSize: '1rem',
+                    fontWeight: 800,
+                    letterSpacing: '0.5px',
+                    boxShadow: '0 0 20px rgba(168, 85, 247, 0.4)'
                   }} 
                   disabled={loading}
                 >
@@ -228,19 +228,11 @@ export default function Login() {
             </div>
           </form>
 
-          <div className="text-center my-2">
-            <span className="text-muted small">Don't have an account? </span>
-            <Link href="/register" className="small fw-semibold text-primary text-decoration-none ms-1">Sign up</Link>
+          <div className="text-center mt-4">
+            <span className="text-theme-secondary small" style={{ color: '#9ca3af' }}>Don't have an account? </span>
+            <Link href="/register" className="small fw-bold text-decoration-none ms-1" style={{ color: '#00f2fe' }}>Sign up</Link>
           </div>
 
-        </div>
-
-        {/* Bottom Decorative Waves Footer */}
-        <div className="position-relative w-100 mt-auto" style={{ height: '75px', flexShrink: 0, zIndex: 1 }}>
-          <svg viewBox="0 0 500 100" preserveAspectRatio="none" className="position-absolute bottom-0 start-0 w-100 h-100">
-            <path d="M0,45 C150,95 350,15 500,55 L500,100 L0,100 Z" style={{ stroke: 'none', fill: '#DCEBFE' }}></path>
-            <path d="M0,65 C150,25 300,95 500,45 L500,100 L0,100 Z" style={{ stroke: 'none', fill: '#2563EB' }}></path>
-          </svg>
         </div>
 
       </div>

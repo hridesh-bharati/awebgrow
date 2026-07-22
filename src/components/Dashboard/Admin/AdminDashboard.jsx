@@ -1,24 +1,31 @@
 "use client";
-// src/components/Dashboard/Admin/AdminDashboard.jsx
+
 import { useEffect, useState } from 'react';
 import { rtdb } from '@/lib/firebase';
 import { ref, onValue } from 'firebase/database';
 import Link from 'next/link';
 
 import DashboardHome from './DashboardHome.jsx';
+import LiveAnalytics from './LiveAnalytics.jsx';
 import UserDirectory from './UserDirectory';
 import CouponManager from './CouponManager';
 import WebsiteOrders from './WebsiteOrders';
 import RecentProjects from './RecentProjects';
 import AdminProfile from './AdminProfile';
 
+
 export default function AdminDashboard({ session, onLogout }) {
   const [allUsers, setAllUsers] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentView, setCurrentView] = useState("dashboard");
+  const [theme, setTheme] = useState("dark");
 
   useEffect(() => {
+    // Current Document Theme Fetching
+    const currentTheme = document.documentElement.getAttribute('data-bs-theme') || 'dark';
+    setTheme(currentTheme);
+
     const usersRef = ref(rtdb, 'users');
     const unsubscribe = onValue(usersRef, (snapshot) => {
       try {
@@ -33,17 +40,24 @@ export default function AdminDashboard({ session, onLogout }) {
           setAllUsers([]);
         }
       } catch (err) {
-        console.error("Payload extraction failed inside real-time registry stream:", err);
+        console.error("User stream parse error:", err);
       }
     }, (error) => {
-      console.error("Database linkage failed: ", error);
+      console.error("Realtime database error: ", error);
     });
 
     return () => unsubscribe();
   }, []);
 
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    document.documentElement.setAttribute('data-bs-theme', nextTheme);
+  };
+
   const navItems = [
     { name: 'Dashboard', icon: 'bi-grid-1x2', view: 'dashboard' },
+    { name: 'Live Analytics', icon: 'bi-activity', view: 'analytics-live' },
     { name: 'Users Network', icon: 'bi-people', view: 'users' },
     { name: 'Website Coupons', icon: 'bi-graph-up', view: 'analytics' },
     { name: 'Website Orders', icon: 'bi-box-seam', view: 'orders' },
@@ -55,11 +69,13 @@ export default function AdminDashboard({ session, onLogout }) {
     switch (currentView) {
       case 'dashboard':
         return <DashboardHome usersCount={allUsers.length} />;
+      case 'analytics-live':
+        return <LiveAnalytics />;
       case 'users':
         return <UserDirectory users={allUsers} />;
       case 'analytics':
         return <CouponManager />;
-      case 'orders': 
+      case 'orders':
         return <WebsiteOrders />;
       case 'projects':
         return <RecentProjects />;
@@ -83,12 +99,19 @@ export default function AdminDashboard({ session, onLogout }) {
                   setIsMobileMenuOpen(false);
                 }
               }}
-              className={`w-100 btn border-0 text-start d-flex align-items-center rounded-3 text-white ${isActive ? 'active-link' : 'hover-link'}`}
-              style={{ padding: '12px 16px', gap: '16px', transition: 'background-color 0.2s' }}
+              className={`w-100 btn border-0 text-start d-flex align-items-center rounded-4 ${isActive ? 'btn-neon-cta shadow-lg' : 'btn-secondary-glow'
+                }`}
+              style={{
+                padding: '11px 16px',
+                gap: '14px',
+                transition: 'all 0.3s ease',
+                width: '100%',
+                justifyContent: !isSidebarOpen && !isMobile ? 'center' : 'flex-start'
+              }}
             >
-              <i className={`bi ${item.icon} fs-5 icon-color flex-shrink-0`}></i>
+              <i className={`bi ${item.icon} fs-5 flex-shrink-0`}></i>
               {(isMobile || isSidebarOpen) && (
-                <span className="fw-medium fs-6 text-nowrap label-text text-color">
+                <span className="fw-black fs-6 text-nowrap" style={{ fontWeight: 800 }}>
                   {item.name}
                 </span>
               )}
@@ -100,13 +123,20 @@ export default function AdminDashboard({ session, onLogout }) {
   );
 
   return (
-    <div className="d-flex bg-light-alt" style={{ minHeight: '100vh', fontFamily: "'Inter', sans-serif" }}>
+    <div className="d-flex bg-theme-main text-theme-primary position-relative overflow-hidden" style={{ minHeight: '100vh' }}>
+
+      {/* BACKGROUND NEON GLOW SPHERES */}
+      <div className="position-absolute rounded-circle pointer-events-none glow-sphere-1" style={{ width: '600px', height: '600px', top: '-10%', left: '-5%', zIndex: 0 }} />
+      <div className="position-absolute rounded-circle pointer-events-none glow-sphere-2" style={{ width: '600px', height: '600px', bottom: '-10%', right: '-5%', zIndex: 0 }} />
 
       {/* 1. DESKTOP SIDEBAR */}
       <aside
-        className="d-none d-lg-flex flex-column justify-content-between border-end border-opacity-10 sidebar-gradient"
+        className="d-none d-lg-flex flex-column justify-content-between border-end position-relative z-2"
         style={{
-          width: isSidebarOpen ? '260px' : '72px',
+          width: isSidebarOpen ? '260px' : '76px',
+          borderColor: 'var(--border-subtle)',
+          backgroundColor: 'var(--bg-card)',
+          backdropFilter: 'blur(16px)',
           transition: 'width 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
           position: 'sticky',
           top: 0,
@@ -116,55 +146,58 @@ export default function AdminDashboard({ session, onLogout }) {
         }}
       >
         <div>
-          <div className="d-flex align-items-center justify-content-between px-4" style={{ height: '70px' }}>
+          <div className="d-flex align-items-center justify-content-between px-4 border-bottom" style={{ height: '70px', borderColor: 'var(--border-subtle)' }}>
             {isSidebarOpen ? (
-              <h5 className="fw-bold m-0 text-white letter-spacing-1 text-nowrap">
-                Web<span className="text-warning">Grow</span><span className="text-white-50 small ms-1 fs-6">.vercel.app</span>
+              <h5 className="fw-black m-0 text-theme-primary letter-spacing-1 text-nowrap" style={{ fontWeight: 900 }}>
+                AWeb<span className="text-gradient-pink-orange">Grow</span><span className="text-theme-secondary small ms-1 fs-6">.admin</span>
               </h5>
             ) : (
-              <h5 className="fw-bold m-0 text-warning text-center w-100">WG</h5>
+              <h5 className="fw-black m-0 text-gradient-pink-orange text-center w-100" style={{ fontWeight: 900 }}>AG</h5>
             )}
           </div>
           <NavigationLinks isMobile={false} />
         </div>
 
-        {/* BOTTOM PANEL WITH LOGOUT */}
-        <div className="p-3 border-top border-white border-opacity-10 d-flex flex-column gap-1">
-          <Link href="/" className="nav-link text-white-50 d-flex align-items-center rounded-3 hover-link" style={{ padding: '10px 16px', gap: '16px' }}>
-            <i className="bi bi-arrow-left-square fs-5 flex-shrink-0 text-white-50"></i>
-            {isSidebarOpen && <span className="text-white small text-nowrap">Back to Main</span>}
+        {/* SIDEBAR FOOTER */}
+        <div className="p-3 border-top d-flex flex-column gap-1" style={{ borderColor: 'var(--border-subtle)' }}>
+          <Link href="/" className="btn-secondary-glow w-100 justify-content-start border-0" style={{ padding: '10px 16px', gap: '14px' }}>
+            <i className="bi bi-arrow-left-square fs-5 flex-shrink-0"></i>
+            {isSidebarOpen && <span className="small text-nowrap fw-bold">Back to Main</span>}
           </Link>
 
           <button
             onClick={onLogout}
-            className="btn border-0 text-start d-flex align-items-center rounded-3 text-danger logout-hover"
-            style={{ padding: '10px 16px', gap: '16px' }}
+            className="btn border-0 text-start d-flex align-items-center rounded-pill text-danger hover-bg-danger"
+            style={{ padding: '10px 16px', gap: '14px', transition: 'all 0.3s ease' }}
           >
             <i className="bi bi-box-arrow-right fs-5 flex-shrink-0 text-danger"></i>
-            {isSidebarOpen && <span className="small text-nowrap fw-medium">Logout</span>}
+            {isSidebarOpen && <span className="small text-nowrap fw-black" style={{ fontWeight: 800 }}>Logout</span>}
           </button>
 
           {isSidebarOpen && (
-            <div className="px-3 opacity-50 text-white text-nowrap mt-1">
-              <small style={{ fontSize: '11px' }}>System Version 2.0.0</small>
+            <div className="px-3 text-theme-secondary text-nowrap mt-1">
+              <small style={{ fontSize: '11px', fontWeight: 600 }}>System Core v2.0.0</small>
             </div>
           )}
         </div>
       </aside>
 
-      {/* 2. MOBILE BOOTSTRAP OFFCANVAS MENU */}
+      {/* 2. MOBILE OFFCANVAS SIDEBAR */}
       <div
-        className={`offcanvas offcanvas-start sidebar-gradient d-lg-none ${isMobileMenuOpen ? 'show' : ''}`}
-        tabIndex="-1"
+        className={`offcanvas offcanvas-start d-lg-none ${isMobileMenuOpen ? 'show' : ''}`}
+        tabIndex={-1}
         style={{
           width: '280px',
+          backgroundColor: 'var(--bg-card)',
+          backdropFilter: 'blur(20px)',
+          borderRight: '1px solid var(--border-subtle)',
           visibility: isMobileMenuOpen ? 'visible' : 'hidden',
           transition: 'transform 0.3s ease-in-out'
         }}
       >
-        <div className="offcanvas-header px-4 d-flex align-items-center justify-content-between" style={{ height: '70px' }}>
-          <h5 className="offcanvas-title fw-bold text-white m-0">
-            Web<span className="text-warning">Grow</span><span className="text-white-50 small ms-1 fs-6">.io</span>
+        <div className="offcanvas-header px-4 d-flex align-items-center justify-content-between border-bottom" style={{ height: '70px', borderColor: 'var(--border-subtle)' }}>
+          <h5 className="offcanvas-title fw-black text-theme-primary m-0" style={{ fontWeight: 900 }}>
+            AWeb<span className="text-gradient-pink-orange">Grow</span><span className="text-theme-secondary small ms-1 fs-6">.admin</span>
           </h5>
           <button
             type="button"
@@ -177,10 +210,10 @@ export default function AdminDashboard({ session, onLogout }) {
             <NavigationLinks isMobile={true} />
           </div>
 
-          <div className="p-3 border-top border-white border-opacity-10 d-flex flex-column gap-1">
-            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="nav-link text-white-50 d-flex align-items-center rounded-3 hover-link" style={{ padding: '10px 16px', gap: '16px' }}>
-              <i className="bi bi-arrow-left-square fs-5 flex-shrink-0 text-white-50"></i>
-              <span className="text-white small">Back to Main</span>
+          <div className="p-3 border-top d-flex flex-column gap-1" style={{ borderColor: 'var(--border-subtle)' }}>
+            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="btn-secondary-glow w-100 justify-content-start border-0" style={{ padding: '10px 16px', gap: '14px' }}>
+              <i className="bi bi-arrow-left-square fs-5 flex-shrink-0"></i>
+              <span className="small fw-bold">Back to Main</span>
             </Link>
 
             <button
@@ -188,21 +221,16 @@ export default function AdminDashboard({ session, onLogout }) {
                 setIsMobileMenuOpen(false);
                 onLogout();
               }}
-              className="btn border-0 text-start d-flex align-items-center rounded-3 text-danger logout-hover"
-              style={{ padding: '10px 16px', gap: '16px' }}
+              className="btn border-0 text-start d-flex align-items-center rounded-pill text-danger"
+              style={{ padding: '10px 16px', gap: '14px' }}
             >
               <i className="bi bi-box-arrow-right fs-5 flex-shrink-0 text-danger"></i>
-              <span className="small fw-medium">Logout</span>
+              <span className="small fw-black" style={{ fontWeight: 800 }}>Logout</span>
             </button>
-
-            <div className="px-3 opacity-50 text-white mt-1">
-              <small style={{ fontSize: '11px' }}>System Version 2.0.0</small>
-            </div>
           </div>
         </div>
       </div>
 
-      {/* Backdrop overlay */}
       {isMobileMenuOpen && (
         <div
           className="offcanvas-backdrop fade show d-lg-none"
@@ -211,17 +239,28 @@ export default function AdminDashboard({ session, onLogout }) {
         ></div>
       )}
 
-      {/* MAIN LAYOUT WRAPPER */}
-      <div className="flex-grow-1 d-flex flex-column min-vh-100" style={{ overflowX: 'hidden' }}>
+      {/* 3. MAIN CONTENT CONTAINER */}
+      <div className="flex-grow-1 d-flex flex-column min-vh-100 position-relative z-1" style={{ overflowX: 'hidden' }}>
 
         {/* TOP NAVBAR */}
-        <nav className="navbar navbar-expand navbar-white bg-white border-bottom px-4" style={{ height: '70px', position: 'sticky', top: 0, zIndex: 1020 }}>
+        <nav
+          className="navbar navbar-expand border-bottom px-4"
+          style={{
+            height: '70px',
+            position: 'sticky',
+            top: 0,
+            zIndex: 1020,
+            backgroundColor: 'var(--bg-header)',
+            backdropFilter: 'blur(16px)',
+            borderColor: 'var(--border-subtle)'
+          }}
+        >
           <div className="container-fluid p-0 d-flex justify-content-between align-items-center">
 
             <div className="d-flex align-items-center gap-3">
               <button
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="btn btn-light rounded-circle border-0 d-none d-lg-flex align-items-center justify-content-center"
+                className="btn btn-secondary-glow rounded-circle p-0 d-none d-lg-flex align-items-center justify-content-center"
                 style={{ width: '40px', height: '40px' }}
               >
                 <i className={`bi ${isSidebarOpen ? 'bi-text-paragraph' : 'bi-list'} fs-5`}></i>
@@ -229,35 +268,54 @@ export default function AdminDashboard({ session, onLogout }) {
 
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="btn btn-light rounded-circle border-0 d-flex d-lg-none align-items-center justify-content-center"
+                className="btn btn-secondary-glow rounded-circle p-0 d-flex d-lg-none align-items-center justify-content-center"
                 style={{ width: '40px', height: '40px' }}
               >
                 <i className="bi bi-list fs-4"></i>
               </button>
 
-              <span className="text-muted d-none d-sm-inline-block small fw-medium">Console / System Management</span>
+              <div
+                className="d-none d-sm-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill"
+                style={{
+                  background: 'rgba(255, 0, 128, 0.06)',
+                  border: '1px solid rgba(255, 0, 128, 0.2)'
+                }}
+              >
+                <span className="badge-dot-pink" />
+                <span className="fw-black text-uppercase" style={{ fontSize: '0.65rem', letterSpacing: '0.12em', color: '#ff77bc', fontWeight: 800 }}>
+                  SYSTEM CONSOLE
+                </span>
+              </div>
             </div>
 
-            <div className="d-flex align-items-center gap-3">
-              {/* ✅ होम (Home) बटन - नोटिफिकेशन बेल से ठीक पहले */}
-              <Link 
-                href="/" 
-                className="btn btn-link text-muted p-1 border-0 d-flex align-items-center justify-content-center" 
+            <div className="d-flex align-items-center gap-2.5">
+              <Link
+                href="/"
+                className="btn btn-secondary-glow rounded-circle p-0 d-flex align-items-center justify-content-center"
+                style={{ width: '38px', height: '38px' }}
                 title="Go to Home"
               >
                 <i className="bi bi-house fs-5"></i>
               </Link>
 
-              {/* नोटिफिकेशन बेल */}
-              <button className="btn btn-link text-muted position-relative p-1 border-0">
+              <button
+                onClick={toggleTheme}
+                className="btn btn-secondary-glow rounded-circle p-0 d-flex align-items-center justify-content-center"
+                style={{ width: '38px', height: '38px' }}
+                title="Toggle Theme"
+              >
+                <i className={`bi ${theme === 'dark' ? 'bi-sun-fill text-warning' : 'bi-moon-stars-fill text-info'} fs-5`}></i>
+              </button>
+
+              <button className="btn btn-secondary-glow rounded-circle p-0 position-relative d-flex align-items-center justify-content-center" style={{ width: '38px', height: '38px' }}>
                 <i className="bi bi-bell fs-5"></i>
                 <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
               </button>
 
-              <div className="d-flex align-items-center gap-3 border-start ps-3">
+              <div className="d-flex align-items-center gap-3 border-start ps-3 ms-1" style={{ borderColor: 'var(--border-subtle)' }}>
                 <div className="text-end">
-                  <div className="fw-semibold text-dark small">{session?.name || 'Hridesh'}</div>
-                  <div className="text-muted" style={{ fontSize: '11px' }}>Super Admin</div>
+                  <div className="fw-black text-theme-primary small" style={{ fontWeight: 800 }}>{session?.name || 'hridesh'}</div>
+                  <div className="text-theme-secondary" style={{ fontSize: '11px', fontWeight: 600 }}>Super Admin</div>
                 </div>
               </div>
             </div>
@@ -265,45 +323,15 @@ export default function AdminDashboard({ session, onLogout }) {
           </div>
         </nav>
 
-        {/* COMPONENT LOADING BOUNDARY */}
-        <main
-          className="flex-grow-1 px-3 py-4"
-          style={{
-            background: 'linear-gradient(135deg, #ffffff 0%, #d1fde1 50%, #ccd5ff 100%)',
-            minHeight: '100vh'
-          }}
-        >
+        {/* ACTIVE VIEW WRAPPER */}
+        <main className="flex-grow-1 px-3 px-md-4 py-4">
           {renderActiveView()}
         </main>
       </div>
 
       <style jsx>{`
-        .bg-light-alt { background-color: #f8fafc; }
-        
-        .sidebar-gradient {
-          background: linear-gradient(135deg, #0b0f19 0%, #1e1b4b 50%, #1a0b44 100%) !important;
-        }
-
-        .icon-color { color: rgba(255, 255, 255, 0.5) !important; }
-        .text-color { color: rgba(255, 255, 255, 0.85) !important; }
-        
-        .active-link { background-color: rgba(255, 193, 7, 0.18) !important; }
-        .active-link .icon-color, .active-link .text-color { color: #ffc107 !important; }
-        
-        .hover-link:hover { background-color: rgba(255, 255, 255, 0.08) !important; }
-        .hover-link:hover .icon-color, .hover-link:hover .text-color { color: #ffffff !important; }
-
-        .logout-hover:hover {
+        .hover-bg-danger:hover {
           background-color: rgba(220, 53, 69, 0.15) !important;
-        }
-
-        .label-text {
-          animation: fadeIn 0.15s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
         }
       `}</style>
     </div>

@@ -92,3 +92,18 @@ html, body {
   align-items: center;
   gap: 8px;
 }
+
+
+/* Dashboard themes  */
+/* ADD THIS TO YOUR theme.css FOR TEXT GRADIENTS */
+.text-gradient-pink-orange {
+  background: linear-gradient(135deg, #ff0080 0%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-purple-blue {
+  background: linear-gradient(135deg, #c084fc 0%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

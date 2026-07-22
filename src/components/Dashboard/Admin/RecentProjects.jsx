@@ -1,5 +1,5 @@
 "use client";
-// src\components\Dashboard\Admin\RecentProjects.jsx
+
 import React, { useState, useEffect } from 'react';
 import { rtdb } from '@/lib/firebase';
 import { ref, push, onValue, remove, update } from 'firebase/database';
@@ -8,7 +8,7 @@ export default function RecentProjects() {
   const [dbProjects, setDbProjects] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
-  const [isUploading, setIsUploading] = useState(false); // स्क्रीनशॉट अपलोडिंग स्टेट के लिए
+  const [isUploading, setIsUploading] = useState(false);
   
   const [formData, setFormData] = useState({
     title: '',
@@ -17,7 +17,7 @@ export default function RecentProjects() {
     websiteUrl: '',
   });
 
-  // 1. READ: Firebase से प्रोजेक्ट्स को रीयल-टाइम फ़ेच करना
+  // 1. READ: Fetch Projects in Realtime
   useEffect(() => {
     const projectsRef = ref(rtdb, 'projects');
     const unsubscribe = onValue(projectsRef, (snapshot) => {
@@ -26,7 +26,7 @@ export default function RecentProjects() {
         const list = Object.keys(data).map(key => ({
           id: key,
           ...data[key]
-        })).reverse(); // नया प्रोजेक्ट सबसे ऊपर दिखेगा
+        })).reverse();
         setDbProjects(list);
       } else {
         setDbProjects([]);
@@ -40,23 +40,19 @@ export default function RecentProjects() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Cloudinary Upload Logic (Using Your Env Credentials)
+  // Cloudinary Upload Logic
   const uploadScreenshotToCloudinary = async (websiteUrl) => {
     try {
-      // 1. Microlink से लाइव वेबसाइट का स्क्रीनशॉट URL लेना
       const screenshotUrl = `https://api.microlink.io/?url=${encodeURIComponent(websiteUrl)}&screenshot=true&embed=screenshot.url`;
       
-      // 2. Image URL को Blob ऑब्जेक्ट में कन्वर्ट करना
       const imageResponse = await fetch(screenshotUrl);
       if (!imageResponse.ok) throw new Error("Failed to fetch screenshot from Microlink");
       const imageBlob = await imageResponse.blob();
       
-      // 3. Cloudinary Form Data तैयार करना
       const cloudinaryData = new FormData();
       cloudinaryData.append("file", imageBlob);
-      cloudinaryData.append("upload_preset", "webgrow_preset"); // Your Preset
+      cloudinaryData.append("upload_preset", "webgrow_preset");
 
-      // 4. Cloudinary API पर इमेज पोस्ट करना
       const res = await fetch("https://api.cloudinary.com/v1_1/duyauncgi/image/upload", {
         method: "POST",
         body: cloudinaryData
@@ -64,7 +60,7 @@ export default function RecentProjects() {
       
       const fileData = await res.json();
       if (fileData.secure_url) {
-        return fileData.secure_url; // Cloudinary Hosted Image Link
+        return fileData.secure_url;
       } else {
         throw new Error(fileData.error?.message || "Cloudinary Upload Failed");
       }
@@ -74,7 +70,7 @@ export default function RecentProjects() {
     }
   };
 
-  // 2. CREATE & UPDATE: सबमिट हैंडलर
+  // 2. CREATE & UPDATE Handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.title || !formData.websiteUrl) return alert("Title and Website URL are required!");
@@ -85,10 +81,8 @@ export default function RecentProjects() {
       let finalImageUrl = "";
 
       if (isEditing) {
-        // UPDATE WORKFLOW
         const currentProject = dbProjects.find(p => p.id === editId);
         
-        // यदि यूआरएल बदला है, केवल तभी नया स्क्रीनशॉट जनरेट और अपलोड करें
         if (currentProject && currentProject.websiteUrl !== formData.websiteUrl) {
           finalImageUrl = await uploadScreenshotToCloudinary(formData.websiteUrl);
         } else {
@@ -101,13 +95,12 @@ export default function RecentProjects() {
           category: formData.category || "Web Project",
           description: formData.description || "No description provided.",
           websiteUrl: formData.websiteUrl,
-          imageUrl: finalImageUrl, // Saved Cloudinary Link
+          imageUrl: finalImageUrl,
         });
         alert("Project updated successfully!");
         setIsEditing(false);
         setEditId(null);
       } else {
-        // CREATE WORKFLOW
         finalImageUrl = await uploadScreenshotToCloudinary(formData.websiteUrl);
 
         const projectsRef = ref(rtdb, 'projects');
@@ -116,7 +109,7 @@ export default function RecentProjects() {
           category: formData.category || "Web Project",
           description: formData.description || "No description provided.",
           websiteUrl: formData.websiteUrl,
-          imageUrl: finalImageUrl || `https://picsum.photos/seed/${encodeURIComponent(formData.title)}/600/400`, // Fail-safe fallback
+          imageUrl: finalImageUrl || `https://picsum.photos/seed/${encodeURIComponent(formData.title)}/600/400`,
           features: [
             { icon: "bi-laptop", text: "Responsive" },
             { icon: "bi-lightning-charge", text: "Fast Load" },
@@ -127,7 +120,6 @@ export default function RecentProjects() {
         alert("Project deployed successfully!");
       }
 
-      // फ़ॉर्म रिसेट करें
       setFormData({ title: '', category: '', description: '', websiteUrl: '' });
     } catch (error) {
       console.error("Error saving data:", error);
@@ -137,7 +129,7 @@ export default function RecentProjects() {
     }
   };
 
-  // 3. EDIT TRIGGER: फ़ॉर्म में पुराना डेटा लोड करने के लिए
+  // 3. EDIT TRIGGER
   const handleEditClick = (project) => {
     setIsEditing(true);
     setEditId(project.id);
@@ -149,7 +141,7 @@ export default function RecentProjects() {
     });
   };
 
-  // 4. DELETE WORKFLOW: डेटाबेस से हटाने के लिए
+  // 4. DELETE WORKFLOW
   const handleDeleteClick = async (id) => {
     if (window.confirm("Are you sure you want to delete this project?")) {
       try {
@@ -173,150 +165,176 @@ export default function RecentProjects() {
   };
 
   return (
-    <div className="row g-4">
-      {/* Dynamic Form: Add / Edit Project */}
-      <div className="col-lg-7">
-        <div className="card border-0 shadow-sm rounded-4 p-4 bg-white sticky-top" style={{ top: '20px', zIndex: '10' }}>
-          <h5 className="fw-bold text-dark mb-4">
-            <i className={`bi ${isEditing ? 'bi-pencil-square text-info' : 'bi-plus-circle-fill text-warning'} me-2`}></i>
-            {isEditing ? "Edit Project Details" : "Add New Project"}
-          </h5>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label small fw-bold text-secondary">Project Title</label>
-              <input 
-                type="text" 
-                className="form-control form-control-sm rounded-3" 
-                name="title"
-                value={formData.title} 
-                onChange={handleChange} 
-                placeholder="e.g. Asad Hospital Alwar" 
-                required 
-                disabled={isUploading}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label small fw-bold text-secondary">Category</label>
-              <input 
-                type="text" 
-                className="form-control form-control-sm rounded-3" 
-                name="category"
-                value={formData.category} 
-                onChange={handleChange} 
-                placeholder="e.g. Healthcare Portal" 
-                disabled={isUploading}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label small fw-bold text-secondary">Website / Live URL</label>
-              <input 
-                type="url" 
-                className="form-control form-control-sm rounded-3" 
-                name="websiteUrl"
-                value={formData.websiteUrl} 
-                onChange={handleChange} 
-                placeholder="https://example.com" 
-                required 
-                disabled={isUploading}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label small fw-bold text-secondary">Description</label>
-              <textarea 
-                className="form-control form-control-sm rounded-3" 
-                rows="3" 
-                name="description"
-                value={formData.description} 
-                onChange={handleChange} 
-                placeholder="Write a brief description..."
-                disabled={isUploading}
-              ></textarea>
-            </div>
-            
-            <div className="d-flex gap-2">
-              <button 
-                type="submit" 
-                className={`btn w-100 text-white fw-bold py-2 text-uppercase rounded-3 small`}
-                style={{ backgroundColor: isEditing ? '#0DCAF0' : '#FEA116', letterSpacing: '0.5px' }}
-                disabled={isUploading}
-              >
-                {isUploading ? (
-                  <>
-                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                    Generating & Uploading Screen...
-                  </>
-                ) : (
-                  isEditing ? "Update Project" : "Deploy Project"
-                )}
-              </button>
-              {isEditing && !isUploading && (
-                <button 
-                  type="button" 
-                  className="btn btn-secondary fw-bold py-2 text-uppercase rounded-3 small"
-                  onClick={cancelEditing}
-                >
-                  Cancel
-                </button>
-              )}
-            </div>
-          </form>
-        </div>
-      </div>
+    <div className="container-fluid px-0">
+      <div className="row g-3 m-0">
+        {/* Dynamic Form: Add / Edit Project */}
+        <div className="col-12 col-xl-7 ps-0">
+          <div 
+            className="rounded-4 p-4 border" 
+            style={{ 
+              backgroundColor: 'var(--bg-card)',
+              borderColor: 'var(--border-subtle)',
+              boxShadow: '0 10px 30px var(--shadow-color)'
+            }}
+          >
+            <h5 className="fw-black text-theme-primary mb-4 d-flex align-items-center gap-2" style={{ fontWeight: 800 }}>
+              <i className={`bi ${isEditing ? 'bi-pencil-square text-info' : 'bi-plus-circle-fill text-pink'}`}></i>
+              {isEditing ? "Edit Project Details" : "Add New Project"}
+            </h5>
 
-      {/* MODIFIED: Deployments List View */}
-      <div className="col-lg-4">
-        <div className="card border-0 shadow-sm rounded-4 p-4 bg-white" style={{ minHeight: '520px' }}>
-          <h5 className="fw-bold text-dark mb-3">Recent Client Deployments</h5>
-          
-          {/* Scrollable Container with Fixed Height */}
-          <div className="overflow-auto pe-1" style={{ maxHeight: '460px' }}>
-            <div className="row row-cols-1 row-cols-md-2 g-3">
-              {dbProjects.map((project) => (
-                <div key={project.id} className="col">
-                  <div className="p-3 rounded-3 border bg-light h-100 d-flex flex-column justify-content-between shadow-sm">
-                    <div className="text-truncate mb-2">
-                      <h6 className="fw-bold text-dark m-0 text-truncate" title={project.title}>
-                        {project.title}
-                      </h6>
-                      <span className="badge bg-white text-secondary border my-2 small text-truncate max-w-100">
-                        {project.category}
-                      </span>
-                      <small className="text-muted d-block text-truncate" title={project.websiteUrl}>
-                        <strong>Target:</strong> {project.websiteUrl}
-                      </small>
-                    </div>
-                    
-                    <div className="d-flex justify-content-between align-items-center mt-2 pt-2 border-top">
-                      <span className="badge bg-success bg-opacity-10 text-success rounded-pill px-2.5 py-1.5 small">
-                        Production
-                      </span>
-                      <div className="d-flex gap-1">
-                        <button 
-                          className="btn btn-sm btn-outline-primary py-1 px-2 rounded-2"
-                          onClick={() => handleEditClick(project)}
-                          title="Edit Project"
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </button>
-                        <button 
-                          className="btn btn-sm btn-outline-danger py-1 px-2 rounded-2"
-                          onClick={() => handleDeleteClick(project.id)}
-                          title="Delete Project"
-                        >
-                          <i className="bi bi-trash3-fill"></i>
-                        </button>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label className="form-label small fw-bold text-theme-secondary">Project Title</label>
+                <input 
+                  type="text" 
+                  className="form-control form-control-sm rounded-3 text-theme-primary border" 
+                  name="title"
+                  value={formData.title} 
+                  onChange={handleChange} 
+                  placeholder="e.g. Asad Hospital Alwar" 
+                  required 
+                  disabled={isUploading}
+                  style={{ backgroundColor: 'var(--bg-pill)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label small fw-bold text-theme-secondary">Category</label>
+                <input 
+                  type="text" 
+                  className="form-control form-control-sm rounded-3 text-theme-primary border" 
+                  name="category"
+                  value={formData.category} 
+                  onChange={handleChange} 
+                  placeholder="e.g. Healthcare Portal" 
+                  disabled={isUploading}
+                  style={{ backgroundColor: 'var(--bg-pill)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label small fw-bold text-theme-secondary">Website / Live URL</label>
+                <input 
+                  type="url" 
+                  className="form-control form-control-sm rounded-3 text-theme-primary border" 
+                  name="websiteUrl"
+                  value={formData.websiteUrl} 
+                  onChange={handleChange} 
+                  placeholder="https://example.com" 
+                  required 
+                  disabled={isUploading}
+                  style={{ backgroundColor: 'var(--bg-pill)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label small fw-bold text-theme-secondary">Description</label>
+                <textarea 
+                  className="form-control form-control-sm rounded-3 text-theme-primary border" 
+                  rows="3" 
+                  name="description"
+                  value={formData.description} 
+                  onChange={handleChange} 
+                  placeholder="Write a brief description..."
+                  disabled={isUploading}
+                  style={{ backgroundColor: 'var(--bg-pill)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }}
+                ></textarea>
+              </div>
+              
+              <div className="d-flex gap-2">
+                <button 
+                  type="submit" 
+                  className="btn-neon-cta w-100 justify-content-center py-2"
+                  disabled={isUploading}
+                >
+                  {isUploading ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                      Generating &amp; Uploading...
+                    </>
+                  ) : (
+                    isEditing ? "Update Project" : "Deploy Project"
+                  )}
+                </button>
+
+                {isEditing && !isUploading && (
+                  <button 
+                    type="button" 
+                    className="btn btn-secondary-glow rounded-3 py-2"
+                    onClick={cancelEditing}
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
+            </form>
+          </div>
+        </div>
+
+        {/* Deployments List View */}
+        <div className="col-12 col-xl-5 pe-0">
+          <div 
+            className="rounded-4 p-4 border" 
+            style={{ 
+              backgroundColor: 'var(--bg-card)',
+              borderColor: 'var(--border-subtle)',
+              boxShadow: '0 10px 30px var(--shadow-color)'
+            }}
+          >
+            <h5 className="fw-black text-theme-primary mb-3" style={{ fontWeight: 800 }}>Recent Deployments</h5>
+            
+            <div className="overflow-auto pe-1" style={{ maxHeight: '480px' }}>
+              <div className="row row-cols-1 g-3 m-0">
+                {dbProjects.map((project) => (
+                  <div key={project.id} className="col px-0">
+                    <div 
+                      className="p-3 rounded-3 border h-100 d-flex flex-column justify-content-between"
+                      style={{ backgroundColor: 'var(--bg-pill)', borderColor: 'var(--border-subtle)' }}
+                    >
+                      <div className="text-truncate mb-2">
+                        <h6 className="fw-black text-theme-primary m-0 text-truncate" title={project.title} style={{ fontWeight: 800 }}>
+                          {project.title}
+                        </h6>
+                        <span className="badge rounded-pill text-white my-2 small text-truncate" style={{ background: 'linear-gradient(135deg, #a855f7, #3b82f6)', fontSize: '0.65rem' }}>
+                          {project.category}
+                        </span>
+                        <small className="text-theme-secondary d-block text-truncate" title={project.websiteUrl} style={{ fontSize: '0.78rem' }}>
+                          <strong>Target:</strong> {project.websiteUrl}
+                        </small>
+                      </div>
+                      
+                      <div className="d-flex justify-content-between align-items-center mt-2 pt-2 border-top" style={{ borderColor: 'var(--border-subtle)' }}>
+                        <span className="badge bg-success bg-opacity-20 text-white rounded-pill px-2.5 py-1 small">
+                          Production
+                        </span>
+                        <div className="d-flex gap-1">
+                          <button 
+                            className="btn btn-sm btn-secondary-glow py-1 px-2 rounded-2"
+                            onClick={() => handleEditClick(project)}
+                            title="Edit Project"
+                          >
+                            <i className="bi bi-pencil-square"></i>
+                          </button>
+                          <button 
+                            className="btn btn-sm btn-outline-danger py-1 px-2 rounded-2"
+                            onClick={() => handleDeleteClick(project.id)}
+                            title="Delete Project"
+                          >
+                            <i className="bi bi-trash3-fill"></i>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+
+              {dbProjects.length === 0 && (
+                <div className="text-center text-theme-secondary py-5">No projects found in Firebase database.</div>
+              )}
             </div>
 
-            {dbProjects.length === 0 && (
-              <div className="text-center text-muted py-5">No projects found in Firebase.</div>
-            )}
           </div>
-
         </div>
       </div>
     </div>

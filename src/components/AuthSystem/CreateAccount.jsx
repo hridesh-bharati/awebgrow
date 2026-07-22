@@ -73,26 +73,32 @@ export default function CreateAccount() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center w-100 bg-light" style={{ minHeight: '100vh', padding: '10px' }}>
+    <div className="d-flex justify-content-center align-items-center w-100 position-relative overflow-hidden shell-wrapper" style={{ minHeight: '100vh', backgroundColor: '#020205', padding: '10px' }}>
       
-      {/* Complete Overhaul Stylesheet for Full Width Stretching */}
+      {/* AMBIENT BACKGROUND NEON SPHERES */}
+      <div className="position-absolute rounded-circle pointer-events-none glow-sphere-1" style={{ width: '500px', height: '500px', top: '-10%', left: '-5%', zIndex: 0, background: 'radial-gradient(circle, rgba(255, 0, 128, 0.15) 0%, transparent 70%)', filter: 'blur(80px)' }} />
+      <div className="position-absolute rounded-circle pointer-events-none glow-sphere-2" style={{ width: '500px', height: '500px', bottom: '-10%', right: '-5%', zIndex: 0, background: 'radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%)', filter: 'blur(80px)' }} />
+
       <style dangerouslySetInnerHTML={{__html: `
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
         .custom-card {
           width: 100% !important;
-          border-radius: 24px;
+          max-width: 560px !important;
+          border-radius: 24px !important;
+          background-color: var(--bg-card, rgba(15, 16, 26, 0.85)) !important;
+          border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+          backdrop-filter: blur(20px);
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6) !important;
+          z-index: 2;
           margin-top: 10px;
           margin-bottom: 10px;
         }
         
-        /* Desktop/PC View Layout Engine */
         @media (min-width: 768px) {
           .custom-card {
-            width: 60% !important;
-            max-width: 900px !important;
-            border-radius: 40px;
+            border-radius: 32px !important;
             margin-top: 0px;
             margin-bottom: 0px;
           }
@@ -110,53 +116,55 @@ export default function CreateAccount() {
         }
         .input-icon-wrapper svg {
           position: absolute;
-          left: 15px;
-          color: #6c757d;
+          left: 16px;
+          color: var(--text-secondary, #9ca3af);
           font-size: 1.1rem;
           z-index: 10;
         }
         .input-icon-wrapper .form-control {
-          padding-left: 45px !important;
+          padding-left: 48px !important;
+          background-color: var(--bg-pill, rgba(255, 255, 255, 0.03)) !important;
+          color: var(--text-primary, #ffffff) !important;
+          border-color: var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+        }
+        .input-icon-wrapper .form-control:focus {
+          border-color: #a855f7 !important;
+          box-shadow: 0 0 0 0.25rem rgba(168, 85, 247, 0.2) !important;
+          background-color: var(--bg-pill, rgba(255, 255, 255, 0.05)) !important;
+        }
+        .input-icon-wrapper .form-control::placeholder {
+          color: rgba(255, 255, 255, 0.3);
         }
       `}} />
 
       {/* Main Container */}
-      <div 
-        className="position-relative bg-white shadow border overflow-hidden custom-card d-flex flex-column"
-        style={{ minHeight: 'auto' }}
-      >
+      <div className="position-relative shadow overflow-hidden custom-card d-flex flex-column" style={{ minHeight: 'auto' }}>
         
-        {/* Top Header Section with SVG Background Stretch */}
-        <div className="position-relative w-100" style={{ height: '160px', flexShrink: 0 }}>
-          <div className="position-absolute top-0 start-0 w-100 h-100" style={{ zIndex: 1 }}>
-            <svg viewBox="0 0 500 160" preserveAspectRatio="none" style={{ height: '100%', width: '100%' }}>
-              <path d="M0,0 L500,0 L500,100 C400,160 150,95 0,140 Z" style={{ stroke: 'none', fill: '#3b00a8' }}></path>
-            </svg>
-          </div>
-
-          <div className="position-absolute w-100 h-100 d-flex flex-column justify-content-center px-4" style={{ zIndex: 2 }}>
-            <h1 className="fw-bold text-white m-0" style={{ fontSize: '2.2rem', letterSpacing: '-0.5px' }}>Create Account</h1>
-            <p className="text-white-50 small mt-1 mb-0" style={{ fontSize: '0.92rem' }}>Register a new profile to get started</p>
+        {/* Top Header Section with Neon Gradient Accent */}
+        <div className="position-relative w-100 py-4 px-4 border-bottom" style={{ borderColor: 'var(--border-subtle)', background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(255, 0, 128, 0.05) 100%)' }}>
+          <div className="d-flex flex-column justify-content-center">
+            <h1 className="fw-black text-white m-0" style={{ fontSize: '2rem', fontWeight: 900, letterSpacing: '-0.5px' }}>Create Account</h1>
+            <p className="text-theme-secondary small mt-1 mb-0" style={{ fontSize: '0.9rem', color: '#9ca3af', fontWeight: 500 }}>Register a new administrative profile to get started</p>
           </div>
         </div>
 
         {/* Form Elements Area */}
-        <div className="px-4 pt-4 pb-2 flex-grow-1 no-scrollbar" style={{ zIndex: 3 }}>
+        <div className="px-4 pt-4 pb-2 flex-grow-1 no-scrollbar">
           <form onSubmit={handleSignup} className="d-flex flex-column gap-3">
             
             {/* Full Name */}
-            <div className="row align-items-center g-2 g-md-3">
-              <div className="col-12 col-md-3 pc-label-align">
-                <label className="form-label small fw-bold text-dark mb-0">Full Name</label>
+            <div className="row align-items-center g-2 mx-0">
+              <div className="col-12 px-0 mb-1">
+                <label className="form-label small fw-bold text-theme-secondary" style={{ color: '#9ca3af' }}>Full Name</label>
               </div>
-              <div className="col-12 col-md-9">
+              <div className="col-12 px-0">
                 <div className="input-icon-wrapper">
                   <FiUser />
                   <input 
                     type="text" 
                     placeholder="Admin Kumar"
                     className="form-control" 
-                    style={{ height: '48px', borderRadius: '10px', border: '1px solid #ced4da', fontSize: '0.95rem' }} 
+                    style={{ height: '48px', borderRadius: '12px', fontSize: '0.9rem' }} 
                     required 
                     onChange={e => setFormData({...formData, name: e.target.value})} 
                   />
@@ -165,18 +173,18 @@ export default function CreateAccount() {
             </div>
             
             {/* Email */}
-            <div className="row align-items-center g-2 g-md-3">
-              <div className="col-12 col-md-3 pc-label-align">
-                <label className="form-label small fw-bold text-dark mb-0">Email Address</label>
+            <div className="row align-items-center g-2 mx-0 mt-1">
+              <div className="col-12 px-0 mb-1">
+                <label className="form-label small fw-bold text-theme-secondary" style={{ color: '#9ca3af' }}>Email Address</label>
               </div>
-              <div className="col-12 col-md-9">
+              <div className="col-12 px-0">
                 <div className="input-icon-wrapper">
                   <FiMail />
                   <input 
                     type="email" 
                     placeholder="admin@gmail.com"
                     className="form-control" 
-                    style={{ height: '48px', borderRadius: '10px', border: '1px solid #ced4da', fontSize: '0.95rem', backgroundColor: '#E8F0FE' }} 
+                    style={{ height: '48px', borderRadius: '12px', fontSize: '0.9rem' }} 
                     required 
                     onChange={e => setFormData({...formData, email: e.target.value})} 
                   />
@@ -185,18 +193,18 @@ export default function CreateAccount() {
             </div>
             
             {/* Mobile Number */}
-            <div className="row align-items-center g-2 g-md-3">
-              <div className="col-12 col-md-3 pc-label-align">
-                <label className="form-label small fw-bold text-dark mb-0">Mobile No.</label>
+            <div className="row align-items-center g-2 mx-0 mt-1">
+              <div className="col-12 px-0 mb-1">
+                <label className="form-label small fw-bold text-theme-secondary" style={{ color: '#9ca3af' }}>Mobile No.</label>
               </div>
-              <div className="col-12 col-md-9">
+              <div className="col-12 px-0">
                 <div className="input-icon-wrapper">
                   <FiPhone />
                   <input 
                     type="tel" 
                     placeholder="+91 xxxxx-xxxxx"
                     className="form-control" 
-                    style={{ height: '48px', borderRadius: '10px', border: '1px solid #ced4da', fontSize: '0.95rem', backgroundColor: '#E8F0FE' }} 
+                    style={{ height: '48px', borderRadius: '12px', fontSize: '0.9rem' }} 
                     required 
                     onChange={e => setFormData({...formData, phone: e.target.value})} 
                   />
@@ -205,18 +213,18 @@ export default function CreateAccount() {
             </div>
             
             {/* Password */}
-            <div className="row align-items-center g-2 g-md-3">
-              <div className="col-12 col-md-3 pc-label-align">
-                <label className="form-label small fw-bold text-dark mb-0">Password</label>
+            <div className="row align-items-center g-2 mx-0 mt-1">
+              <div className="col-12 px-0 mb-1">
+                <label className="form-label small fw-bold text-theme-secondary" style={{ color: '#9ca3af' }}>Password</label>
               </div>
-              <div className="col-12 col-md-9">
+              <div className="col-12 px-0">
                 <div className="input-icon-wrapper">
                   <FiLock />
                   <input 
                     type="password" 
                     placeholder="••••••"
                     className="form-control" 
-                    style={{ height: '48px', borderRadius: '10px', border: '1px solid #ced4da', fontSize: '0.95rem', backgroundColor: '#E8F0FE' }} 
+                    style={{ height: '48px', borderRadius: '12px', fontSize: '0.9rem' }} 
                     required 
                     onChange={e => setFormData({...formData, password: e.target.value})} 
                   />
@@ -224,18 +232,20 @@ export default function CreateAccount() {
               </div>
             </div>
 
-            {/* Action Action */}
-            <div className="row mt-3">
-              <div className="col-12 offset-md-3 col-md-9">
+            {/* Action Button */}
+            <div className="row mt-3 mx-0">
+              <div className="col-12 px-0">
                 <button 
                   type="submit" 
-                  className="btn w-100 rounded-pill py-2 fw-bold text-white" 
+                  className="btn w-100 rounded-pill py-2 fw-black text-white" 
                   style={{ 
                     height: '50px', 
-                    backgroundColor: '#F59E0B', 
+                    background: 'linear-gradient(135deg, #a855f7 0%, #ff0080 100%)',
                     border: 'none',
                     fontSize: '1rem',
-                    letterSpacing: '0.5px'
+                    fontWeight: 800,
+                    letterSpacing: '0.5px',
+                    boxShadow: '0 0 20px rgba(168, 85, 247, 0.4)'
                   }} 
                   disabled={loading}
                 >
@@ -245,19 +255,11 @@ export default function CreateAccount() {
             </div>
           </form>
 
-          <div className="text-center mt-4 mb-4">
-            <span className="text-muted small">Already have account </span>
-            <Link href="/login" className="small fw-semibold text-primary text-decoration-none ms-1">Sign in</Link>
+          <div className="text-center mt-4 mb-3">
+            <span className="text-theme-secondary small" style={{ color: '#9ca3af' }}>Already have account? </span>
+            <Link href="/login" className="small fw-bold text-decoration-none ms-1" style={{ color: '#00f2fe' }}>Sign in</Link>
           </div>
 
-        </div>
-
-        {/* Bottom Decorative Waves Footer */}
-        <div className="position-relative w-100 mt-auto" style={{ height: '65px', flexShrink: 0, zIndex: 1 }}>
-          <svg viewBox="0 0 500 100" preserveAspectRatio="none" className="position-absolute bottom-0 start-0 w-100 h-100">
-            <path d="M0,50 C150,100 350,20 500,60 L500,100 L0,100 Z" style={{ stroke: 'none', fill: '#DCEBFE' }}></path>
-            <path d="M0,70 C150,30 300,100 500,50 L500,100 L0,100 Z" style={{ stroke: 'none', fill: '#2563EB' }}></path>
-          </svg>
         </div>
 
       </div>
