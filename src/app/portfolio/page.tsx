@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import PortfolioCard from '@/components/Home/PortfolioCard';
-
+// src\app\portfolio\page.tsx
 // ✅ Page-specific SEO Metadata
 export const metadata: Metadata = {
   title: "Our Portfolio | Web Development Projects | AWebGrow",
@@ -20,11 +20,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Our Portfolio | Web Development Projects | AWebGrow",
     description: "Explore AWebGrow's best web development, mobile app, and digital marketing projects.",
-    url: "https://awebgrowhb.com/portfolio",
+    url: "https://www.awebgrow.com/portfolio",
     type: "website",
   },
   alternates: {
-    canonical: "https://awebgrowhb.com/portfolio",
+    canonical: "https://www.awebgrow.com/portfolio",
   },
 };
 

@@ -15,11 +15,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Terms and Conditions | AWebGrow",
     description: "AWebGrow's terms and conditions - Service agreements and policies",
-    url: "https://awebgrowhb.com/terms-and-conditions",
+    url: "https://www.awebgrow.com/terms-and-conditions",
     type: "website",
   },
   alternates: {
-    canonical: "https://awebgrowhb.com/terms-and-conditions",
+    canonical: "https://www.awebgrow.com/terms-and-conditions",
   },
   robots: {
     index: true,
@@ -199,7 +199,7 @@ export default function TermsAndConditionsPage() {
                 <strong>AWebGrow</strong><br />
                 Email: <a href="mailto:hridesh027@gmail.com" className="text-decoration-none" style={{ color: '#8b5cf6' }}>hridesh027@gmail.com</a><br />
                 Phone: <a href="tel:+917267995307" className="text-decoration-none" style={{ color: '#8b5cf6' }}>+91-7267995307</a><br />
-                Website: <a href="https://awebgrowhb.com" className="text-decoration-none" style={{ color: '#8b5cf6' }}>awebgrowhb.com</a>
+                Website: <a href="https://www.awebgrow.com" className="text-decoration-none" style={{ color: '#8b5cf6' }}>awebgrowhb.com</a>
               </address>
             </section>
 
@@ -224,11 +224,11 @@ export default function TermsAndConditionsPage() {
               "@type": "WebPage",
               "name": "Terms and Conditions",
               "description": "AWebGrow's terms and conditions - Service agreements and policies for web development, SEO, and digital marketing services.",
-              "url": "https://awebgrowhb.com/terms-and-conditions",
+              "url": "https://www.awebgrow.com/terms-and-conditions",
               "publisher": {
                 "@type": "Organization",
                 "name": "AWebGrow",
-                "url": "https://awebgrowhb.com"
+                "url": "https://www.awebgrow.com"
               },
               "lastReviewed": "2026-07-22"
             })

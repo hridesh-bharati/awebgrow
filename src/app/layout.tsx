@@ -16,7 +16,7 @@ const inter = Inter({
   display: 'swap',
 });
 
-const FALLBACK_URL = 'https://awebgrowhb.com';
+const FALLBACK_URL = 'https://www.awebgrow.com';
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL;
 
 export const metadata = {

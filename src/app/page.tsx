@@ -11,7 +11,7 @@ import FeatureCard from "@/components/Home/FeatureCard";
 import CustomCursor from "./CustomCursor";
 import Link from "next/link";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://awebgrowhb.com';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.awebgrow.com';
 
 // ✅ COMPLETE SCHEMA COLLECTION
 const schemas = [

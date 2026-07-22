@@ -4,12 +4,9 @@ Disallow: /dashboard/
 Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
-Disallow: /*?*
 
 User-agent: Googlebot
 Allow: /
-Disallow: /dashboard/
-Disallow: /api/
 
-Sitemap: https://awebgrowhb.com/sitemap.xml
-Host: https://awebgrowhb.com
+Sitemap: https://www.awebgrow.com/sitemap.xml
+Host: https://www.awebgrow.com

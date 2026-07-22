@@ -1,66 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
-  <!-- HOMEPAGE -->
   <url>
-    <loc>https://awebgrowhb.com</loc>
+    <loc>https://www.awebgrow.com</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- SERVICES -->
   <url>
-    <loc>https://awebgrowhb.com/services</loc>
+    <loc>https://www.awebgrow.com/services</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- PORTFOLIO -->
   <url>
-    <loc>https://awebgrowhb.com/portfolio</loc>
+    <loc>https://www.awebgrow.com/portfolio</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- ABOUT -->
   <url>
-    <loc>https://awebgrowhb.com/about</loc>
+    <loc>https://www.awebgrow.com/about</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
-  <!-- CONTACT -->
   <url>
-    <loc>https://awebgrowhb.com/contact</loc>
+    <loc>https://www.awebgrow.com/contact</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- FAQ -->
   <url>
-    <loc>https://awebgrowhb.com/faq</loc>
+    <loc>https://www.awebgrow.com/faq</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
-
-  <!-- PRIVACY POLICY -->
   <url>
-    <loc>https://awebgrowhb.com/privacy-policy</loc>
+    <loc>https://www.awebgrow.com/booking</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.awebgrow.com/privacy-policy</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
-  <!-- TERMS AND CONDITIONS -->
   <url>
-    <loc>https://awebgrowhb.com/terms-and-conditions</loc>
+    <loc>https://www.awebgrow.com/terms-and-conditions</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

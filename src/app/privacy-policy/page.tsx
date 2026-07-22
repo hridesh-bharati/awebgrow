@@ -15,11 +15,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Privacy Policy | AWebGrow",
     description: "AWebGrow's privacy policy - How we protect your data",
-    url: "https://awebgrowhb.com/privacy-policy",
+    url: "https://www.awebgrow.com/privacy-policy",
     type: "website",
   },
   alternates: {
-    canonical: "https://awebgrowhb.com/privacy-policy",
+    canonical: "https://www.awebgrow.com/privacy-policy",
   },
   robots: {
     index: true,
@@ -208,7 +208,7 @@ export default function PrivacyPolicyPage() {
                 <strong>AWebGrow</strong><br />
                 Email: <a href="mailto:hridesh027@gmail.com" className="text-decoration-none" style={{ color: '#8b5cf6' }}>hridesh027@gmail.com</a><br />
                 Phone: <a href="tel:+917267995307" className="text-decoration-none" style={{ color: '#8b5cf6' }}>+91-7267995307</a><br />
-                Website: <a href="https://awebgrowhb.com" className="text-decoration-none" style={{ color: '#8b5cf6' }}>awebgrowhb.com</a>
+                Website: <a href="https://www.awebgrow.com" className="text-decoration-none" style={{ color: '#8b5cf6' }}>awebgrowhb.com</a>
               </address>
             </section>
 
@@ -232,11 +232,11 @@ export default function PrivacyPolicyPage() {
               "@type": "WebPage",
               "name": "Privacy Policy",
               "description": "AWebGrow's privacy policy - How we collect, use, and protect your personal data.",
-              "url": "https://awebgrowhb.com/privacy-policy",
+              "url": "https://www.awebgrow.com/privacy-policy",
               "publisher": {
                 "@type": "Organization",
                 "name": "AWebGrow",
-                "url": "https://awebgrowhb.com"
+                "url": "https://www.awebgrow.com"
               },
               "lastReviewed": "2026-07-22"
             })
