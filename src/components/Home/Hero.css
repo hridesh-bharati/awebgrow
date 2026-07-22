@@ -1,0 +1,237 @@
+/* ========================================================= */
+/* HERO SECTION CORE STYLES - FIXED CLIPPING & SPACING */
+/* ========================================================= */
+
+.hero-section {
+  background-color: #090a0f;
+  margin-top: 65px; /* Navbar space */
+  min-height: calc(100vh - 65px);
+  display: flex;
+  align-items: center;
+  position: relative;
+  /* CRITICAL FIX: Overflow hidden hatakar visible kiya taaki nodes katein nahi */
+  overflow: visible !important; 
+  padding-top: 15px;
+  padding-bottom: 25px;
+}
+
+/* Background Glow Effects */
+.glow-sphere-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+  top: -5%;
+  left: -5%;
+  filter: blur(60px);
+  pointer-events: none;
+  position: absolute;
+}
+
+.glow-sphere-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+  bottom: 0%;
+  right: -5%;
+  filter: blur(60px);
+  pointer-events: none;
+  position: absolute;
+}
+
+/* Badge Styling */
+.hero-badge {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  padding: 5px 14px;
+  border-radius: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-dot-pink {
+  width: 6px;
+  height: 6px;
+  background-color: #ec4899;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ec4899;
+}
+
+.badge-text-glow {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: #e4e4e7;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Typography Gradient */
+.text-gradient-purple-blue {
+  background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-pink-orange {
+  background: linear-gradient(135deg, #ec4899 0%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Buttons Styling */
+.btn-secondary-glow {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.85rem;
+  backdrop-filter: blur(8px);
+  color: #ffffff !important;
+  padding: 8px 20px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-secondary-glow:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ========================================================= */
+/* ORBIT ANIMATION & NODE STYLES - FIXED SIZING */
+/* ========================================================= */
+
+.orbit-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 320px; /* Reduced container to prevent overflowing screen */
+  height: 320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible !important;
+}
+
+.center-rocket-box {
+  width: 95px;
+  height: 95px;
+  background: linear-gradient(135deg, #a855f7, #ec4899, #f97316);
+  box-shadow: 0 0 35px rgba(236, 72, 153, 0.5);
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  position: absolute;
+}
+
+@keyframes spinOrbit {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes counterSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+
+.orbit-circle-path {
+  width: 230px; /* Perfectly fitting radius */
+  height: 230px;
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  animation: spinOrbit 22s linear infinite;
+  z-index: 3;
+  overflow: visible !important;
+}
+
+.orbit-circle-path:hover {
+  animation-play-state: paused;
+}
+
+.orbit-node-item {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  background: #12131c;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -26px; /* Offset to align exactly on orbit circle */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  z-index: 4;
+}
+
+.orbit-node-item:hover {
+  transform: scale(1.15);
+}
+
+.orbit-node-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: counterSpin 22s linear infinite;
+}
+
+.orbit-circle-path:hover .orbit-node-inner {
+  animation-play-state: paused;
+}
+
+/* 6 Items Exact Placement */
+.node-pos-1 { top: 0%; left: 50%; }
+.node-pos-2 { top: 25%; left: 93.3%; }
+.node-pos-3 { top: 75%; left: 93.3%; }
+.node-pos-4 { top: 100%; left: 50%; }
+.node-pos-5 { top: 75%; left: 6.7%; }
+.node-pos-6 { top: 25%; left: 6.7%; }
+
+/* ========================================================= */
+/* STATS STRIP STYLES */
+/* ========================================================= */
+
+.stat-card-glow {
+  background: rgba(18, 19, 28, 0.7);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 8px; /* Compact padding to keep everything inside 100vh */
+  transition: all 0.3s ease;
+}
+
+.stat-card-glow:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.stat-number {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 0;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 991.98px) {
+  .hero-section {
+    min-height: auto;
+    padding-top: 20px;
+    padding-bottom: 30px;
+  }
+  .orbit-wrapper {
+    max-width: 280px;
+    height: 280px;
+    margin-top: 15px;
+  }
+  .orbit-circle-path {
+    width: 200px;
+    height: 200px;
+  }
+}
