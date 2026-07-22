@@ -1,41 +1,32 @@
-/* ========================================================= */
-/* HERO SECTION CORE STYLES - ZERO CLIPPING & NO SCROLL BUG */
-/* ========================================================= */
+/* src/components/Home/Hero.css */
 
 .hero-section {
   background-color: #090a0f;
   margin-top: 65px;
   position: relative;
-  /* CRITICAL FIX: Overflow visible taaki icons na katein aur layout scroll na kare */
   overflow: visible !important;
   padding-top: 25px;
   padding-bottom: 40px;
 }
 
-/* Background Glow Effects */
+/* Background Glow */
+.glow-sphere-1, .glow-sphere-2 {
+  width: 450px;
+  height: 450px;
+  filter: blur(70px);
+  pointer-events: none;
+  position: absolute;
+}
 .glow-sphere-1 {
-  width: 450px;
-  height: 450px;
   background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
-  top: -5%;
-  left: -5%;
-  filter: blur(70px);
-  pointer-events: none;
-  position: absolute;
+  top: -5%; left: -5%;
 }
-
 .glow-sphere-2 {
-  width: 450px;
-  height: 450px;
   background: radial-gradient(circle, rgba(236, 72, 153, 0.18) 0%, rgba(0, 0, 0, 0) 70%);
-  bottom: 0%;
-  right: -5%;
-  filter: blur(70px);
-  pointer-events: none;
-  position: absolute;
+  bottom: 0%; right: -5%;
 }
 
-/* Badge Styling */
+/* Hero Badge */
 .hero-badge {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -48,8 +39,7 @@
 }
 
 .badge-dot-pink {
-  width: 6px;
-  height: 6px;
+  width: 6px; height: 6px;
   background-color: #ec4899;
   border-radius: 50%;
   box-shadow: 0 0 8px #ec4899;
@@ -63,45 +53,7 @@
   text-transform: uppercase;
 }
 
-/* Typography Gradient */
-.text-gradient-purple-blue {
-  background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-pink-orange {
-  background: linear-gradient(135deg, #ec4899 0%, #f97316 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Buttons Styling */
-.btn-secondary-glow {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  font-size: 0.85rem;
-  backdrop-filter: blur(8px);
-  color: #ffffff !important;
-  padding: 9px 22px;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.btn-secondary-glow:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
-}
-
-/* ========================================================= */
-/* CENTER LOGO & FULL UNCLIPPED ORBIT SYSTEM */
-/* ========================================================= */
-
+/* Orbit System */
 .orbit-wrapper {
   position: relative;
   width: 100%;
@@ -114,9 +66,8 @@
   overflow: visible !important;
 }
 
-/* Center Brand Image Frame (Slightly Bigger Picture) */
 .center-brand-box {
-  width: 175px; /* Increased image frame size */
+  width: 175px; 
   height: 175px;
   border-radius: 28px;
   display: flex;
@@ -147,7 +98,7 @@
 }
 
 .orbit-circle-path {
-  width: 320px; /* Perfect orbit diameter for 175px central box */
+  width: 320px; 
   height: 320px;
   position: absolute;
   border-radius: 50%;
@@ -163,7 +114,7 @@
 
 .orbit-node-item {
   position: absolute;
-  width: 60px; /* Node Box */
+  width: 60px; 
   height: 60px;
   background: #12131c;
   border-radius: 50%;
@@ -192,7 +143,7 @@
   animation-play-state: paused;
 }
 
-/* 6 Orbit Positions around circle */
+/* Orbit Node Positioning */
 .node-pos-1 { top: 0%; left: 50%; }
 .node-pos-2 { top: 25%; left: 93.3%; }
 .node-pos-3 { top: 75%; left: 93.3%; }
@@ -200,10 +151,7 @@
 .node-pos-5 { top: 75%; left: 6.7%; }
 .node-pos-6 { top: 25%; left: 6.7%; }
 
-/* ========================================================= */
-/* STATS STRIP STYLES */
-/* ========================================================= */
-
+/* Stats Strip */
 .stat-card-glow {
   background: rgba(18, 19, 28, 0.7);
   backdrop-filter: blur(12px);
@@ -225,17 +173,7 @@
 }
 
 @media (max-width: 991.98px) {
-  .orbit-wrapper {
-    max-width: 320px;
-    height: 320px;
-    margin-top: 20px;
-  }
-  .orbit-circle-path {
-    width: 240px;
-    height: 240px;
-  }
-  .center-brand-box {
-    width: 130px;
-    height: 130px;
-  }
+  .orbit-wrapper { max-width: 320px; height: 320px; margin-top: 20px; }
+  .orbit-circle-path { width: 240px; height: 240px; }
+  .center-brand-box { width: 130px; height: 130px; }
 }

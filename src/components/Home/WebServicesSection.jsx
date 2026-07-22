@@ -12,7 +12,6 @@ const services = [
   "Tech Support", "Digital Transformation"
 ];
 
-// Pre-defined Neon Palette Matrix
 const badgeColors = [
   { text: '#00f2fe', bg: 'rgba(0, 242, 254, 0.05)', border: 'rgba(0, 242, 254, 0.25)', glow: 'rgba(0, 242, 254, 0.3)' },
   { text: '#ff0080', bg: 'rgba(255, 0, 128, 0.05)', border: 'rgba(255, 0, 128, 0.25)', glow: 'rgba(255, 0, 128, 0.3)' },
@@ -27,11 +26,7 @@ const badgeColors = [
 const WebServicesSection = () => {
   return (
     <section className="w-100 position-relative py-3 d-flex align-items-center justify-content-center marquee-section-wrapper">
-      
-      {/* MASK CONTAINER FOR FADING EDGES */}
       <div className="w-100 overflow-hidden position-relative marquee-mask-container">
-        
-        {/* RUNNING MARQUEE CONTAINER */}
         <div className="marquee-track-container d-flex align-items-center gap-4">
           
           {/* TRACK GROUP 1 */}
@@ -43,26 +38,19 @@ const WebServicesSection = () => {
                   <div 
                     className="service-badge"
                     style={{
-                      '--text-color': color.text,
-                      '--bg-color': color.bg,
-                      '--border-color': color.border,
-                      '--glow-color': color.glow
+                      '--text-color': color.text, '--bg-color': color.bg,
+                      '--border-color': color.border, '--glow-color': color.glow
                     }}
                   >
                     {service}
                   </div>
-                  <span 
-                    className="badge-star-icon" 
-                    style={{ color: color.text, textShadow: `0 0 10px ${color.text}` }}
-                  >
-                    ✦
-                  </span>
+                  <span className="badge-star-icon" style={{ color: color.text, textShadow: `0 0 10px ${color.text}` }}>✦</span>
                 </div>
               );
             })}
           </div>
           
-          {/* TRACK GROUP 2 (DUPLICATE FOR SEAMLESS LOOP) */}
+          {/* TRACK GROUP 2 */}
           <div className="d-flex align-items-center gap-4 text-uppercase">
             {services.map((service, index) => {
               const color = badgeColors[index % badgeColors.length];
@@ -71,20 +59,13 @@ const WebServicesSection = () => {
                   <div 
                     className="service-badge"
                     style={{
-                      '--text-color': color.text,
-                      '--bg-color': color.bg,
-                      '--border-color': color.border,
-                      '--glow-color': color.glow
+                      '--text-color': color.text, '--bg-color': color.bg,
+                      '--border-color': color.border, '--glow-color': color.glow
                     }}
                   >
                     {service}
                   </div>
-                  <span 
-                    className="badge-star-icon" 
-                    style={{ color: color.text, textShadow: `0 0 10px ${color.text}` }}
-                  >
-                    ✦
-                  </span>
+                  <span className="badge-star-icon" style={{ color: color.text, textShadow: `0 0 10px ${color.text}` }}>✦</span>
                 </div>
               );
             })}
