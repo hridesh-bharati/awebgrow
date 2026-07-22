@@ -118,152 +118,175 @@ export default function PricingPackages() {
   const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
 
   return (
-    <>
-      <div className="w-100 min-vh-100 py-6 px-0 position-relative overflow-hidden" style={{ 
-        background: '#f8fafc' 
-      }} id="pricingpackages">
-        
-        {/* Colorful Ambient Scatter Orbs */}
-        <div className="position-absolute top-0 start-0 rounded-circle" style={{
-          width: '800px', height: '800px',
-          backgroundImage: 'radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 70%)',
-          filter: 'blur(120px)', pointerEvents: 'none', transform: 'translate(-30%, -30%)'
-        }}></div>
+    <div className="w-100 min-vh-100 py-5 px-0 position-relative overflow-hidden bg-theme-main border-top" id="pricingpackages" style={{ borderColor: 'var(--border-subtle)' }}>
+      
+      {/* AMBIENT BACKGROUND GLOWS */}
+      <div 
+        className="position-absolute top-0 start-0 rounded-circle pointer-events-none glow-sphere-1" 
+        style={{
+          width: '800px', 
+          height: '800px',
+          transform: 'translate(-30%, -30%)'
+        }}
+      />
 
-        <div className="container-fluid p-0" style={{ maxWidth: '1920px', position: 'relative', zIndex: 1 }}>
+      <div className="container-fluid p-0 position-relative z-1" style={{ maxWidth: '1920px' }}>
 
-          {/* MASTER TOP HEADER */}
-          <div className="text-center mb-5">
-            <div className="badge-wrapper d-inline-flex align-items-center gap-2 px-4 py-2 rounded-pill mb-3" style={{ background: 'rgba(15,23,42,0.04)', border: '1px solid rgba(15,23,42,0.06)' }}>
-              <span className="badge-dot" style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#4f46e5', display: 'inline-block' }}></span>
-              <span className="badge-text fw-bold tracking-wider text-uppercase text-slate-600" style={{ fontSize: '0.7rem', letterSpacing: '0.12em' }}>💎 PRICING PLANS</span>
-            </div>
-            <h1 className="display-4 fw-black mb-3 text-slate-900" style={{ fontWeight: 900, letterSpacing: '-0.02em' }}>
-              Professional <span style={{ background: 'linear-gradient(90deg, #4f46e5, #0ea5e9, #10b981)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Website Packages</span>
-            </h1>
-            <p className="text-slate-500 mx-auto fs-5" style={{ maxWidth: '520px' }}>
-              7 Powerful Packages • Starting From <span className="fw-bold text-slate-900">₹13,999</span>
-            </p>
+        {/* MASTER TOP HEADER */}
+        <div className="text-center mb-5 px-3">
+          {/* EXTRA BOLD NEON BADGE */}
+          <div 
+            className="d-inline-flex align-items-center gap-2 px-3.5 py-1.5 rounded-pill mb-3"
+            style={{
+              background: 'rgba(255, 0, 128, 0.08)',
+              border: '1.5px solid rgba(255, 0, 128, 0.35)',
+              backdropFilter: 'blur(10px)',
+              boxShadow: '0 0 15px rgba(255, 0, 128, 0.15)'
+            }}
+          >
+            <span style={{ width: '7px', height: '7px', backgroundColor: '#ff0080', borderRadius: '50%', boxShadow: '0 0 10px #ff0080, 0 0 20px #ff0080' }} />
+            <span className="fw-black text-uppercase" style={{ fontSize: '0.72rem', letterSpacing: '0.14em', color: '#ff77bc', fontWeight: 800 }}>
+              💎 PRICING PLANS
+            </span>
           </div>
 
-          {/* ALL CATEGORIES FULL WIDTH STACK GRID */}
-          <div className="row g-5 m-0 w-100">
-            {websitePackagesData.map((category, catIndex) => (
-              <div key={catIndex} className="col-12 px-0 px-md-3">
-                
-                {/* CATEGORY BLOCK CARD CONTAINER */}
-                <div 
-                  className="category-card position-relative overflow-hidden p-4 p-md-5"
-                  style={{
-                    background: 'rgba(255, 255, 255, 0.65)',
-                    backdropFilter: 'blur(20px)',
-                    WebkitBackdropFilter: 'blur(20px)',
-                    borderRadius: '28px',
-                    border: '1px solid rgba(15, 23, 42, 0.05)',
-                    boxShadow: '0 10px 30px -10px rgba(15,23,42,0.03)',
-                    transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
-                  }}
-                >
-                  {/* INNER CATEGORY INFOBAR HEADER */}
-                  <div className="d-flex align-items-center flex-wrap gap-3 mb-4 pb-3 position-relative border-bottom border-slate-100">
-                    <div 
-                      className="d-flex align-items-center justify-content-center rounded-3 shadow-sm text-white fs-4"
-                      style={{
-                        width: '52px', height: '52px', background: category.gradient,
-                        flexShrink: 0
-                      }}
-                    >
-                      <i className={`bi ${category.icon}`}></i>
-                    </div>
-                    <div>
-                      <h2 className="fw-bold mb-0 text-slate-900" style={{ fontSize: '1.45rem', fontWeight: 800 }}>
-                        {category.title}
-                      </h2>
-                      <span className="text-slate-400 d-none d-lg-flex fw-semibold mt-0.5" style={{ fontSize: '0.72rem', letterSpacing: '0.02em' }}>{category.subTitle} Baseline Architecture</span>
-                    </div>
-                    <div className="ms-sm-auto mt-2 mt-sm-0">
-                      <span className="badge rounded-pill px-3.5 py-2 fw-bold" style={{ background: category.gradient, color: '#ffffff', fontSize: '0.78rem', boxShadow: `0 6px 12px -3px ${category.color}30` }}>
-                        Starting {category.startingPrice}
-                      </span>
-                    </div>
+          {/* MAXIMUM BOLD HEADING */}
+          <h1 
+            className="display-4 fw-black mb-3 text-theme-primary"
+            style={{ fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.15 }}
+          >
+            Professional <span className="text-gradient-pink-orange" style={{ fontWeight: 900, filter: 'drop-shadow(0 0 25px rgba(255, 0, 128, 0.35))' }}>Website Packages</span>
+          </h1>
+
+          <p className="text-theme-secondary mx-auto fs-5" style={{ maxWidth: '520px', fontWeight: 500 }}>
+            7 Powerful Packages • Starting From <span className="fw-black text-theme-primary" style={{ fontWeight: 900 }}>₹13,999</span>
+          </p>
+        </div>
+
+        {/* CATEGORIES GRID */}
+        <div className="row g-5 m-0 w-100">
+          {websitePackagesData.map((category, catIndex) => (
+            <div key={catIndex} className="col-12 px-0 px-md-3">
+              
+              {/* CATEGORY CONTAINER */}
+              <div 
+                className="position-relative overflow-hidden p-4 p-md-5 rounded-4 border"
+                style={{
+                  backgroundColor: 'var(--bg-card)',
+                  borderColor: 'var(--border-subtle)',
+                  boxShadow: '0 10px 30px var(--shadow-color)',
+                  transition: 'background-color 0.3s ease, border-color 0.3s ease'
+                }}
+              >
+                {/* CATEGORY HEADER */}
+                <div className="d-flex align-items-center flex-wrap gap-3 mb-4 pb-3 position-relative border-bottom" style={{ borderColor: 'var(--border-subtle)' }}>
+                  <div 
+                    className="d-flex align-items-center justify-content-center rounded-3 shadow-sm text-white fs-4 flex-shrink-0"
+                    style={{ width: '52px', height: '52px', background: category.gradient }}
+                  >
+                    <i className={`bi ${category.icon}`}></i>
                   </div>
+                  <div>
+                    <h2 className="fw-black mb-0 text-theme-primary" style={{ fontSize: '1.5rem', fontWeight: 900 }}>
+                      {category.title}
+                    </h2>
+                    <span className="text-theme-secondary d-none d-lg-flex fw-bold mt-0.5" style={{ fontSize: '0.78rem', opacity: 0.9 }}>
+                      {category.subTitle} Baseline Architecture
+                    </span>
+                  </div>
+                  <div className="ms-sm-auto mt-2 mt-sm-0">
+                    <span className="badge rounded-pill px-3.5 py-2 fw-black text-white" style={{ background: category.gradient, fontSize: '0.8rem', fontWeight: 800 }}>
+                      Starting ₹{category.startingPrice}
+                    </span>
+                  </div>
+                </div>
 
-                  {/* SUB PLANS HORIZONTAL ROW SCROLLING GRID */}
-                  <div className="row g-3 position-relative">
-                    {category.plans.map((plan, planIndex) => {
-                      const planKey = `${catIndex}-${planIndex}`;
-                      const isHovered = hoveredPlan === planKey;
+                {/* PLANS ROW */}
+                <div className="row g-3 position-relative">
+                  {category.plans.map((plan, planIndex) => {
+                    const planKey = `${catIndex}-${planIndex}`;
+                    const isHovered = hoveredPlan === planKey;
 
-                      return (
-                        <div key={planIndex} className="col-12 col-sm-6 col-lg-4 col-xl-3 col-xxl">
-                          <div 
-                            className="plan-card h-100 d-flex flex-column position-relative p-4 rounded-4 bg-white shadow"
-                            onMouseEnter={() => setHoveredPlan(planKey)}
-                            onMouseLeave={() => setHoveredPlan(null)}
-                            style={{
-                              border: plan.popular ? `2px solid ${category.color}` : '1px solid rgba(15, 23, 42, 0.06)',
-                              boxShadow: isHovered ? `0 20px 35px -10px ${category.color}15` : '0 4px 6px -1px rgba(0,0,0,0.01)',
-                              transform: isHovered ? 'translateY(-5px)' : 'none',
-                              transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)'
-                            }}
-                          >
-                            {/* Popular Ribbon Label Indicator */}
-                            {plan.popular && (
-                              <div className="position-absolute top-0 end-0 px-3 py-0.5 fw-bold text-white" style={{ background: category.gradient, borderRadius: '0 14px 0 14px', fontSize: '0.6rem', letterSpacing: '0.05em' }}>
-                                ★ POPULAR CHOICE
-                              </div>
-                            )}
-
-                            <div className="d-flex justify-content-between align-items-center mb-3">
-                              <span className="badge rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style={{ background: category.gradient, width: '22px', height: '22px', fontSize: '0.6rem' }}>
-                                {plan.id}
-                              </span>
-                              <span className="fs-5 fw-black" style={{ color: category.color, fontWeight: 800 }}>
-                                {plan.price}
-                              </span>
-                            </div>
-
-                            <h4 className="fw-bold text-slate-900 mb-3" style={{ fontSize: '0.92rem' }}>
-                              {plan.type}
-                            </h4>
-
-                            {/* Core Bullet Deliverables */}
-                            <ul className="list-unstyled mb-4 flex-grow-1">
-                              {plan.features.map((feature, fIdx) => (
-                                <li key={fIdx} className="d-flex align-items-start gap-2 mb-2" style={{ fontSize: '0.78rem', lineHeight: '1.45' }}>
-                                  <i className="bi bi-patch-check-fill mt-0.5 flex-shrink-0" style={{ color: category.color, fontSize: '0.75rem' }}></i>
-                                  <span style={{ color: '#475569', fontWeight: 500 }}>{feature}</span>
-                                </li>
-                              ))}
-                            </ul>
-
-                            {/* Redirect Form Route Target Button */}
-                            <Link
-                              href={`/booking?title=${encodeURIComponent(category.title)}&type=${encodeURIComponent(plan.type)}&price=${encodeURIComponent(plan.price)}&features=${encodeURIComponent(plan.features.join(','))}&icon=${encodeURIComponent(category.icon)}&gradient=${encodeURIComponent(category.gradient)}`}
-                              className="btn w-100 rounded-pill py-2.5 fw-bold text-white text-center border-0 d-flex align-items-center justify-content-center gap-1 mt-auto shadow-xs"
+                    return (
+                      <div key={planIndex} className="col-12 col-sm-6 col-lg-4 col-xl-3 col-xxl">
+                        <div 
+                          className="h-100 d-flex flex-column position-relative p-4 rounded-4 border"
+                          onMouseEnter={() => setHoveredPlan(planKey)}
+                          onMouseLeave={() => setHoveredPlan(null)}
+                          style={{
+                            backgroundColor: 'var(--bg-card)',
+                            borderColor: plan.popular ? category.color : 'var(--border-subtle)',
+                            boxShadow: isHovered ? `0 15px 30px var(--shadow-color)` : 'none',
+                            transform: isHovered ? 'translateY(-5px)' : 'none',
+                            transition: 'all 0.3s ease'
+                          }}
+                        >
+                          {/* POPULAR BADGE */}
+                          {plan.popular && (
+                            <div 
+                              className="position-absolute top-0 end-0 px-3 py-1 fw-black text-white" 
                               style={{ 
-                                background: isHovered ? '#0f172a' : category.gradient, 
-                                fontSize: '0.8rem',
-                                transition: 'all 0.25s'
+                                background: category.gradient, 
+                                borderRadius: '0 14px 0 14px', 
+                                fontSize: '0.62rem', 
+                                letterSpacing: '0.06em',
+                                fontWeight: 900
                               }}
                             >
-                              <span>Choose Blueprint</span>
-                              <i className="bi bi-arrow-right" style={{ fontSize: '0.7rem' }}></i>
-                            </Link>
+                              ★ POPULAR CHOICE
+                            </div>
+                          )}
 
+                          <div className="d-flex justify-content-between align-items-center mb-3">
+                            <span className="badge rounded-circle d-flex align-items-center justify-content-center text-white fw-black" style={{ background: category.gradient, width: '24px', height: '24px', fontSize: '0.65rem', fontWeight: 900 }}>
+                              {plan.id}
+                            </span>
+                            <span className="fs-5 fw-black" style={{ color: category.color, fontWeight: 900 }}>
+                              {plan.price}
+                            </span>
                           </div>
+
+                          <h4 className="fw-black text-theme-primary mb-3" style={{ fontSize: '0.98rem', fontWeight: 900 }}>
+                            {plan.type}
+                          </h4>
+
+                          {/* FEATURES LIST */}
+                          <ul className="list-unstyled mb-4 flex-grow-1">
+                            {plan.features.map((feature, fIdx) => (
+                              <li key={fIdx} className="d-flex align-items-start gap-2 mb-2" style={{ fontSize: '0.8rem', lineHeight: '1.45' }}>
+                                <i className="bi bi-patch-check-fill mt-0.5 flex-shrink-0" style={{ color: category.color, fontSize: '0.8rem' }}></i>
+                                <span className="text-theme-secondary" style={{ fontWeight: 500 }}>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+
+                          {/* ACTION BUTTON */}
+                          <Link
+                            href={`/booking?title=${encodeURIComponent(category.title)}&type=${encodeURIComponent(plan.type)}&price=${encodeURIComponent(plan.price)}&features=${encodeURIComponent(plan.features.join(','))}&icon=${encodeURIComponent(category.icon)}&gradient=${encodeURIComponent(category.gradient)}`}
+                            className="btn w-100 rounded-pill py-2.5 fw-black text-white text-center border-0 d-flex align-items-center justify-content-center gap-1 mt-auto"
+                            style={{ 
+                              background: isHovered ? '#0f172a' : category.gradient, 
+                              fontSize: '0.82rem',
+                              fontWeight: 800,
+                              transition: 'all 0.25s'
+                            }}
+                          >
+                            <span>Choose Blueprint</span>
+                            <i className="bi bi-arrow-right" style={{ fontSize: '0.75rem' }}></i>
+                          </Link>
+
                         </div>
-                      );
-                    })}
-                  </div>
-
+                      </div>
+                    );
+                  })}
                 </div>
-              </div>
-            ))}
-          </div>
 
+              </div>
+            </div>
+          ))}
         </div>
+
       </div>
-    </>
+    </div>
   );
 }

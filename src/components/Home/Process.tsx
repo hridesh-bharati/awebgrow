@@ -11,8 +11,7 @@ import {
   Zap, 
   X, 
   Check, 
-  ArrowRight, 
-  Sparkles 
+  ArrowRight 
 } from 'lucide-react';
 
 interface ServiceItem {
@@ -22,10 +21,9 @@ interface ServiceItem {
   description: string;
   features: string[];
   accentColor: string;
-  glassBg: string;
+  glowColor: string;
 }
 
-// Exactly 6 core web development ecosystem capabilities
 const services: ServiceItem[] = [
   {
     icon: Globe,
@@ -33,8 +31,8 @@ const services: ServiceItem[] = [
     tag: "FRONTEND / FULLSTACK",
     description: "Fast, SEO-optimized user interfaces built with production-ready Next.js and React pipelines.",
     features: ["Next.js App Router", "SEO & Core Web Vitals", "State Management"],
-    accentColor: "#22c55e", // Dashboard Green
-    glassBg: "rgba(255, 255, 255, 0.65)"
+    accentColor: "#10b981", 
+    glowColor: "rgba(16, 185, 129, 0.35)"
   },
   {
     icon: ShoppingCart,
@@ -42,8 +40,8 @@ const services: ServiceItem[] = [
     tag: "RETAIL SOLUTIONS",
     description: "High-conversion digital storefronts built with seamless payment handling and inventory hooks.",
     features: ["Stripe / Crypto Hooks", "Inventory Sync Systems", "Instant Fluid Checkout"],
-    accentColor: "#3b82f6", // Active Blue
-    glassBg: "rgba(255, 255, 255, 0.65)"
+    accentColor: "#3b82f6", 
+    glowColor: "rgba(59, 130, 246, 0.35)"
   },
   {
     icon: Layout,
@@ -51,8 +49,8 @@ const services: ServiceItem[] = [
     tag: "PRODUCT DESIGN",
     description: "Wireframes, layout frameworks, and responsive design systems that prioritize intuitive user actions.",
     features: ["Figma to Code Systems", "User Action Mapping", "Responsive Wireframes"],
-    accentColor: "#ea580c", // Warning/Alert Orange
-    glassBg: "rgba(255, 255, 255, 0.65)"
+    accentColor: "#f97316", 
+    glowColor: "rgba(249, 115, 22, 0.35)"
   },
   {
     icon: Server,
@@ -60,8 +58,8 @@ const services: ServiceItem[] = [
     tag: "SCALABLE SYSTEMS",
     description: "Robust data architectures, secure API development, and lightning-fast database performance optimization.",
     features: ["RESTful / GraphQL APIs", "Database Optimization", "Secure Middleware"],
-    accentColor: "#a855f7", // Inbox Purple
-    glassBg: "rgba(255, 255, 255, 0.65)"
+    accentColor: "#a855f7", 
+    glowColor: "rgba(168, 85, 247, 0.35)"
   },
   {
     icon: Shield,
@@ -69,17 +67,17 @@ const services: ServiceItem[] = [
     tag: "DATA PROTECTION",
     description: "Implementing token authorizations, end-to-end user encryption protocols, and regular site vulnerability patches.",
     features: ["JWT / OAuth Verification", "Data Encryption Layers", "Vulnerability Patches"],
-    accentColor: "#ef4444", // Exam Red
-    glassBg: "rgba(255, 255, 255, 0.65)"
+    accentColor: "#ff0080", 
+    glowColor: "rgba(255, 0, 128, 0.35)"
   },
   {
     icon: Zap,
     title: "Speed Optimization",
     tag: "PERFORMANCE",
     description: "Deep diagnostic code profiling, asset compression, and intelligent caching setups to ensure fast page loads.",
-    features: ["Smart Edge Caching", "Asset Asset Compression", "Bundle Size Shaving"],
-    accentColor: "#0d9488", // Attendance Teal
-    glassBg: "rgba(255, 255, 255, 0.65)"
+    features: ["Smart Edge Caching", "Asset Compression", "Bundle Size Shaving"],
+    accentColor: "#00f2fe", 
+    glowColor: "rgba(0, 242, 254, 0.35)"
   }
 ];
 
@@ -92,29 +90,66 @@ export default function Services() {
     return () => window.removeEventListener('keydown', handleEscape);
   }, []);
 
-  // Shared feature renderer to maintain DRY infrastructure
   const renderFeatures = (features: string[], color: string, size = 14) => 
     features.map((feature, idx) => (
-      <div key={idx} className="d-flex align-items-center gap-2 mb-2 text-secondary" style={{ fontSize: '0.875rem' }}>
+      <div key={idx} className="d-flex align-items-center gap-2 mb-2 text-theme-secondary" style={{ fontSize: '0.85rem' }}>
         <Check size={size} style={{ color, flexShrink: 0 }} />
         <span>{feature}</span>
       </div>
     ));
 
   return (
-    <section className="py-5 position-relative overflow-hidden" id="services" style={{ background: '#f8fafc' }}>
-      {/* Reduced blue intensity blobs drastically to keep background balanced and clean */}
-      <div className="position-absolute rounded-circle opacity-10" style={{ top: '-5%', left: '10%', width: '250px', height: '250px', background: '#e2e8f0', filter: 'blur(90px)' }} />
-      <div className="position-absolute rounded-circle opacity-10" style={{ bottom: '5%', right: '10%', width: '300px', height: '300px', background: '#cbd5e1', filter: 'blur(100px)' }} />
+    <section className="py-5 position-relative overflow-hidden bg-theme-main border-top" id="services" style={{ borderColor: 'var(--border-subtle)' }}>
+      
+      {/* High-Contrast Neon Ambient Glow Orbs */}
+      <div 
+        className="position-absolute rounded-circle pointer-events-none" 
+        style={{ 
+          width: '450px', 
+          height: '450px', 
+          background: 'radial-gradient(circle, rgba(255, 0, 128, 0.12) 0%, transparent 70%)', 
+          filter: 'blur(90px)', 
+          top: '5%',
+          left: '-5%'
+        }} 
+      />
+      <div 
+        className="position-absolute rounded-circle pointer-events-none" 
+        style={{ 
+          width: '450px', 
+          height: '450px', 
+          background: 'radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%)', 
+          filter: 'blur(90px)', 
+          bottom: '5%',
+          right: '-5%'
+        }} 
+      />
 
-      <div className="container position-relative" style={{ zIndex: 2 }}>
+      <div className="container position-relative z-1">
+        
         {/* Section Header */}
         <div className="text-center mb-5">
-          <div className="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3" style={{ background: 'rgba(255, 255, 255, 0.8)', backdropFilter: 'blur(4px)', border: '1px solid #e2e8f0' }}>
-            <Sparkles size={14} style={{ color: '#475569' }} />
-            <span className="fw-bold" style={{ fontSize: '0.75rem', letterSpacing: '0.05em', color: '#475569' }}>WHAT WE DO</span>
+          <div 
+            className="d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill mb-3"
+            style={{
+              background: 'rgba(255, 0, 128, 0.06)',
+              border: '1px solid rgba(255, 0, 128, 0.25)',
+              backdropFilter: 'blur(10px)'
+            }}
+          >
+            <span style={{ width: '6px', height: '6px', backgroundColor: '#ff0080', borderRadius: '50%', boxShadow: '0 0 10px #ff0080' }} />
+            <span className="fw-bold text-uppercase" style={{ fontSize: '0.68rem', letterSpacing: '0.12em', color: '#ff77bc' }}>
+              ✦ WHAT WE DO
+            </span>
           </div>
-          <h2 className="fw-bold mb-3 text-dark" style={{ fontSize: '2.5rem', letterSpacing: '-0.02em' }}>Web Ecosystem Solutions</h2>
+
+          <h2 className="display-6 fw-extrabold text-theme-primary mb-3">
+            Web Ecosystem <span className="text-gradient-pink-orange">Solutions</span>
+          </h2>
+          
+          <p className="text-theme-secondary fs-6 mx-auto" style={{ maxWidth: '580px', lineHeight: '1.6' }}>
+            Tailored digital capabilities engineered to scale your brand with cutting-edge stack integration.
+          </p>
         </div>
 
         {/* Services Layout Grid */}
@@ -124,46 +159,56 @@ export default function Services() {
             return (
               <div key={index} className="col-12 col-md-6 col-lg-4">
                 <div 
-                  className="h-100 p-4 rounded-4"
+                  className="h-100 p-4 rounded-4 border position-relative overflow-hidden"
                   onClick={() => setSelectedService(service)}
                   style={{
                     cursor: 'pointer',
-                    background: service.glassBg,
-                    backdropFilter: 'blur(16px)',
-                    WebkitBackdropFilter: 'blur(16px)',
-                    border: '1px solid rgba(255, 255, 255, 0.7)',
-                    boxShadow: '0 4px 24px -4px rgba(0, 0, 0, 0.04)',
-                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                    backgroundColor: 'var(--bg-card)',
+                    borderColor: 'var(--border-subtle)',
+                    boxShadow: '0 10px 30px var(--shadow-color)',
+                    transition: 'transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease',
                     display: 'flex',
                     flexDirection: 'column'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-4px)';
-                    e.currentTarget.style.borderColor = `${service.accentColor}50`;
-                    e.currentTarget.style.boxShadow = `0 12px 30px -5px ${service.accentColor}15`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.7)';
-                    e.currentTarget.style.boxShadow = '0 4px 24px -4px rgba(0, 0, 0, 0.04)';
                   }}
                 >
                   <div className="d-flex align-items-center justify-content-between mb-4">
                     <div className="d-flex align-items-center gap-3">
-                      <div className="d-flex align-items-center justify-content-center rounded-3 text-white" style={{ width: '46px', height: '46px', background: service.accentColor }}>
+                      <div 
+                        className="d-flex align-items-center justify-content-center rounded-3 text-white" 
+                        style={{ 
+                          width: '46px', 
+                          height: '46px', 
+                          background: service.accentColor,
+                          boxShadow: `0 0 15px ${service.glowColor}`
+                        }}
+                      >
                         <IconComponent size={22} />
                       </div>
-                      <h4 className="fw-bold mb-0" style={{ color: '#1e293b', fontSize: '1.15rem' }}>{service.title}</h4>
+                      <h4 className="fw-bold mb-0 text-theme-primary" style={{ fontSize: '1.15rem' }}>{service.title}</h4>
                     </div>
-                    <span className="px-2 py-0.5 rounded text-muted fw-semibold" style={{ background: 'rgba(0,0,0,0.04)', fontSize: '0.65rem' }}>{service.tag}</span>
+                    <span 
+                      className="px-2 py-0.5 rounded fw-bold" 
+                      style={{ 
+                        background: 'var(--bg-pill)', 
+                        color: service.accentColor,
+                        fontSize: '0.65rem',
+                        border: `1px solid ${service.accentColor}30`
+                      }}
+                    >
+                      {service.tag}
+                    </span>
                   </div>
                   
-                  <p className="mb-4 text-secondary" style={{ fontSize: '0.9rem', lineHeight: 1.6, flex: 1 }}>{service.description}</p>
+                  <p className="mb-4 text-theme-secondary" style={{ fontSize: '0.88rem', lineHeight: 1.6, flex: 1 }}>
+                    {service.description}
+                  </p>
                   
-                  <div className="mt-auto">{renderFeatures(service.features, service.accentColor)}</div>
+                  <div className="mt-auto">
+                    {renderFeatures(service.features, service.accentColor)}
+                  </div>
 
-                  <div className="mt-4 pt-3 d-flex align-items-center justify-content-between" style={{ borderTop: '1px solid rgba(0,0,0,0.05)' }}>
-                    <span className="fw-semibold" style={{ fontSize: '0.85rem', color: service.accentColor }}>Inspect Stack</span>
+                  <div className="mt-4 pt-3 d-flex align-items-center justify-content-between border-top" style={{ borderColor: 'var(--border-subtle)' }}>
+                    <span className="fw-bold" style={{ fontSize: '0.82rem', color: service.accentColor }}>Inspect Stack</span>
                     <ArrowRight size={16} style={{ color: service.accentColor }} />
                   </div>
                 </div>
@@ -173,59 +218,77 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Shared Modular Modal Stack */}
+      {/* Shared Neon Modal Overlay */}
       {selectedService && (() => {
         const ModalIcon = selectedService.icon;
         return (
           <div 
-            className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+            className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-3"
             onClick={() => setSelectedService(null)}
-            style={{ background: 'rgba(15, 23, 42, 0.2)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', zIndex: 1050, padding: '1rem' }}
+            style={{ 
+              background: 'rgba(2, 2, 3, 0.75)', 
+              backdropFilter: 'blur(12px)', 
+              WebkitBackdropFilter: 'blur(12px)', 
+              zIndex: 1050 
+            }}
           >
             <div 
-              className="rounded-4 p-4 p-md-5 position-relative"
+              className="rounded-4 p-4 p-md-5 position-relative border"
               onClick={(e) => e.stopPropagation()}
               style={{ 
                 maxWidth: '480px', 
                 width: '100%', 
-                background: 'rgba(255, 255, 255, 0.85)', 
-                backdropFilter: 'blur(24px)',
-                border: '1px solid rgba(255, 255, 255, 0.8)',
-                boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.12)'
+                backgroundColor: 'var(--bg-card)', 
+                borderColor: 'var(--border-subtle)',
+                boxShadow: `0 20px 50px ${selectedService.glowColor}`
               }}
             >
               <button
                 onClick={() => setSelectedService(null)}
-                className="position-absolute border-0 d-flex align-items-center justify-content-center"
-                style={{ top: '1.25rem', right: '1.25rem', width: '32px', height: '32px', borderRadius: '50%', color: '#64748b', background: 'rgba(0,0,0,0.05)' }}
+                className="position-absolute border-0 d-flex align-items-center justify-content-center text-theme-secondary"
+                style={{ 
+                  top: '1.25rem', 
+                  right: '1.25rem', 
+                  width: '32px', 
+                  height: '32px', 
+                  borderRadius: '50%', 
+                  background: 'var(--bg-pill)' 
+                }}
               >
                 <X size={16} />
               </button>
 
               <div className="d-flex align-items-center gap-3 mb-4">
-                <div className="d-flex align-items-center justify-content-center rounded-3 text-white" style={{ width: '52px', height: '52px', background: selectedService.accentColor }}>
+                <div 
+                  className="d-flex align-items-center justify-content-center rounded-3 text-white" 
+                  style={{ 
+                    width: '52px', 
+                    height: '52px', 
+                    background: selectedService.accentColor,
+                    boxShadow: `0 0 20px ${selectedService.glowColor}`
+                  }}
+                >
                   <ModalIcon size={26} />
                 </div>
                 <div>
-                  <h3 className="fw-bold mb-0 text-dark" style={{ fontSize: '1.35rem' }}>{selectedService.title}</h3>
-                  <span className="text-muted fw-bold" style={{ fontSize: '0.75rem' }}>{selectedService.tag}</span>
+                  <h3 className="fw-bold mb-0 text-theme-primary" style={{ fontSize: '1.35rem' }}>{selectedService.title}</h3>
+                  <span className="fw-bold small" style={{ color: selectedService.accentColor }}>{selectedService.tag}</span>
                 </div>
               </div>
 
-              <p className="text-secondary" style={{ lineHeight: 1.6, fontSize: '0.95rem' }}>{selectedService.description}</p>
+              <p className="text-theme-secondary" style={{ lineHeight: 1.6, fontSize: '0.92rem' }}>{selectedService.description}</p>
 
-              <div className="p-3 rounded-3 mt-4" style={{ background: 'rgba(255,255,255,0.4)', border: '1px solid rgba(0,0,0,0.05)' }}>
-                <h6 className="fw-bold mb-3 text-dark" style={{ fontSize: '0.9rem' }}>Delivery Framework Details</h6>
+              <div className="p-3 rounded-3 mt-4 border" style={{ backgroundColor: 'var(--bg-pill)', borderColor: 'var(--border-subtle)' }}>
+                <h6 className="fw-bold mb-3 text-theme-primary" style={{ fontSize: '0.9rem' }}>Delivery Framework Details</h6>
                 {renderFeatures(selectedService.features, selectedService.accentColor, 16)}
               </div>
 
               <Link
                 href="/contact"
-                className="btn w-100 rounded-3 py-2.5 fw-semibold text-white mt-4 d-inline-flex align-items-center justify-content-center gap-2"
+                className="btn-neon-cta w-100 justify-content-center py-2.5 mt-4"
                 onClick={() => setSelectedService(null)}
-                style={{ background: selectedService.accentColor, border: 'none' }}
               >
-                Configure Specs
+                <span>Configure Specs</span>
                 <ArrowRight size={16} />
               </Link>
             </div>

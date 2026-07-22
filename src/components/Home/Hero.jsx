@@ -23,45 +23,48 @@ export default function Hero() {
       <div className="glow-sphere-2" />
 
       <div className="container position-relative z-2">
-        <div className="row align-items-center gy-3">
+        <div className="row align-items-center gy-4">
           
-          {/* LEFT CONTENT COLUMN */}
-          <div className="col-12 col-lg-7 text-center text-lg-start">
+          {/* LEFT CONTENT COLUMN (FULL 100VH ON MOBILE) */}
+          <div className="col-12 col-lg-7 text-center text-lg-start hero-left-content">
             
             {/* BADGE */}
-            <div className="hero-badge mb-2" data-aos="fade-down" data-aos-delay="100">
+            <div className="hero-badge mb-3 mx-auto mx-lg-0" data-aos="fade-down" data-aos-delay="100">
               <span className="badge-dot-pink" />
               <span className="badge-text-glow">WE BUILD. YOU GROW.</span>
             </div>
 
             {/* MAIN TITLE */}
             <h1
-              className="fw-extrabold text-white mb-2"
+              className="fw-extrabold text-white mb-3"
               data-aos="fade-right"
               data-aos-delay="200"
               style={{
-                fontSize: 'clamp(1.9rem, 3.8vw, 3.4rem)',
-                lineHeight: '1.12',
+                fontSize: 'clamp(2.1rem, 4.5vw, 3.4rem)',
+                lineHeight: '1.18',
                 letterSpacing: '-0.03em',
-                fontWeight: 800,
+                fontWeight: 900,
               }}
             >
               Building Digital{' '}
               <span className="text-gradient-purple-blue">Experiences</span>
               <br />
               That Drive Real{' '}
-              <span className="text-gradient-pink-orange">Business Growth.</span>
+              <span className="text-gradient-pink-orange" style={{ filter: 'drop-shadow(0 0 20px rgba(255,0,128,0.3))' }}>
+                Business Growth.
+              </span>
             </h1>
 
             {/* SUBTITLE */}
             <p
-              className="mb-3 mx-auto mx-lg-0 text-secondary"
+              className="mb-4 mx-auto mx-lg-0 text-secondary"
               data-aos="fade-up"
               data-aos-delay="300"
               style={{
-                fontSize: 'clamp(0.85rem, 0.95vw, 1rem)',
-                maxWidth: '520px',
-                lineHeight: '1.5',
+                fontSize: 'clamp(0.92rem, 1.1vw, 1.05rem)',
+                maxWidth: '540px',
+                lineHeight: '1.65',
+                fontWeight: 500
               }}
             >
               AWebGrow helps brands and businesses transform ideas into powerful digital products that attract, engage, and convert.
@@ -69,16 +72,16 @@ export default function Hero() {
 
             {/* BUTTONS */}
             <div
-              className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start gap-2.5 mb-3"
+              className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start gap-3 mb-4"
               data-aos="fade-up"
               data-aos-delay="400"
             >
-              <Link href="/services" className="btn-neon-cta" style={{ padding: '9px 22px', fontSize: '0.82rem' }}>
+              <Link href="/services" className="btn-neon-cta" style={{ padding: '11px 26px', fontSize: '0.85rem', fontWeight: 800 }}>
                 <span>Explore Our Services</span>
                 <i className="bi bi-arrow-right"></i>
               </Link>
 
-              <Link href="#portfolio" className="btn-secondary-glow">
+              <Link href="#portfolio" className="btn-secondary-glow" style={{ padding: '10px 24px', fontWeight: 700 }}>
                 <i className="bi bi-play-circle-fill" style={{ color: '#a855f7' }}></i>
                 <span>View Our Work</span>
               </Link>
@@ -86,11 +89,11 @@ export default function Hero() {
 
             {/* RATING */}
             <div
-              className="d-flex align-items-center justify-content-center justify-content-lg-start gap-2.5"
+              className="d-flex align-items-center justify-content-center justify-content-lg-start gap-2.5 pt-1"
               data-aos="fade-up"
               data-aos-delay="500"
             >
-              <div className="d-flex align-items-center text-warning" style={{ fontSize: '0.8rem' }}>
+              <div className="d-flex align-items-center text-warning" style={{ fontSize: '0.85rem' }}>
                 <i className="bi bi-star-fill me-1"></i>
                 <i className="bi bi-star-fill me-1"></i>
                 <i className="bi bi-star-fill me-1"></i>
@@ -98,33 +101,30 @@ export default function Hero() {
                 <i className="bi bi-star-fill me-1"></i>
                 <span className="fw-bold text-white ms-1">4.9/5</span>
               </div>
-              <div style={{ height: '12px', width: '1px', backgroundColor: 'rgba(255,255,255,0.2)' }} />
-              <span className="text-secondary" style={{ fontSize: '0.75rem' }}>
-                Trusted by 150+ Clients Worldwide
+              <div className='ms-2' style={{ height: '14px', width: '1px', backgroundColor: 'rgba(255,255,255,0.2)' }} />
+              <span className="text-secondary" style={{ fontSize: '0.78rem', fontWeight: 500 }}>
+                Trusted by 45+ Clients Worldwide
               </span>
             </div>
 
           </div>
 
-          {/* RIGHT COLUMN: BRAND "A" LOGO IMAGE + CIRCULAR ORBIT */}
+          {/* RIGHT COLUMN: CIRCULAR ORBIT (SCROLL DOWN BELOW 100VH ON MOBILE) */}
           <div className="col-12 col-lg-5 text-center" data-aos="zoom-in" data-aos-delay="300">
-            <div className="orbit-wrapper">
+            <div className="orbit-wrapper rounded-circle">
               
-              {/* CENTER BRAND LOGO IMAGE ("A" LETTER LOGO) */}
               <div className="center-brand-box">
                 <Image
                   src="/images/home-circle-image.png"
                   alt="AWebGrow Brand Logo"
-                  width={135}
-                  height={135}
-                  className="brand-image-fit"
+                  width={200}
+                  height={200}
+                  className="brand-image-fit rounded-circle"
                   priority
                 />
               </div>
 
-              {/* ORBIT PATH & NODES */}
               <div className="orbit-circle-path">
-                
                 <div className="orbit-node-item node-pos-1" style={{ border: '1px solid rgba(59,130,246,0.6)', boxShadow: '0 0 10px rgba(59,130,246,0.4)' }}>
                   <div className="orbit-node-inner">
                     <i className="bi bi-code-slash text-info" style={{ fontSize: '0.8rem' }}></i>
@@ -135,38 +135,37 @@ export default function Hero() {
                 <div className="orbit-node-item node-pos-2" style={{ border: '1px solid rgba(168,85,247,0.6)', boxShadow: '0 0 10px rgba(168,85,247,0.4)' }}>
                   <div className="orbit-node-inner">
                     <i className="bi bi-search-heart" style={{ color: '#a855f7', fontSize: '0.8rem' }}></i>
-                    <span style={{ fontSize: '0.45rem', color: '#e4e4e7', fontWeight: 600 }}>SEO</span>
+                    <span style={{ fontSize: '0.45rem', color: '#e4e4e7', fontWeight:600 }}>SEO</span>
                   </div>
                 </div>
 
                 <div className="orbit-node-item node-pos-3" style={{ border: '1px solid rgba(16,185,129,0.6)', boxShadow: '0 0 10px rgba(16,185,129,0.4)' }}>
                   <div className="orbit-node-inner">
                     <i className="bi bi-phone-fill text-success" style={{ fontSize: '0.8rem' }}></i>
-                    <span style={{ fontSize: '0.45rem', color: '#e4e4e7', fontWeight: 600 }}>App Dev</span>
+                    <span style={{ fontSize: '0.45rem', color: '#e4e4e7', fontWeight:600 }}>App Dev</span>
                   </div>
                 </div>
 
                 <div className="orbit-node-item node-pos-4" style={{ border: '1px solid rgba(249,115,22,0.6)', boxShadow: '0 0 10px rgba(249,115,22,0.4)' }}>
                   <div className="orbit-node-inner">
                     <i className="bi bi-google text-warning" style={{ fontSize: '0.8rem' }}></i>
-                    <span style={{ fontSize: '0.42rem', color: '#e4e4e7', fontWeight: 600 }}>Google Ads</span>
+                    <span style={{ fontSize: '0.42rem', color: '#e4e4e7', fontWeight:600 }}>Google Ads</span>
                   </div>
                 </div>
 
                 <div className="orbit-node-item node-pos-5" style={{ border: '1px solid rgba(236,72,153,0.6)', boxShadow: '0 0 10px rgba(236,72,153,0.4)' }}>
                   <div className="orbit-node-inner">
                     <i className="bi bi-infinity" style={{ color: '#ec4899', fontSize: '0.85rem' }}></i>
-                    <span style={{ fontSize: '0.42rem', color: '#e4e4e7', fontWeight: 600 }}>Meta Ads</span>
+                    <span style={{ fontSize: '0.42rem', color: '#e4e4e7', fontWeight:600 }}>Meta Ads</span>
                   </div>
                 </div>
 
                 <div className="orbit-node-item node-pos-6" style={{ border: '1px solid rgba(239,68,68,0.6)', boxShadow: '0 0 10px rgba(239,68,68,0.4)' }}>
                   <div className="orbit-node-inner">
                     <i className="bi bi-cpu-fill text-danger" style={{ fontSize: '0.8rem' }}></i>
-                    <span style={{ fontSize: '0.42rem', color: '#e4e4e7', fontWeight: 600 }}>AI Solutions</span>
+                    <span style={{ fontSize: '0.42rem', color: '#e4e4e7', fontWeight:600 }}>AI Solutions</span>
                   </div>
                 </div>
-
               </div>
 
             </div>
@@ -175,8 +174,7 @@ export default function Hero() {
         </div>
 
         {/* STATS STRIP */}
-        <div className="row g-2 mt-3 pt-1">
-          
+        <div className="row g-2 mt-4 pt-1">
           <div className="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
             <div className="stat-card-glow text-center" style={{ borderBottom: '3px solid #3b82f6' }}>
               <div className="d-flex align-items-center justify-content-center gap-1.5 mb-0.5">
@@ -220,7 +218,6 @@ export default function Hero() {
               <p className="text-secondary fw-medium mb-0" style={{ fontSize: '0.7rem' }}>Client Retention</p>
             </div>
           </div>
-
         </div>
 
       </div>
