@@ -39,7 +39,6 @@ export default function TermsAndConditionsPage() {
         <div className="row justify-content-center">
           <div className="col-lg-10">
             
-            {/* ✅ Breadcrumb Navigation */}
             <nav aria-label="Breadcrumb" className="mb-4">
               <ol className="breadcrumb" itemScope itemType="https://schema.org/BreadcrumbList">
                 <li className="breadcrumb-item" itemScope itemType="https://schema.org/ListItem">
@@ -55,7 +54,6 @@ export default function TermsAndConditionsPage() {
               </ol>
             </nav>
 
-            {/* ✅ Page Header */}
             <header className="mb-5">
               <h1 
                 id="terms-heading"
@@ -69,13 +67,12 @@ export default function TermsAndConditionsPage() {
               </p>
             </header>
 
-            {/* ✅ Acceptance of Terms */}
             <section className="mb-4" aria-labelledby="acceptance-heading">
               <h2 id="acceptance-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 1. Acceptance of Terms
               </h2>
               <p className="mb-3" style={{ lineHeight: '1.8', color: '#475569' }}>
-                By accessing and using <strong>AWebGrow</strong> (&quot;awebgrowhb.com&quot;), you agree to be bound by 
+                By accessing and using <strong>AWebGrow</strong> (&quot;www.awebgrow.com&quot;), you agree to be bound by 
                 these Terms and Conditions. If you do not agree with any part of these terms, you must not use our 
                 website or services.
               </p>
@@ -85,7 +82,6 @@ export default function TermsAndConditionsPage() {
               </p>
             </section>
 
-            {/* ✅ Services Provided */}
             <section className="mb-4" aria-labelledby="services-heading">
               <h2 id="services-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 2. Services Provided
@@ -104,7 +100,6 @@ export default function TermsAndConditionsPage() {
               </ul>
             </section>
 
-            {/* ✅ User Obligations */}
             <section className="mb-4" aria-labelledby="obligations-heading">
               <h2 id="obligations-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 3. User Obligations
@@ -121,7 +116,6 @@ export default function TermsAndConditionsPage() {
               </ul>
             </section>
 
-            {/* ✅ Payment Terms */}
             <section className="mb-4" aria-labelledby="payment-heading">
               <h2 id="payment-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 4. Payment Terms
@@ -138,7 +132,6 @@ export default function TermsAndConditionsPage() {
               </ul>
             </section>
 
-            {/* ✅ Intellectual Property */}
             <section className="mb-4" aria-labelledby="ip-heading">
               <h2 id="ip-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 5. Intellectual Property
@@ -153,7 +146,6 @@ export default function TermsAndConditionsPage() {
               </p>
             </section>
 
-            {/* ✅ Limitation of Liability */}
             <section className="mb-4" aria-labelledby="liability-heading">
               <h2 id="liability-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 6. Limitation of Liability
@@ -165,7 +157,6 @@ export default function TermsAndConditionsPage() {
               </p>
             </section>
 
-            {/* ✅ Termination */}
             <section className="mb-4" aria-labelledby="termination-heading">
               <h2 id="termination-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 7. Termination
@@ -176,7 +167,6 @@ export default function TermsAndConditionsPage() {
               </p>
             </section>
 
-            {/* ✅ Governing Law */}
             <section className="mb-4" aria-labelledby="law-heading">
               <h2 id="law-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 8. Governing Law
@@ -187,7 +177,6 @@ export default function TermsAndConditionsPage() {
               </p>
             </section>
 
-            {/* ✅ Contact Us */}
             <section className="mb-4" aria-labelledby="terms-contact-heading">
               <h2 id="terms-contact-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 9. Contact Information
@@ -199,11 +188,10 @@ export default function TermsAndConditionsPage() {
                 <strong>AWebGrow</strong><br />
                 Email: <a href="mailto:hridesh027@gmail.com" className="text-decoration-none" style={{ color: '#8b5cf6' }}>hridesh027@gmail.com</a><br />
                 Phone: <a href="tel:+917267995307" className="text-decoration-none" style={{ color: '#8b5cf6' }}>+91-7267995307</a><br />
-                Website: <a href="https://www.awebgrow.com" className="text-decoration-none" style={{ color: '#8b5cf6' }}>awebgrowhb.com</a>
+                Website: <a href="https://www.awebgrow.com" className="text-decoration-none" style={{ color: '#8b5cf6' }}>www.awebgrow.com</a>
               </address>
             </section>
 
-            {/* ✅ Footer Note */}
             <footer className="border-top pt-3 mt-5">
               <p className="text-muted" style={{ fontSize: '0.85rem' }}>
                 These terms and conditions are effective as of July 22, 2026. AWebGrow reserves the right 
@@ -215,7 +203,6 @@ export default function TermsAndConditionsPage() {
           </div>
         </div>
 
-        {/* ✅ Schema.org Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

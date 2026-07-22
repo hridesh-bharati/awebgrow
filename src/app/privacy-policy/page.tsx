@@ -39,7 +39,6 @@ export default function PrivacyPolicyPage() {
         <div className="row justify-content-center">
           <div className="col-lg-10">
             
-            {/* ✅ Breadcrumb Navigation */}
             <nav aria-label="Breadcrumb" className="mb-4">
               <ol className="breadcrumb" itemScope itemType="https://schema.org/BreadcrumbList">
                 <li className="breadcrumb-item" itemScope itemType="https://schema.org/ListItem">
@@ -55,7 +54,6 @@ export default function PrivacyPolicyPage() {
               </ol>
             </nav>
 
-            {/* ✅ Page Header */}
             <header className="mb-5">
               <h1 
                 id="privacy-heading"
@@ -69,13 +67,12 @@ export default function PrivacyPolicyPage() {
               </p>
             </header>
 
-            {/* ✅ Introduction */}
             <section className="mb-4" aria-labelledby="intro-heading">
               <h2 id="intro-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 1. Introduction
               </h2>
               <p className="mb-3" style={{ lineHeight: '1.8', color: '#475569' }}>
-                Welcome to <strong>AWebGrow</strong> (&quot;awebgrowhb.com&quot;). We are committed to protecting 
+                Welcome to <strong>AWebGrow</strong> (&quot;www.awebgrow.com&quot;). We are committed to protecting 
                 your personal information and your right to privacy. This Privacy Policy explains how we collect, 
                 use, disclose, and safeguard your information when you visit our website or use our services.
               </p>
@@ -86,7 +83,6 @@ export default function PrivacyPolicyPage() {
               </p>
             </section>
 
-            {/* ✅ Information We Collect */}
             <section className="mb-4" aria-labelledby="info-heading">
               <h2 id="info-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 2. Information We Collect
@@ -107,7 +103,6 @@ export default function PrivacyPolicyPage() {
               </ul>
             </section>
 
-            {/* ✅ How We Use Your Information */}
             <section className="mb-4" aria-labelledby="use-heading">
               <h2 id="use-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 3. How We Use Your Information
@@ -125,7 +120,6 @@ export default function PrivacyPolicyPage() {
               </ul>
             </section>
 
-            {/* ✅ Data Protection */}
             <section className="mb-4" aria-labelledby="protection-heading">
               <h2 id="protection-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 4. Data Protection & Security
@@ -142,7 +136,6 @@ export default function PrivacyPolicyPage() {
               </ul>
             </section>
 
-            {/* ✅ Cookies Policy */}
             <section className="mb-4" aria-labelledby="cookies-heading">
               <h2 id="cookies-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 5. Cookies Policy
@@ -160,7 +153,6 @@ export default function PrivacyPolicyPage() {
               </ul>
             </section>
 
-            {/* ✅ Third-Party Services */}
             <section className="mb-4" aria-labelledby="third-party-heading">
               <h2 id="third-party-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 6. Third-Party Services
@@ -179,7 +171,6 @@ export default function PrivacyPolicyPage() {
               </p>
             </section>
 
-            {/* ✅ Your Rights */}
             <section className="mb-4" aria-labelledby="rights-heading">
               <h2 id="rights-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 7. Your Rights
@@ -196,7 +187,6 @@ export default function PrivacyPolicyPage() {
               </ul>
             </section>
 
-            {/* ✅ Contact Information */}
             <section className="mb-4" aria-labelledby="contact-heading">
               <h2 id="contact-heading" className="h4 fw-bold mb-3" style={{ color: '#0f172a' }}>
                 8. Contact Us
@@ -208,11 +198,10 @@ export default function PrivacyPolicyPage() {
                 <strong>AWebGrow</strong><br />
                 Email: <a href="mailto:hridesh027@gmail.com" className="text-decoration-none" style={{ color: '#8b5cf6' }}>hridesh027@gmail.com</a><br />
                 Phone: <a href="tel:+917267995307" className="text-decoration-none" style={{ color: '#8b5cf6' }}>+91-7267995307</a><br />
-                Website: <a href="https://www.awebgrow.com" className="text-decoration-none" style={{ color: '#8b5cf6' }}>awebgrowhb.com</a>
+                Website: <a href="https://www.awebgrow.com" className="text-decoration-none" style={{ color: '#8b5cf6' }}>www.awebgrow.com</a>
               </address>
             </section>
 
-            {/* ✅ Footer Note */}
             <footer className="border-top pt-3 mt-5">
               <p className="text-muted" style={{ fontSize: '0.85rem' }}>
                 This privacy policy is effective as of July 22, 2026, and will be updated as necessary. 
@@ -223,7 +212,6 @@ export default function PrivacyPolicyPage() {
           </div>
         </div>
 
-        {/* ✅ Schema.org Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
