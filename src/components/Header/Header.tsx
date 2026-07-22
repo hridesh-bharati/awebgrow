@@ -127,7 +127,7 @@ export default function Header() {
         <div className="container-fluid max-width-xl d-flex align-items-center justify-content-between">
           {/* BRAND LOGO */}
           <Link href="/" className="text-decoration-none d-flex align-items-center m-0 p-0">
-            <Image src="/icons/awebgrow-logo.png" alt="AWEBGROW Logo" width={120} height={50} className="object-fit-contain  m-0 p-0 ms-1" priority />
+            <Image src="/icons/awebgrow-logo.png" alt="AWEBGROW Logo" width={140} height={80} className="object-fit-contain rounded-2 border-secondary m-0 p-0 ms-1" priority />
           </Link>
 
           {/* DESKTOP NAVIGATION (Pill Container) */}
