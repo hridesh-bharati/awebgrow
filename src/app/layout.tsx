@@ -7,6 +7,7 @@ import "./globale.css";
 import { Toaster } from 'sonner';
 import type { Viewport } from 'next';
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
+import { allKeywords } from "@/app/data/seo-keywords";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,50 +21,29 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL;
 
 export const metadata = {
   metadataBase: new URL(BASE_URL),
-  
-  // ✅ IMPROVED TITLE for Indian market
+
   title: {
     default: "Web Development Company India | Website & App Development Services | AWebGrow",
     template: "%s | AWebGrow"
   },
-  
-  // ✅ IMPROVED DESCRIPTION with keywords
-  description: "AWebGrow is a leading web development company in India offering custom website development, eCommerce solutions, mobile app development, UI/UX design, SEO services, and enterprise software development. Hire expert Next.js & MERN stack developers.",
-  
-  // ✅ EXPANDED KEYWORDS with local SEO
-  keywords: [
-    "web development company India",
-    "website development services",
-    "mobile app development agency",
-    "Next.js developers India",
-    "MERN stack development",
-    "React developers India",
-    "eCommerce website development",
-    "UI/UX design services",
-    "SEO company India",
-    "software development company",
-    "digital agency India",
-    "web design company",
-    "custom website development",
-    "AWebGrow India",
-    "Hridesh Bharati",
-    "affordable website packages",
-    "website developer India",
-    "web agency India"
-  ],
-  
+
+  description: "AWebGrow is a leading web development company in India offering custom website development, eCommerce solutions, mobile app development, UI/UX design, SEO services, digital marketing, and enterprise software development. Hire expert Next.js, React & MERN stack developers.",
+
+  // ✅ 500+ KEYWORDS FROM SEO DATABASE
+  keywords: allKeywords,
+
   authors: [{ name: "Hridesh Bharati", url: "https://github.com/hrideshbharati" }],
   creator: "AWebGrow Team",
   publisher: "AWebGrow Digital Agency",
-  
+
   manifest: "/manifest.json",
-  
+
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-  
+
   robots: {
     index: true,
     follow: true,
@@ -75,13 +55,11 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
-  
-  // ✅ FIXED VERIFICATION - Direct code
+
   verification: {
     google: "Zce3KX6aOJA6UHKpJVkl9JUMIFTLtLankJbNCvTT0Rw",
   },
-  
-  // ✅ IMPROVED OPEN GRAPH
+
   openGraph: {
     title: "Web Development Company India | Website & App Development | AWebGrow",
     description: "Transform your business with India's leading web development company. Custom websites, mobile apps, eCommerce solutions & digital marketing services.",
@@ -98,8 +76,7 @@ export const metadata = {
     locale: "en_IN",
     type: "website",
   },
-  
-  // ✅ IMPROVED TWITTER CARD
+
   twitter: {
     card: "summary_large_image",
     title: "Web Development Company India | AWebGrow",
@@ -107,11 +84,11 @@ export const metadata = {
     images: ["/images/twitter-image.jpg"],
     creator: "@AWebGrow",
   },
-  
+
   alternates: {
     canonical: BASE_URL,
   },
-  
+
   category: "technology",
 };
 
@@ -125,7 +102,6 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
-// ✅ ORGANIZATION SCHEMA for Root Layout
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -137,7 +113,7 @@ const organizationSchema = {
     "https://linkedin.com/company/AWebGrow",
     "https://twitter.com/AWebGrow"
   ],
-  "description": "Leading web development company in India offering website, app development, UI/UX design, and digital marketing services.",
+  "description": "Leading web development company in India offering website, app development, UI/UX design, SEO and digital marketing services.",
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "+91-7267995307",
@@ -158,16 +134,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        {/* ✅ GOOGLE VERIFICATION HTML FILE FALLBACK */}
         <meta name="google-site-verification" content="Zce3KX6aOJA6UHKpJVkl9JUMIFTLtLankJbNCvTT0Rw" />
-        
-        {/* ✅ STRUCTURED DATA */}
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
-        
-        {/* ✅ FAVICONS */}
+
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -181,9 +154,9 @@ export default function RootLayout({
         {children}
         <PWAInstallPrompt />
         <Toaster position="top-center" richColors closeButton />
-        
-        <Script 
-          src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+
+        <Script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
           strategy="afterInteractive"
         />
       </body>

@@ -19,10 +19,10 @@ export default function Hero() {
 
   return (
     <>
-      <section id="hero" className="hero-section">
+      <section id="hero" className="hero-section" aria-label="Hero Section">
         {/* BACKGROUND GLOW SPHERES */}
-        <div className="glow-sphere-1" />
-        <div className="glow-sphere-2" />
+        <div className="glow-sphere-1" aria-hidden="true" />
+        <div className="glow-sphere-2" aria-hidden="true" />
 
         <div className="container position-relative z-2">
           <div className="row align-items-center gy-4">
@@ -32,11 +32,11 @@ export default function Hero() {
               
               {/* BADGE */}
               <div className="hero-badge mb-3" data-aos="fade-down">
-                <span className="badge-dot-pink" />
+                <span className="badge-dot-pink" aria-hidden="true" />
                 <span className="badge-text-glow">WE BUILD. YOU GROW.</span>
               </div>
 
-              {/* MAIN TITLE */}
+              {/* MAIN TITLE - H1 with keywords */}
               <h1
                 className="fw-extrabold text-white mb-3"
                 data-aos="fade-right"
@@ -55,7 +55,7 @@ export default function Hero() {
                 <span className="text-gradient-pink-orange">Business Growth.</span>
               </h1>
 
-              {/* SUBTITLE */}
+              {/* SUBTITLE - SEO optimized */}
               <p
                 className="mb-4 mx-auto mx-lg-0"
                 data-aos="fade-up"
@@ -67,7 +67,7 @@ export default function Hero() {
                   lineHeight: '1.55',
                 }}
               >
-                AWebGrow helps brands and businesses transform ideas into powerful digital products that attract, engage, and convert.
+                AWebGrow is a leading web development company in India helping brands transform ideas into powerful digital products that attract, engage, and convert.
               </p>
 
               {/* BUTTONS */}
@@ -76,13 +76,22 @@ export default function Hero() {
                 data-aos="fade-up"
                 data-aos-delay="300"
               >
-                <Link href="/services" className="btn-neon-cta" style={{ padding: '10px 24px', fontSize: '0.85rem' }}>
+                <Link 
+                  href="/services" 
+                  className="btn-neon-cta" 
+                  style={{ padding: '10px 24px', fontSize: '0.85rem' }}
+                  title="AWebGrow Services - Web Development, SEO, App Development"
+                >
                   <span>Explore Our Services</span>
-                  <i className="bi bi-arrow-right"></i>
+                  <i className="bi bi-arrow-right" aria-hidden="true"></i>
                 </Link>
 
-                <Link href="#portfolio" className="btn-secondary-glow">
-                  <i className="bi bi-play-circle-fill" style={{ color: '#a855f7' }}></i>
+                <Link 
+                  href="#portfolio" 
+                  className="btn-secondary-glow"
+                  title="AWebGrow Portfolio - Websites & Apps We Built"
+                >
+                  <i className="bi bi-play-circle-fill" style={{ color: '#a855f7' }} aria-hidden="true"></i>
                   <span>View Our Work</span>
                 </Link>
               </div>
@@ -93,15 +102,15 @@ export default function Hero() {
                 data-aos="fade-up"
                 data-aos-delay="400"
               >
-                <div className="d-flex align-items-center text-warning" style={{ fontSize: '0.85rem' }}>
-                  <i className="bi bi-star-fill me-1"></i>
-                  <i className="bi bi-star-fill me-1"></i>
-                  <i className="bi bi-star-fill me-1"></i>
-                  <i className="bi bi-star-fill me-1"></i>
-                  <i className="bi bi-star-fill me-1"></i>
+                <div className="d-flex align-items-center text-warning" style={{ fontSize: '0.85rem' }} aria-label="Rating 4.9 out of 5">
+                  <i className="bi bi-star-fill me-1" aria-hidden="true"></i>
+                  <i className="bi bi-star-fill me-1" aria-hidden="true"></i>
+                  <i className="bi bi-star-fill me-1" aria-hidden="true"></i>
+                  <i className="bi bi-star-fill me-1" aria-hidden="true"></i>
+                  <i className="bi bi-star-fill me-1" aria-hidden="true"></i>
                   <span className="fw-bold text-white ms-1">4.9/5</span>
                 </div>
-                <div style={{ height: '14px', width: '1px', backgroundColor: 'rgba(255,255,255,0.2)' }} />
+                <div style={{ height: '14px', width: '1px', backgroundColor: 'rgba(255,255,255,0.2)' }} aria-hidden="true" />
                 <span className="text-secondary" style={{ fontSize: '0.78rem' }}>
                   Trusted by 150+ Clients Worldwide
                 </span>
@@ -117,7 +126,7 @@ export default function Hero() {
                 <div className="center-brand-box">
                   <Image
                     src="/images/home-circle-image.png"
-                    alt="AWebGrow Brand Logo"
+                    alt="AWebGrow - Web Development Company India"
                     width={175}
                     height={175}
                     className="brand-image-fit"
@@ -126,46 +135,46 @@ export default function Hero() {
                 </div>
 
                 {/* ORBIT PATH & NODES */}
-                <div className="orbit-circle-path">
+                <div className="orbit-circle-path" role="list" aria-label="Our Services">
                   
-                  <div className="orbit-node-item node-pos-1" style={{ border: '1px solid rgba(59,130,246,0.6)', boxShadow: '0 0 12px rgba(59,130,246,0.4)' }}>
+                  <div className="orbit-node-item node-pos-1" style={{ border: '1px solid rgba(59,130,246,0.6)', boxShadow: '0 0 12px rgba(59,130,246,0.4)' }} role="listitem" aria-label="Web Development">
                     <div className="orbit-node-inner">
-                      <i className="bi bi-code-slash text-info" style={{ fontSize: '0.85rem' }}></i>
+                      <i className="bi bi-code-slash text-info" style={{ fontSize: '0.85rem' }} aria-hidden="true"></i>
                       <span style={{ fontSize: '0.48rem', color: '#e4e4e7', fontWeight: 600 }}>Web Dev</span>
                     </div>
                   </div>
 
-                  <div className="orbit-node-item node-pos-2" style={{ border: '1px solid rgba(168,85,247,0.6)', boxShadow: '0 0 12px rgba(168,85,247,0.4)' }}>
+                  <div className="orbit-node-item node-pos-2" style={{ border: '1px solid rgba(168,85,247,0.6)', boxShadow: '0 0 12px rgba(168,85,247,0.4)' }} role="listitem" aria-label="SEO Services">
                     <div className="orbit-node-inner">
-                      <i className="bi bi-search-heart" style={{ color: '#a855f7', fontSize: '0.85rem' }}></i>
+                      <i className="bi bi-search-heart" style={{ color: '#a855f7', fontSize: '0.85rem' }} aria-hidden="true"></i>
                       <span style={{ fontSize: '0.48rem', color: '#e4e4e7', fontWeight: 600 }}>SEO</span>
                     </div>
                   </div>
 
-                  <div className="orbit-node-item node-pos-3" style={{ border: '1px solid rgba(16,185,129,0.6)', boxShadow: '0 0 12px rgba(16,185,129,0.4)' }}>
+                  <div className="orbit-node-item node-pos-3" style={{ border: '1px solid rgba(16,185,129,0.6)', boxShadow: '0 0 12px rgba(16,185,129,0.4)' }} role="listitem" aria-label="App Development">
                     <div className="orbit-node-inner">
-                      <i className="bi bi-phone-fill text-success" style={{ fontSize: '0.85rem' }}></i>
+                      <i className="bi bi-phone-fill text-success" style={{ fontSize: '0.85rem' }} aria-hidden="true"></i>
                       <span style={{ fontSize: '0.48rem', color: '#e4e4e7', fontWeight: 600 }}>App Dev</span>
                     </div>
                   </div>
 
-                  <div className="orbit-node-item node-pos-4" style={{ border: '1px solid rgba(249,115,22,0.6)', boxShadow: '0 0 12px rgba(249,115,22,0.4)' }}>
+                  <div className="orbit-node-item node-pos-4" style={{ border: '1px solid rgba(249,115,22,0.6)', boxShadow: '0 0 12px rgba(249,115,22,0.4)' }} role="listitem" aria-label="Google Ads">
                     <div className="orbit-node-inner">
-                      <i className="bi bi-google text-warning" style={{ fontSize: '0.85rem' }}></i>
+                      <i className="bi bi-google text-warning" style={{ fontSize: '0.85rem' }} aria-hidden="true"></i>
                       <span style={{ fontSize: '0.45rem', color: '#e4e4e7', fontWeight: 600 }}>Google Ads</span>
                     </div>
                   </div>
 
-                  <div className="orbit-node-item node-pos-5" style={{ border: '1px solid rgba(236,72,153,0.6)', boxShadow: '0 0 12px rgba(236,72,153,0.4)' }}>
+                  <div className="orbit-node-item node-pos-5" style={{ border: '1px solid rgba(236,72,153,0.6)', boxShadow: '0 0 12px rgba(236,72,153,0.4)' }} role="listitem" aria-label="Meta Ads">
                     <div className="orbit-node-inner">
-                      <i className="bi bi-infinity" style={{ color: '#ec4899', fontSize: '0.9rem' }}></i>
+                      <i className="bi bi-infinity" style={{ color: '#ec4899', fontSize: '0.9rem' }} aria-hidden="true"></i>
                       <span style={{ fontSize: '0.45rem', color: '#e4e4e7', fontWeight: 600 }}>Meta Ads</span>
                     </div>
                   </div>
 
-                  <div className="orbit-node-item node-pos-6" style={{ border: '1px solid rgba(239,68,68,0.6)', boxShadow: '0 0 12px rgba(239,68,68,0.4)' }}>
+                  <div className="orbit-node-item node-pos-6" style={{ border: '1px solid rgba(239,68,68,0.6)', boxShadow: '0 0 12px rgba(239,68,68,0.4)' }} role="listitem" aria-label="AI Solutions">
                     <div className="orbit-node-inner">
-                      <i className="bi bi-cpu-fill text-danger" style={{ fontSize: '0.85rem' }}></i>
+                      <i className="bi bi-cpu-fill text-danger" style={{ fontSize: '0.85rem' }} aria-hidden="true"></i>
                       <span style={{ fontSize: '0.45rem', color: '#e4e4e7', fontWeight: 600 }}>AI Solutions</span>
                     </div>
                   </div>
@@ -183,7 +192,7 @@ export default function Hero() {
             <div className="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
               <div className="stat-card-glow text-center" style={{ borderBottom: '3px solid #3b82f6' }}>
                 <div className="d-flex align-items-center justify-content-center gap-2 mb-1">
-                  <i className="bi bi-globe fs-5 text-info"></i>
+                  <i className="bi bi-globe fs-5 text-info" aria-hidden="true"></i>
                   <h2 className="stat-number text-gradient-purple-blue">150+</h2>
                 </div>
                 <p className="text-secondary fw-medium mb-0" style={{ fontSize: '0.75rem' }}>Websites Built</p>
@@ -193,7 +202,7 @@ export default function Hero() {
             <div className="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
               <div className="stat-card-glow text-center" style={{ borderBottom: '3px solid #a855f7' }}>
                 <div className="d-flex align-items-center justify-content-center gap-2 mb-1">
-                  <i className="bi bi-emoji-smile fs-5" style={{ color: '#c084fc' }}></i>
+                  <i className="bi bi-emoji-smile fs-5" style={{ color: '#c084fc' }} aria-hidden="true"></i>
                   <h2 className="stat-number" style={{ background: 'linear-gradient(135deg, #c084fc, #a855f7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                     250+
                   </h2>
@@ -205,7 +214,7 @@ export default function Hero() {
             <div className="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
               <div className="stat-card-glow text-center" style={{ borderBottom: '3px solid #f97316' }}>
                 <div className="d-flex align-items-center justify-content-center gap-2 mb-1">
-                  <i className="bi bi-graph-up-arrow fs-5 text-warning"></i>
+                  <i className="bi bi-graph-up-arrow fs-5 text-warning" aria-hidden="true"></i>
                   <h2 className="stat-number" style={{ background: 'linear-gradient(135deg, #fb923c, #f97316)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                     1M+
                   </h2>
@@ -217,7 +226,7 @@ export default function Hero() {
             <div className="col-6 col-md-3" data-aos="fade-up" data-aos-delay="400">
               <div className="stat-card-glow text-center" style={{ borderBottom: '3px solid #ec4899' }}>
                 <div className="d-flex align-items-center justify-content-center gap-2 mb-1">
-                  <i className="bi bi-trophy fs-5" style={{ color: '#f472b6' }}></i>
+                  <i className="bi bi-trophy fs-5" style={{ color: '#f472b6' }} aria-hidden="true"></i>
                   <h2 className="stat-number text-gradient-pink-orange">98%</h2>
                 </div>
                 <p className="text-secondary fw-medium mb-0" style={{ fontSize: '0.75rem' }}>Client Retention</p>
