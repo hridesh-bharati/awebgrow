@@ -1,32 +1,39 @@
+// src/app/services/page.jsx
 import Services from "@/components/Home/Services";
 import Header from "@/components/Header/Header";
+import { seoKeywords } from "@/app/data/seo-keywords"; 
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://webgrowhs.vercel.app/';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.awebgrow.com/';
 
 export const metadata = {
-  title: "Next-Gen Web & App Development Services | WebGrow",
-  description: "Accelerate your digital growth with WebGrow's professional full-stack web development, mobile apps, and scalable digital ecosystems tailored for modern businesses.",
+  title: "Next-Gen Web & App Development Services | AWebGrow",
+  description: "Accelerate your digital growth with professional full-stack web development, mobile apps, and scalable digital ecosystems tailored for modern businesses.",
+  
+  // ✅ Yahan humne saare keywords ya specific categories ko combine karke array bana diya hai
   keywords: [
-    "WebGrow",
-    "WebGrow Services",
-    "Next-Gen Web Development",
-    "Mobile App Development",
-    "Custom Software Solutions",
-    "Affordable Website Packages",
-    "Scalable Web Apps",
-    "Full-Stack Development"
+    ...seoKeywords.brandKeywords,
+    ...seoKeywords.websiteDevelopment,
+    ...seoKeywords.seoServices,
+    ...seoKeywords.mobileAppDevelopment,
+    ...seoKeywords.uiUxDesign,
+    ...seoKeywords.digitalMarketing,
+    ...seoKeywords.ecommerce,
+    ...seoKeywords.technologyStack,
+    ...seoKeywords.hireDevelopers,
+    ...seoKeywords.businessEnterprise
   ],
+
   openGraph: {
-    title: "Next-Gen Web & App Development Services | WebGrow",
-    description: "From custom web applications to scalable digital ecosystems, explore WebGrow's professional pricing plans and modern tech solutions.",
+    title: "Next-Gen Web & App Development Services | AWebGrow",
+    description: "From custom web applications to scalable digital ecosystems, explore professional pricing plans and modern tech solutions.",
     url: `${siteUrl}/services`, 
-    siteName: "WebGrow",
+    siteName: "AWebGrow",
     images: [
       {
         url: `${siteUrl}/images/logo.jpg`,
         width: 1200,
         height: 630,
-        alt: "WebGrow Next-Gen Services",
+        alt: "AWebGrow Next-Gen Services",
       },
     ],
     locale: "en_US",
@@ -34,8 +41,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Next-Gen Web & App Development Services | WebGrow",
-    description: "Scale your digital footprint with WebGrow's modern tech ecosystem and flexible service packages.",
+    title: "Next-Gen Web & App Development Services | AWebGrow",
+    description: "Scale your digital footprint with modern tech ecosystem and flexible service packages.",
     images: [`${siteUrl}/images/logo.jpg`],
   },
 };
