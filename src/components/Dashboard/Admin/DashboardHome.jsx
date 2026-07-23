@@ -372,10 +372,10 @@ export default function DashboardHome() {
                       ₹{Number(order.finalPayableAmount || 0).toLocaleString("en-IN")}
                     </td>
                     <td className="py-3 text-end pe-0">
-                      <span className={`badge px-3 py-1.5 rounded-pill fw-bold ${
-                        order.orderStatus === 'Completed' ? 'bg-success bg-opacity-20 text-success' :
-                        order.orderStatus === 'Pending' ? 'bg-warning bg-opacity-20 text-warning' :
-                        order.orderStatus === 'Cancelled' ? 'bg-danger bg-opacity-20 text-danger' : 'bg-primary bg-opacity-20 text-primary'
+                      <span className={`badge px-3 py-1.5 rounded-pill text-white fw-bold ${
+                        order.orderStatus === 'Completed' ? 'bg-success bg-opacity-20' :
+                        order.orderStatus === 'Pending' ? 'bg-warning bg-opacity-20' :
+                        order.orderStatus === 'Cancelled' ? 'bg-danger bg-opacity-20' : 'bg-primary bg-opacity-20'
                       }`} style={{ fontSize: '11px' }}>
                         {order.orderStatus || 'New'}
                       </span>
