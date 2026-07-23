@@ -122,7 +122,7 @@ export default function Footer() {
             <p className="m-0">© {currentYear} <span className="text-theme-primary fw-bold">WebGrow</span>. All rights reserved.</p>
           </div>
           <div className="col-md-auto text-center text-md-center font-monospace">
-            Developed by: <Link href="/team" className="text-gradient-purple-blue fw-bold">WebGrow Team</Link>
+            Developed by: <Link href="/team" className="text-gradient-purple-blue fw-bold">AWebGrow Team</Link>
           </div>
           <div className="col-md-auto">
             <div className="d-flex justify-content-center gap-4">

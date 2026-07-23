@@ -10,7 +10,7 @@ import { FiMail, FiLock } from 'react-icons/fi';
 import Image from 'next/image';
 
 const ADMIN_EMAILS = [
-  'sushantkumar867695@gmail.com',
+  'awebgrow@gmail.com',
   'hridesh027@gmail.com',
   'kandusushil9@gmail.com'
 ];

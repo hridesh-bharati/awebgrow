@@ -1,4 +1,4 @@
-// src\app\api\auth\me\route.jsx
+// src/app/api/auth/me/route.jsx
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
@@ -7,10 +7,10 @@ export async function GET(request) {
     const token = request.cookies.get('auth_token')?.value;
 
     if (!token) {
-      return NextResponse.json({ authenticated: false }, { status: 401 });
+      return NextResponse.json({ authenticated: false, user: null }, { status: 200 });
     }
 
-    // Securely verify token context
+    // Token verify karo
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     
     return NextResponse.json({
@@ -22,8 +22,13 @@ export async function GET(request) {
         profileImage: decoded.profileImage || null,
         role: decoded.role || 'user'
       }
-    });
+    }, { status: 200 });
+
   } catch (error) {
-    return NextResponse.json({ authenticated: false, error: "Invalid session scope" }, { status: 401 });
+    return NextResponse.json({ 
+      authenticated: false, 
+      user: null,
+      error: "Session expired or invalid" 
+    }, { status: 200 });
   }
 }

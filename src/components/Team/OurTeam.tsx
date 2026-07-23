@@ -9,13 +9,13 @@ const teamMembers = [
   {
     name: "Sushant Rai",
     role: "Founder & Strategist",
-    image: "/images/team1.jpg",
+    image: "/images/team1.png",
     bio: "Specializes in data-driven brand scaling, conversion rate optimization (CRO), and building targeted social media growth engines.",
     github: "#",
     linkedin: "https://linkedin.com/in/shushant-rai",
     whatsapp: "https://wa.me/919304556165",
     phone: "+919304556165",
-    email: "sushantkumar867695@gmail.com",
+    email: "awebgrow@gmail.com",
     expertise: ["Digital Strategy", "SEO", "CRO", "Social Media"],
     accentColor: "#ec4899",
     gradient: "linear-gradient(135deg, #ec4899 0%, #f97316 100%)",
@@ -24,7 +24,7 @@ const teamMembers = [
   {
     name: "Hridesh Bharati",
     role: "Android • Native • PWA • WebApp Developer",
-    image: "/images/team2.png",  
+    image: "/images/team2.png",
     bio: "Expert in architecting scalable MERN stack ecosystems, Native-UI optimizations, and technical SEO architectures. Specializes in cross-platform mobile development and progressive web apps.",
     github: "https://github.com/hridesh-bharati",
     linkedin: "https://linkedin.com/in/hridesh-bharati",
@@ -39,7 +39,7 @@ const teamMembers = [
   {
     name: "Sushil Kandu",
     role: "MERN Stack Developer",
-    image: "/images/team3.jpg",
+    image: "/images/team3.png",
     bio: "Passionate engineer focusing on robust backend logic, secure RESTful APIs, and responsive, interactive frontend workflows.",
     github: "https://github.com/shushil-kandu",
     linkedin: "https://linkedin.com/in/shushil-kandu",
@@ -67,7 +67,7 @@ export default function TeamClient() {
 
   return (
     <main className="min-vh-100 py-5 text-white position-relative overflow-hidden" id="our-team" style={{ backgroundColor: '#020205' }}>
-      
+
       {/* AMBIENT BACKGROUND GLOW BLOBS */}
       <div className="position-absolute rounded-circle pointer-events-none glow-sphere" style={{ width: '500px', height: '500px', top: '-10%', left: '-5%', zIndex: 0, background: 'radial-gradient(circle, rgba(255, 0, 128, 0.12) 0%, transparent 70%)', filter: 'blur(90px)' }} />
       <div className="position-absolute rounded-circle pointer-events-none glow-sphere" style={{ width: '500px', height: '500px', bottom: '-10%', right: '-5%', zIndex: 0, background: 'radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%)', filter: 'blur(90px)' }} />
@@ -160,10 +160,10 @@ export default function TeamClient() {
       `}</style>
 
       <div className="container py-4 position-relative z-2">
-        
+
         {/* HEADER SECTION */}
         <div className="text-center my-4" data-aos="fade-up">
-          <div 
+          <div
             className="d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill mb-3"
             style={{
               background: 'rgba(0, 242, 254, 0.06)',
@@ -177,8 +177,8 @@ export default function TeamClient() {
             </span>
           </div>
 
-          <h1 
-            className="display-4 fw-black mb-3 text-white" 
+          <h1
+            className="display-4 fw-black mb-3 text-white"
             style={{ fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.15 }}
           >
             Meet Our <span className="colorful-heading-blue-cyan">Expert Team</span>
@@ -196,9 +196,9 @@ export default function TeamClient() {
 
             return (
               <div key={index} className="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay={index * 150}>
-                
+
                 {/* CYBERPUNK CARD */}
-                <div 
+                <div
                   className="team-clean-card h-100 p-4 pt-5 d-flex flex-column align-items-center text-center position-relative overflow-hidden"
                   style={{
                     boxShadow: isHovered ? `0 20px 40px ${member.glowColor}` : '0 10px 30px rgba(0, 0, 0, 0.5)',
@@ -207,26 +207,26 @@ export default function TeamClient() {
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
-                  
+
                   {/* AVATAR RING */}
                   <div className="position-relative mb-4" style={{ width: '130px', height: '130px' }}>
-                    <div 
-                      className="position-absolute rounded-circle avatar-ring" 
-                      style={{ 
-                        inset: '-4px', 
+                    <div
+                      className="position-absolute rounded-circle avatar-ring"
+                      style={{
+                        inset: '-4px',
                         background: member.gradient,
                         opacity: isHovered ? 1 : 0.35,
                         transform: isHovered ? 'scale(1.03)' : 'scale(1)'
-                      }} 
+                      }}
                     />
                     <div className="position-relative rounded-circle overflow-hidden border border-3 border-dark h-100 w-100">
-                      <Image 
-                        src={member.image} 
-                        alt={member.name} 
-                        fill 
-                        sizes="130px" 
-                        className="object-fit-cover" 
-                        priority={index === 0} 
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        fill
+                        sizes="130px"
+                        className="object-fit-cover"
+                        priority={index === 0}
                       />
                     </div>
                   </div>
@@ -239,9 +239,9 @@ export default function TeamClient() {
 
                     {/* ROLE BADGE */}
                     <div className="mb-3 w-100 px-2">
-                      <span 
-                        className="role-badge text-white" 
-                        style={{ 
+                      <span
+                        className="role-badge text-white"
+                        style={{
                           background: member.gradient,
                         }}
                       >
@@ -257,9 +257,9 @@ export default function TeamClient() {
                     {/* SKILLS PILLS */}
                     <div className="d-flex flex-wrap gap-2 justify-content-center mb-4">
                       {member.expertise.map((skill, i) => (
-                        <span 
-                          key={i} 
-                          className="expertise-pill" 
+                        <span
+                          key={i}
+                          className="expertise-pill"
                           style={{
                             color: member.accentColor,
                             border: `1px solid ${member.accentColor}35`
@@ -274,10 +274,10 @@ export default function TeamClient() {
                   {/* SOCIAL LINKS STRIP */}
                   <div className="d-flex justify-content-center gap-2 pt-3 w-100 border-top" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
                     {member.github && member.github !== "#" && (
-                      <a 
-                        href={member.github} 
-                        target="_blank" 
-                        rel="noreferrer" 
+                      <a
+                        href={member.github}
+                        target="_blank"
+                        rel="noreferrer"
                         className="team-social-icon"
                         onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#181717'; e.currentTarget.style.borderColor = '#181717'; }}
                         onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}
@@ -285,28 +285,28 @@ export default function TeamClient() {
                         <i className="bi bi-github"></i>
                       </a>
                     )}
-                    <a 
-                      href={member.linkedin} 
-                      target="_blank" 
-                      rel="noreferrer" 
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
                       className="team-social-icon"
                       onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#0a66c2'; e.currentTarget.style.borderColor = '#0a66c2'; }}
                       onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}
                     >
                       <i className="bi bi-linkedin"></i>
                     </a>
-                    <a 
-                      href={member.whatsapp} 
-                      target="_blank" 
-                      rel="noreferrer" 
+                    <a
+                      href={member.whatsapp}
+                      target="_blank"
+                      rel="noreferrer"
                       className="team-social-icon"
                       onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#25D366'; e.currentTarget.style.borderColor = '#25D366'; }}
                       onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}
                     >
                       <i className="bi bi-whatsapp"></i>
                     </a>
-                    <a 
-                      href={`mailto:${member.email}`} 
+                    <a
+                      href={`mailto:${member.email}`}
                       className="team-social-icon"
                       onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#ea4335'; e.currentTarget.style.borderColor = '#ea4335'; }}
                       onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}
@@ -316,10 +316,10 @@ export default function TeamClient() {
                   </div>
 
                   {/* CALL BUTTON */}
-                  <a 
-                    href={`tel:${member.phone}`} 
+                  <a
+                    href={`tel:${member.phone}`}
                     className="btn w-100 mt-4 rounded-pill text-white d-flex align-items-center justify-content-center call-btn"
-                    style={{ 
+                    style={{
                       background: member.gradient,
                       boxShadow: `0 4px 18px ${member.glowColor}`
                     }}
