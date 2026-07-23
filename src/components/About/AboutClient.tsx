@@ -93,7 +93,7 @@ export default function AboutClient() {
 
   return (
     <div className="bg-theme-main text-theme-primary overflow-hidden">
-      
+
       {/* ============================================ */}
       {/* 1. HERO BANNER */}
       {/* ============================================ */}
@@ -449,7 +449,7 @@ export default function AboutClient() {
                     <div>
                       <h3 className="fw-black mb-0 text-theme-primary" style={{ fontSize: '1.15rem', fontWeight: 800 }}>Noida Office</h3>
                       <p className="mb-0 text-theme-secondary" style={{ fontSize: '0.85rem', fontWeight: 500 }}>
-                        Sector 62, Noida, Uttar Pradesh - 201309, India
+                        Noida, Uttar Pradesh - 201309, India
                       </p>
                     </div>
                   </div>
@@ -464,7 +464,7 @@ export default function AboutClient() {
                 >
                   <div className="position-relative flex-shrink-0" style={{ width: '48px', height: '48px' }}>
                     <Image
-                      src="/images/team1.jpg"
+                      src="/images/team1.png"
                       alt="Sushant Rai"
                       fill
                       className="rounded-circle object-fit-cover border border-2 border-danger"
@@ -473,10 +473,10 @@ export default function AboutClient() {
                   <div>
                     <div className="d-flex align-items-center gap-2">
                       <h6 className="fw-bold mb-0 text-theme-primary" style={{ fontSize: '0.9rem' }}>Sushant Rai</h6>
-                      <span className="badge rounded-pill text-white" style={{ background: 'linear-gradient(135deg, #ec4899, #f97316)', fontSize: '0.62rem' }}>Co-Founder</span>
+                      <span className="badge rounded-pill text-white" style={{ background: 'linear-gradient(135deg, #ec4899, #f97316)', fontSize: '0.62rem' }}>Founder</span>
                     </div>
                     <p className="small text-theme-secondary mb-0 mt-0.5" style={{ fontSize: '0.76rem', lineHeight: '1.3' }}>
-                      SEO &amp; digital marketing expert driving growth strategies for clients across Noida and Delhi NCR.
+                      SEO &amp; digital marketing expert driving growth strategies for clients across Noida.
                     </p>
                   </div>
                 </div>
@@ -503,7 +503,7 @@ export default function AboutClient() {
                       <i className="bi bi-geo-alt-fill"></i>
                     </div>
                     <div>
-                      <h3 className="fw-black mb-0 text-theme-primary" style={{ fontSize: '1.15rem', fontWeight:800 }}>Nichlaul HQ</h3>
+                      <h3 className="fw-black mb-0 text-theme-primary" style={{ fontSize: '1.15rem', fontWeight: 800 }}>Nichlaul HQ</h3>
                       <p className="mb-0 text-theme-secondary" style={{ fontSize: '0.85rem', fontWeight: 500 }}>
                         Nichlaul, Maharajganj, Uttar Pradesh - 273304, India
                       </p>
@@ -528,11 +528,11 @@ export default function AboutClient() {
                   </div>
                   <div>
                     <div className="d-flex align-items-center gap-2">
-                      <h6 className="fw-bold mb-0 text-theme-primary" style={{ fontSize: '0.9rem' }}>hridesh</h6>
+                      <h6 className="fw-bold mb-0 text-theme-primary" style={{ fontSize: '0.9rem' }}>Hridesh Bharati</h6>
                       <span className="badge rounded-pill text-white" style={{ background: 'linear-gradient(135deg, #a855f7, #3b82f6)', fontSize: '0.62rem' }}>Founder &amp; Lead</span>
                     </div>
                     <p className="small text-theme-secondary mb-0 mt-0.5" style={{ fontSize: '0.76rem', lineHeight: '1.3' }}>
-                      Full-stack developer specializing in Next.js, React &amp; MERN Stack. Building scalable web solutions from Nichlaul.
+                      Full-stack &amp; LLM Developer specializing in Next.js, React &amp; MERN Stack. Building scalable AI-powered web solutions from Nichlaul.
                     </p>
                   </div>
                 </div>
