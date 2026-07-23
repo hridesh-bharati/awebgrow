@@ -35,7 +35,7 @@
   background-color: #020203; 
   margin-top: 65px;
   position: relative;
-  overflow: visible !important;
+  overflow: hidden !important; /* Horizontal scroll/overflow issue fix */
   padding-top: 25px;
   padding-bottom: 40px;
   transition: background-color 0.3s ease;
@@ -135,17 +135,16 @@
   position: relative;
   width: 100%;
   max-width: 440px;  
-  height: 450px;
+  height: 440px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: visible !important;
 }
 
 .center-brand-box {
-  width: 175px; 
-  height: 175px;
+  width: 160px; 
+  height: 160px;
   border-radius: 28px;
   display: flex;
   align-items: center;
@@ -175,38 +174,45 @@
 }
 
 .orbit-circle-path {
-  width: 320px; 
-  height: 320px;
+  width: 310px; 
+  height: 310px;
   position: absolute;
   border-radius: 50%;
   border: 1px dashed rgba(255, 255, 255, 0.15); 
-  animation: spinOrbit 24s linear infinite;
+  animation: spinOrbit 30s linear infinite;
   z-index: 3;
-  overflow: visible !important;
 }
 
 .orbit-circle-path:hover {
   animation-play-state: paused;
 }
 
+/* Base Node Styling */
 .orbit-node-item {
   position: absolute;
-  width: 60px; 
-  height: 60px;
+  top: 50%;
+  left: 50%;
+  width: 56px; 
+  height: 56px;
   background: #0a0a0c;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: -30px;
+  margin-top: -28px;
+  margin-left: -28px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Smooth transform transition using CSS variable */
+  transform: rotate(var(--angle)) translate(155px) rotate(calc(-1 * var(--angle))) scale(1);
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease, box-shadow 0.3s ease;
   z-index: 4;
+  will-change: transform;
 }
 
+/* Smooth & Subtle Hover (1.08 scale) */
 .orbit-node-item:hover {
-  transform: scale(1.15);
-  background: #111116;
+  transform: rotate(var(--angle)) translate(155px) rotate(calc(-1 * var(--angle))) scale(1.08) !important;
+  background: #121218;
 }
 
 .orbit-node-inner {
@@ -214,19 +220,22 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  animation: counterSpin 24s linear infinite;
+  animation: counterSpin 30s linear infinite;
 }
 
 .orbit-circle-path:hover .orbit-node-inner {
   animation-play-state: paused;
 }
 
-.node-pos-1 { top: 0%; left: 50%; }
-.node-pos-2 { top: 25%; left: 93.3%; }
-.node-pos-3 { top: 75%; left: 93.3%; }
-.node-pos-4 { top: 100%; left: 50%; }
-.node-pos-5 { top: 75%; left: 6.7%; }
-.node-pos-6 { top: 25%; left: 6.7%; }
+/* --- EXACT 8-NODE CIRCLE POSITIONS --- */
+.node-pos-1 { --angle: 0deg; }
+.node-pos-2 { --angle: 45deg; }
+.node-pos-3 { --angle: 90deg; }
+.node-pos-4 { --angle: 135deg; }
+.node-pos-5 { --angle: 180deg; }
+.node-pos-6 { --angle: 225deg; }
+.node-pos-7 { --angle: 270deg; }
+.node-pos-8 { --angle: 315deg; }
 
 /* 4. STATS STRIP */
 .stat-card-glow {
@@ -263,10 +272,9 @@
 }
 
 /* ========================================================= */
-/* MOBILE SPECIFIC: LEFT SECTION FULL 100VH + ORBIT BELOW    */
+/* MOBILE SPECIFIC RESPONSIVE OVERRIDES                      */
 /* ========================================================= */
 @media (max-width: 991.98px) {
-  /* Left Content block fills full 100vh (subtracting header height) */
   .hero-left-content {
     min-height: calc(65vh - 65px) !important;
     display: flex !important;
@@ -282,21 +290,31 @@
     padding-bottom: 40px !important;
   }
 
-  /* Circular orbit displays smoothly after scrolling down */
   .orbit-wrapper { 
     max-width: 320px; 
     height: 320px; 
-    margin-top: 40px; 
+    margin-top: 30px; 
   }
   
   .orbit-circle-path { 
-    width: 240px; 
-    height: 240px; 
+    width: 230px; 
+    height: 230px; 
   }
   
   .center-brand-box { 
-    width: 130px; 
-    height: 130px; 
+    width: 120px; 
+    height: 120px; 
+  }
+
+  .orbit-node-item {
+    width: 46px;
+    height: 46px;
+    margin-top: -23px;
+    margin-left: -23px;
+    transform: rotate(var(--angle)) translate(115px) rotate(calc(-1 * var(--angle))) scale(1);
+  }
+
+  .orbit-node-item:hover {
+    transform: rotate(var(--angle)) translate(115px) rotate(calc(-1 * var(--angle))) scale(1.08) !important;
   }
 }
-

@@ -8,7 +8,7 @@ import "./theme.css";
 import { Toaster } from 'sonner';
 import type { Viewport } from 'next';
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
-import VisitorTracker from "@/components/VisitorTracker"; // ✅ Added Visitor Tracker component
+import VisitorTracker from "@/components/VisitorTracker"; 
 import { allKeywords } from "@/app/data/seo-keywords";
 
 const inter = Inter({
@@ -256,7 +256,6 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
       </head>
       <body
         style={{ fontFamily: "var(--font-inter), sans-serif" }}

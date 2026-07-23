@@ -83,7 +83,7 @@ export default function Home() {
 
           {/* Micro-copy Text */}
           <p style={{ color: '#7b6f9e', fontSize: '0.8rem' }} >
-            14-day trial, no credit card required
+              Book a Freee Strategy Call
           </p>
         </div>
       </section>

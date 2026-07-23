@@ -82,7 +82,7 @@ export default function PWAInstallPrompt() {
           </div>
           <div>
             <h6 className="mb-0 fw-bold text-dark">WebGrow App</h6>
-            <small className="text-muted d-block" style={{ fontSize: "12px" }}>
+            <small className="text-primary d-block" style={{ fontSize: "12px" }}>
               Better experience & faster access
             </small>
           </div>
@@ -91,7 +91,7 @@ export default function PWAInstallPrompt() {
         <div className="d-flex align-items-center gap-2">
           <button 
             onClick={() => setShowPrompt(false)} 
-            className="btn btn-light btn-sm rounded-circle px-2 py-1 text-muted"
+            className="btn btn-danger btn-sm rounded-circle px-2 py-1 text-muted"
             aria-label="Close"
           >
             <i className="bi bi-x-lg"></i>

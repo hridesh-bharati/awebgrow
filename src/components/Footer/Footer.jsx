@@ -98,8 +98,8 @@ export default function Footer() {
               </div>
               <div className="d-flex align-items-center gap-2">
                 <i className="bi bi-envelope-fill text-gradient-pink-orange fs-6"></i>
-                <a href="mailto:sushantkumar867696@gmail.com" className="text-decoration-none text-theme-secondary" style={{ fontSize: '0.85rem' }}>
-                  sushantkumar867696@gmail.com
+                <a href="mailto:awebgrow@gmail.com" className="text-decoration-none text-theme-secondary" style={{ fontSize: '0.85rem' }}>
+                  awebgrow@gmail.com
                 </a>
               </div>
               <div className="d-flex align-items-center gap-2">
@@ -122,7 +122,7 @@ export default function Footer() {
             <p className="m-0">© {currentYear} <span className="text-theme-primary fw-bold">WebGrow</span>. All rights reserved.</p>
           </div>
           <div className="col-md-auto text-center text-md-center font-monospace">
-            Developed by: <span className="text-gradient-purple-blue fw-bold">WebGrow Team</span>
+            Developed by: <Link href="/team" className="text-gradient-purple-blue fw-bold">WebGrow Team</Link>
           </div>
           <div className="col-md-auto">
             <div className="d-flex justify-content-center gap-4">

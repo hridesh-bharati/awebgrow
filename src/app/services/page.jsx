@@ -1,14 +1,14 @@
 // src/app/services/page.jsx
 import Services from "@/components/Home/Services";
 import Header from "@/components/Header/Header";
-import { seoKeywords } from "@/app/data/seo-keywords"; 
+import { seoKeywords } from "@/app/data/seo-keywords";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.awebgrow.com/';
 
 export const metadata = {
   title: "Next-Gen Web & App Development Services | AWebGrow",
   description: "Accelerate your digital growth with professional full-stack web development, mobile apps, and scalable digital ecosystems tailored for modern businesses.",
-  
+
   // ✅ Yahan humne saare keywords ya specific categories ko combine karke array bana diya hai
   keywords: [
     ...seoKeywords.brandKeywords,
@@ -26,7 +26,7 @@ export const metadata = {
   openGraph: {
     title: "Next-Gen Web & App Development Services | AWebGrow",
     description: "From custom web applications to scalable digital ecosystems, explore professional pricing plans and modern tech solutions.",
-    url: `${siteUrl}/services`, 
+    url: `${siteUrl}/services`,
     siteName: "AWebGrow",
     images: [
       {

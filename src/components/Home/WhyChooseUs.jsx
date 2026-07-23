@@ -181,7 +181,7 @@ export default function WhyChooseUs() {
 
                     <div className="d-flex align-items-center gap-2.5 position-relative z-2">
                       <div
-                        className="d-flex align-items-center justify-content-center flex-shrink-0 rounded-2"
+                        className="d-flex align-items-center justify-content-center flex-shrink-0 rounded-circle me-2"
                         style={{
                           width: '36px',
                           height: '36px',
