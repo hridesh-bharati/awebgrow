@@ -6,7 +6,7 @@ import { rtdb } from "@/lib/firebase";
 import { toast, Toaster } from "sonner";
 
 const ADMIN_EMAILS = new Set([
-  "sushantkumar867695@gmail.com",
+  "webgrow@gmail.com",
   "hridesh027@gmail.com",
   "kandusushil9@gmail.com"
 ]);

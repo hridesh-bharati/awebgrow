@@ -291,7 +291,7 @@ export default function AdminDashboard({ session, onLogout }) {
             <div className="d-flex align-items-center gap-2.5">
               <Link
                 href="/"
-                className="btn btn-secondary-glow rounded-circle p-0 d-flex align-items-center justify-content-center"
+                className="btn btn-secondary-glow rounded-circle mx-1 p-0 d-flex align-items-center justify-content-center"
                 style={{ width: '38px', height: '38px' }}
                 title="Go to Home"
               >
@@ -300,14 +300,14 @@ export default function AdminDashboard({ session, onLogout }) {
 
               <button
                 onClick={toggleTheme}
-                className="btn btn-secondary-glow rounded-circle p-0 d-flex align-items-center justify-content-center"
+                className="btn btn-secondary-glow rounded-circle mx-1 p-0 d-flex align-items-center justify-content-center"
                 style={{ width: '38px', height: '38px' }}
                 title="Toggle Theme"
               >
                 <i className={`bi ${theme === 'dark' ? 'bi-sun-fill text-warning' : 'bi-moon-stars-fill text-info'} fs-5`}></i>
               </button>
 
-              <button className="btn btn-secondary-glow rounded-circle p-0 position-relative d-flex align-items-center justify-content-center" style={{ width: '38px', height: '38px' }}>
+              <button className="btn btn-secondary-glow rounded-circle mx-1 p-0 position-relative d-flex align-items-center justify-content-center" style={{ width: '38px', height: '38px' }}>
                 <i className="bi bi-bell fs-5"></i>
                 <span className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
               </button>

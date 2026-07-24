@@ -147,7 +147,7 @@ export default function CreateAccount() {
               <label className="form-label extra-small fw-bold mb-1" style={{ color: '#9ca3af', fontSize: '0.78rem' }}>Full Name</label>
               <div className="position-relative d-flex align-items-center">
                 <FiUser className="position-absolute ms-3 text-secondary" style={{ zIndex: 10 }} />
-                <input type="text" placeholder="Hridesh Kumar" className="form-control text-white border" style={{ height: '46px', borderRadius: '10px', paddingLeft: '42px', fontSize: '0.88rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', borderColor: 'rgba(255, 255, 255, 0.08)' }} required onChange={e => setFormData({ ...formData, name: e.target.value })} />
+                <input type="text" placeholder="User Name" className="form-control text-white border" style={{ height: '46px', borderRadius: '10px', paddingLeft: '42px', fontSize: '0.88rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', borderColor: 'rgba(255, 255, 255, 0.08)' }} required onChange={e => setFormData({ ...formData, name: e.target.value })} />
               </div>
             </div>
 
