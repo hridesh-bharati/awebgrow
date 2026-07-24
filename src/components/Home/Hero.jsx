@@ -235,7 +235,7 @@ export default function Hero() {
 
               <Link href="/about" className="btn-secondary-glow" style={{ padding: '10px 24px', fontWeight: 700 }}>
                 <i className="bi bi-play-circle-fill" style={{ color: '#a855f7' }}></i>
-                <span>About our compnay</span>
+                <span>About Us</span>
               </Link>
             </div>
 

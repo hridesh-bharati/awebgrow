@@ -119,7 +119,7 @@ export default function Footer() {
         {/* BOTTOM METADATA BAR */}
         <div className="row align-items-center justify-content-between g-3 small text-theme-secondary" style={{ fontSize: '0.82rem' }}>
           <div className="col-md-auto text-center text-md-start">
-            <p className="m-0">© {currentYear} <span className="text-theme-primary fw-bold">WebGrow</span>. All rights reserved.</p>
+            <p className="m-0">© {currentYear} <span className="text-theme-primary fw-bold">AWebGrow</span>. All rights reserved.</p>
           </div>
           <div className="col-md-auto text-center text-md-center font-monospace">
             Developed by: <Link href="/team" className="text-gradient-purple-blue fw-bold">AWebGrow Team</Link>

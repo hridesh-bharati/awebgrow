@@ -49,7 +49,7 @@ export default function CreateAccount() {
         name: displayName || userEmail.split('@')[0],
         email: userEmail.toLowerCase(),
         phone: phoneNumber.trim(),
-        profileImage: photoURL || "/images/default-avatar.jpg",
+        profileImage: photoURL || "/icos/default-avatar.png",
         role: isAdmin ? 'admin' : 'user',
         createdAt: new Date().toISOString()
       };
@@ -60,17 +60,28 @@ export default function CreateAccount() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    try {
-      await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-      const dbUser = await syncUserToDatabase(formData.email, formData.name, "/images/default-avatar.jpg", formData.phone);
-      await initSession(dbUser);
-    } catch (error) {
-      console.error(error);
-      alert("Registration Error: " + error.message);
-    } finally {
-      setLoading(false);
-    }
+   setLoading(true);
+try {
+  await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+  const dbUser = await syncUserToDatabase(
+    formData.email, 
+    formData.name, 
+    "/icos/default-avatar.png", 
+    formData.phone
+  );
+  await initSession(dbUser);
+} catch (error) {
+  // ✅ Handle Firebase Errors Cleanly
+  if (error.code === 'auth/email-already-in-use') {
+    alert("Is email se account pehle se bana hua hai! Please Login karein.");
+  } else if (error.code === 'auth/weak-password') {
+    alert("Password kam se kam 6 characters ka hona chahiye!");
+  } else {
+    alert("Signup Failed: " + error.message);
+  }
+} finally {
+  setLoading(false);
+}
   };
 
   return (

@@ -64,7 +64,7 @@ export default function Login() {
         uid: emailKey,
         email: targetEmail,
         name: dbUser?.name || targetEmail.split('@')[0],
-        profileImage: dbUser?.profileImage || "/images/default-avatar.jpg",
+        profileImage: dbUser?.profileImage || "/icos/default-avatar.png",
         role: ADMIN_EMAILS.includes(targetEmail) ? 'admin' : (dbUser?.role || 'user')
       });
 

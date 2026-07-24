@@ -125,7 +125,7 @@ export default function UserDirectory({ users = [] }) {
                     <div className="d-flex align-items-center gap-3 w-100 w-md-auto" style={{ width: '45%' }}>
                       <div style={{ minWidth: '38px' }}>
                         <img
-                          src={u.profileImage || "/images/default-avatar.jpg"}
+                          src={u.profileImage || "/icos/default-avatar.png"}
                           alt="avatar"
                           className="rounded-circle border"
                           style={{ width: "38px", height: "38px", objectFit: "cover", borderColor: 'var(--border-subtle)' }}

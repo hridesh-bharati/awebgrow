@@ -4,6 +4,9 @@ import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
+import { auth, rtdb } from '@/lib/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { ref, get } from 'firebase/database';
 import './Header.css';
 
 const SEARCH_INDEX = [
@@ -44,28 +47,72 @@ export default function Header() {
     document.documentElement.setAttribute('data-bs-theme', nextTheme);
   };
 
+  // ✅ AUTHENTICATION & USER DATA FETCH FIX
   useEffect(() => {
     if (!mounted) return;
     let isCurrent = true;
 
+    // 1. JWT Cookie Endpoint Check
     const checkAuthStatus = async () => {
       try {
         const res = await fetch('/api/auth/me', { cache: 'no-store' });
         if (res.ok) {
           const data = await res.json();
-          if (data.authenticated && isCurrent) {
-            setUser(data.user);
+          if (data.authenticated && data.user && isCurrent) {
+            setUser({
+              name: data.user.name || data.user.email?.split('@')[0],
+              profileImage: data.user.profileImage || "/icos/default-avatar.png",
+              email: data.user.email,
+              role: data.user.role
+            });
             return;
           }
         }
-        if (isCurrent) setUser(null);
       } catch (error) {
-        if (isCurrent) setUser(null);
+        console.error("Auth session fetch error:", error);
       }
     };
 
-    checkAuthStatus();
-    return () => { isCurrent = false; };
+    // 2. Client Firebase Observer (Type Safe with fallback checks)
+    if (!auth || !rtdb) {
+      checkAuthStatus();
+      return;
+    }
+
+    const unsubscribe = onAuthStateChanged(auth!, async (fbUser) => {
+      if (fbUser && isCurrent) {
+        try {
+          const emailKey = fbUser.email?.replace(/\./g, '_');
+          let dbUserData = null;
+          if (emailKey && rtdb) {
+            const userSnap = await get(ref(rtdb!, `users/${emailKey}`));
+            if (userSnap.exists()) {
+              dbUserData = userSnap.val();
+            }
+          }
+
+          setUser({
+            name: dbUserData?.name || fbUser.displayName || fbUser.email?.split('@')[0] || "User",
+            profileImage: dbUserData?.profileImage || fbUser.photoURL || "/icos/default-avatar.png",
+            email: fbUser.email,
+            role: dbUserData?.role || 'user'
+          });
+        } catch (e) {
+          setUser({
+            name: fbUser.displayName || fbUser.email?.split('@')[0] || "User",
+            profileImage: fbUser.photoURL || "/icos/default-avatar.png",
+            email: fbUser.email
+          });
+        }
+      } else {
+        checkAuthStatus();
+      }
+    });
+
+    return () => {
+      isCurrent = false;
+      unsubscribe();
+    };
   }, [pathname, mounted]);
 
   useEffect(() => {
@@ -97,14 +144,12 @@ export default function Header() {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch('/api/auth/logout', { method: 'POST' });
-      if (res.ok) {
-        setUser(null);
-        setShowDropdown(false);
-        setShowSidebar(false);
-        router.push('/');
-        router.refresh();
-      }
+      await fetch('/api/auth/logout', { method: 'POST' });
+      setUser(null);
+      setShowDropdown(false);
+      setShowSidebar(false);
+      router.push('/login');
+      router.refresh();
     } catch (error) {
       console.error("Logout failure:", error);
     }
@@ -130,7 +175,7 @@ export default function Header() {
             <Image src="/icons/awebgrow-logo.png" alt="AWEBGROW Logo" width={120} height={50} className="object-fit-contain rounded-2 border border-2 border-dark m-0 p-0" priority />
           </Link>
 
-          {/* DESKTOP NAVIGATION (Pill Container) */}
+          {/* DESKTOP NAVIGATION */}
           <nav className="d-none d-lg-flex align-items-center nav-capsule">
             {navLinks.map((link) => {
               const isActive = pathname === link.path;
@@ -189,18 +234,32 @@ export default function Header() {
             <div ref={dropdownRef} className="position-relative">
               {user ? (
                 <>
-                  <button onClick={() => setShowDropdown(!showDropdown)} className="btn p-0 border-0 rounded-circle" style={{ width: '36px', height: '36px' }}>
-                    <Image src={user.profileImage || "/icons/logo.png"} alt="User Avatar" width={36} height={36} className="rounded-circle object-fit-cover border border-2 border-danger" />
+                  <button 
+                    onClick={() => setShowDropdown(!showDropdown)} 
+                    className="btn p-0 border-0 rounded-circle overflow-hidden shadow-sm" 
+                    style={{ width: '38px', height: '38px' }}
+                  >
+                    <img 
+                      src={user.profileImage || "/icos/default-avatar.png"} 
+                      alt={user.name || "User Avatar"} 
+                      width="38" 
+                      height="38" 
+                      className="rounded-circle object-fit-cover border border-2 border-primary"
+                      onError={(e) => { (e.target as HTMLImageElement).src = "/icos/default-avatar.png"; }}
+                    />
                   </button>
 
                   {showDropdown && (
-                    <div className="position-absolute bg-dark border text-start shadow-lg p-2 mt-2 end-0 rounded-3 z-3" style={{ minWidth: '160px' }}>
-                      <div className="px-3 py-1.5 fw-bold border-bottom text-truncate text-white" style={{ fontSize: '0.78rem' }}>{user.name}</div>
-                      <Link href="/dashboard" className="dropdown-item py-1.5 px-3 small text-white d-block rounded-2 mt-1" onClick={() => setShowDropdown(false)}>
-                        Dashboard
+                    <div className="position-absolute bg-dark border border-secondary text-start shadow-lg p-2 mt-2 end-0 rounded-3 z-3" style={{ minWidth: '180px' }}>
+                      <div className="px-3 py-2 border-bottom text-white">
+                        <div className="fw-bold text-truncate" style={{ fontSize: '0.82rem' }}>{user.name}</div>
+                        <div className="text-muted text-truncate extra-small" style={{ fontSize: '0.72rem' }}>{user.email}</div>
+                      </div>
+                      <Link href="/dashboard" className="dropdown-item py-2 px-3 small text-white d-block rounded-2 mt-1" onClick={() => setShowDropdown(false)}>
+                        <i className="bi bi-grid-1x2 me-2"></i> Dashboard
                       </Link>
-                      <button className="dropdown-item py-1.5 px-3 text-danger small w-100 border-0 bg-transparent text-start fw-semibold rounded-2" onClick={handleLogout}>
-                        Logout
+                      <button className="dropdown-item py-2 px-3 text-danger small w-100 border-0 bg-transparent text-start fw-semibold rounded-2 mt-1" onClick={handleLogout}>
+                        <i className="bi bi-box-arrow-right me-2"></i> Logout
                       </button>
                     </div>
                   )}
@@ -221,7 +280,7 @@ export default function Header() {
         </div>
       </header>
 
-      {/* MOBILE DRAWER / OFFCANVAS (Styled with Cyberpunk Theme) */}
+      {/* MOBILE SIDEBAR */}
       {showSidebar && (
         <div
           className="position-fixed top-0 start-0 w-100 h-100 z-3"
@@ -230,7 +289,7 @@ export default function Header() {
         />
       )}
       <div
-        className="position-fixed top-25 start-0 h-100 text-white p-4 d-flex flex-column z-3 mobile-sidebar-drawer"
+        className="position-fixed top-0 start-0 h-100 text-white p-4 d-flex flex-column z-3 mobile-sidebar-drawer"
         style={{
           width: '300px',
           backgroundColor: 'var(--bg-card, #0f101a)',
@@ -241,13 +300,13 @@ export default function Header() {
         }}
       >
         <div className="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom" style={{ borderColor: 'var(--border-subtle)' }}>
-          <div className="d-flex align-items-center gap-2">
-            AWebGrow  ~ A Digital Solution
+          <div className="d-flex align-items-center gap-2 fw-bold">
+            AWebGrow Solutions
           </div>
           <button onClick={() => setShowSidebar(false)} className="btn-close btn-close-white shadow-none" />
         </div>
 
-        {/* Mobile Search Bar inside Drawer */}
+        {/* Mobile Search */}
         <div className="mb-4">
           <div className="position-relative d-flex align-items-center">
             <input
@@ -260,20 +319,6 @@ export default function Header() {
             />
             <i className="bi bi-search position-absolute end-0 pe-3 text-secondary" style={{ fontSize: '0.8rem' }}></i>
           </div>
-          {searchQuery.trim() !== '' && filteredSuggestions.length > 0 && (
-            <div className="mt-2 rounded-3 border p-1" style={{ backgroundColor: 'var(--bg-pill)', borderColor: 'var(--border-subtle)' }}>
-              {filteredSuggestions.map((item, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => { router.push(item.path); setShowSidebar(false); setSearchQuery(''); }}
-                  className="p-2 small text-light rounded cursor-pointer text-truncate"
-                  style={{ cursor: 'pointer', fontSize: '0.8rem' }}
-                >
-                  {item.label}
-                </div>
-              ))}
-            </div>
-          )}
         </div>
 
         {/* Navigation Links */}
@@ -307,5 +352,3 @@ export default function Header() {
     </>
   );
 }
-
-/* Header Specific Styling */
