@@ -46,7 +46,7 @@ export default function AdminProfile({ session }) {
       setName(data?.name || session?.name || 'hridesh');
       setEmail(data?.email || session?.email || 'hridesh027@gmail.com');
       setPhone(data?.phone || session?.phone || '');
-      setProfileImage(data?.profileImage || session?.profileImage || "/icos/default-avatar.png");
+      setProfileImage(data?.profileImage || session?.profileImage || "/icons/default-avatar.png");
       
       setLoading(false);
     });

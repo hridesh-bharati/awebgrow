@@ -95,7 +95,7 @@ export default function UserDashboard({ session, onLogout }) {
                 <div className="d-flex align-items-center gap-3">
                   <div className="position-relative" style={{ width: '70px', height: '70px' }}>
                     <Image 
-                      src={session?.profileImage || "/icos/default-avatar.png"} 
+                      src={session?.profileImage || "/icons/default-avatar.png"} 
                       alt="Profile" 
                       fill
                       className="rounded-circle object-fit-cover border border-2 border-purple shadow-sm"

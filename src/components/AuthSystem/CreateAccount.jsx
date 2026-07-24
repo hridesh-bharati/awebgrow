@@ -49,7 +49,7 @@ export default function CreateAccount() {
         name: displayName || userEmail.split('@')[0],
         email: userEmail.toLowerCase(),
         phone: phoneNumber.trim(),
-        profileImage: photoURL || "/icos/default-avatar.png",
+        profileImage: photoURL || "/icons/default-avatar.png",
         role: isAdmin ? 'admin' : 'user',
         createdAt: new Date().toISOString()
       };
@@ -66,7 +66,7 @@ try {
   const dbUser = await syncUserToDatabase(
     formData.email, 
     formData.name, 
-    "/icos/default-avatar.png", 
+    "/icons/default-avatar.png", 
     formData.phone
   );
   await initSession(dbUser);

@@ -61,7 +61,7 @@ export default function Header() {
           if (data.authenticated && data.user && isCurrent) {
             setUser({
               name: data.user.name || data.user.email?.split('@')[0],
-              profileImage: data.user.profileImage || "/icos/default-avatar.png",
+              profileImage: data.user.profileImage || "/icons/default-avatar.png",
               email: data.user.email,
               role: data.user.role
             });
@@ -93,14 +93,14 @@ export default function Header() {
 
           setUser({
             name: dbUserData?.name || fbUser.displayName || fbUser.email?.split('@')[0] || "User",
-            profileImage: dbUserData?.profileImage || fbUser.photoURL || "/icos/default-avatar.png",
+            profileImage: dbUserData?.profileImage || fbUser.photoURL || "/icons/default-avatar.png",
             email: fbUser.email,
             role: dbUserData?.role || 'user'
           });
         } catch (e) {
           setUser({
             name: fbUser.displayName || fbUser.email?.split('@')[0] || "User",
-            profileImage: fbUser.photoURL || "/icos/default-avatar.png",
+            profileImage: fbUser.photoURL || "/icons/default-avatar.png",
             email: fbUser.email
           });
         }
@@ -240,12 +240,12 @@ export default function Header() {
                     style={{ width: '38px', height: '38px' }}
                   >
                     <img 
-                      src={user.profileImage || "/icos/default-avatar.png"} 
-                      alt={user.name || "User Avatar"} 
+                      src={user.profileImage || "/icons/default-avatar.png"} 
+                      alt={user.name || "user"} 
                       width="38" 
                       height="38" 
-                      className="rounded-circle object-fit-cover border border-2 border-primary"
-                      onError={(e) => { (e.target as HTMLImageElement).src = "/icos/default-avatar.png"; }}
+                      className="rounded-circle object-fit-cover border border- border-light"
+                      onError={(e) => { (e.target as HTMLImageElement).src = "/icons/default-avatar.png"; }}
                     />
                   </button>
 
