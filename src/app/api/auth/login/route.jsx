@@ -1,4 +1,3 @@
-// src\app\api\auth\login\route.jsx
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
