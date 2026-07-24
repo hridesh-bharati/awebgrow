@@ -9,7 +9,6 @@ export async function GET(request) {
       return NextResponse.json({ authenticated: false, user: null }, { status: 200 });
     }
 
-    // Token verify karo
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     
     return NextResponse.json({

@@ -47,12 +47,32 @@ export default function Header() {
     document.documentElement.setAttribute('data-bs-theme', nextTheme);
   };
 
-  // ✅ AUTHENTICATION & USER DATA FETCH FIX
+  // ✅ FULLY FIXED MULTI-STAGE AUTH SYNC
   useEffect(() => {
     if (!mounted) return;
     let isCurrent = true;
 
-    // 1. JWT Cookie Endpoint Check
+    // 1. Instant Fast-Load from LocalStorage (Syncs immediately with Login/Register)
+    if (typeof window !== 'undefined') {
+      const savedSession = localStorage.getItem('awebgrow_user_session');
+      if (savedSession) {
+        try {
+          const parsed = JSON.parse(savedSession);
+          if (parsed && isCurrent) {
+            setUser({
+              name: parsed.name || parsed.email?.split('@')[0],
+              profileImage: parsed.profileImage || "/icons/default-avatar.png",
+              email: parsed.email,
+              role: parsed.role || 'user'
+            });
+          }
+        } catch (e) {
+          console.error("Session parse error:", e);
+        }
+      }
+    }
+
+    // 2. Server API Session Check (/api/auth/me)
     const checkAuthStatus = async () => {
       try {
         const res = await fetch('/api/auth/me', { cache: 'no-store' });
@@ -68,13 +88,17 @@ export default function Header() {
             return;
           }
         }
+        // If not authenticated via cookie & localStorage missing -> clear user state
+        if (!localStorage.getItem('awebgrow_user_session') && isCurrent) {
+          setUser(null);
+        }
       } catch (error) {
-        console.error("Auth session fetch error:", error);
+        console.error("Auth session check error:", error);
       }
     };
 
-    // 2. Client Firebase Observer (Type Safe with fallback checks)
-    if (!auth || !rtdb) {
+    // 3. Client Firebase Auth Observer
+    if (!auth) {
       checkAuthStatus();
       return;
     }
@@ -91,12 +115,17 @@ export default function Header() {
             }
           }
 
-          setUser({
+          const userPayload = {
             name: dbUserData?.name || fbUser.displayName || fbUser.email?.split('@')[0] || "User",
             profileImage: dbUserData?.profileImage || fbUser.photoURL || "/icons/default-avatar.png",
             email: fbUser.email,
             role: dbUserData?.role || 'user'
-          });
+          };
+
+          setUser(userPayload);
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('awebgrow_user_session', JSON.stringify(userPayload));
+          }
         } catch (e) {
           setUser({
             name: fbUser.displayName || fbUser.email?.split('@')[0] || "User",
@@ -145,6 +174,9 @@ export default function Header() {
   const handleLogout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('awebgrow_user_session');
+      }
       setUser(null);
       setShowDropdown(false);
       setShowSidebar(false);
