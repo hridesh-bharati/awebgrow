@@ -27,7 +27,7 @@ export default function CreateAccount() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const syncUserToDatabase = async (userEmail, displayName, photoURL, phoneNumber = '') => {
+  const syncUserToDatabase = async (userEmail, displayName, photoURL = '', phoneNumber = '') => {
     const emailKey = userEmail.toLowerCase().replace(/\./g, '_');
     const userRef = ref(rtdb, `users/${emailKey}`);
 
@@ -70,7 +70,7 @@ export default function CreateAccount() {
     }
   };
 
-  // 1. Email/Password Signup -> Redirects to Login
+  // 1. Email/Password Signup -> Redirects to Login Page
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -87,7 +87,7 @@ export default function CreateAccount() {
       router.push('/login');
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
-        toast.error("Email is already registered! Redirecting to login...");
+        toast.error("Email is already registered! Please login.");
         router.push('/login');
       } else if (error.code === 'auth/weak-password') {
         toast.error("Password should be at least 6 characters!");
@@ -99,7 +99,7 @@ export default function CreateAccount() {
     }
   };
 
-  // 2. Google / GitHub OAuth Signup -> Direct to Dashboard
+  // 2. Google / GitHub OAuth -> Direct to Dashboard
   const handleOAuthLogin = async (providerName) => {
     setLoading(true);
     try {
@@ -108,13 +108,13 @@ export default function CreateAccount() {
       const fbUser = result.user;
 
       if (!fbUser.email) {
-        throw new Error("Email permissions are required.");
+        throw new Error("Email permissions required.");
       }
 
       const dbUser = await syncUserToDatabase(
         fbUser.email,
         fbUser.displayName,
-        fbUser.photoURL,
+        fbUser.photoURL || "/icons/default-avatar.png",
         fbUser.phoneNumber || ''
       );
 
@@ -128,63 +128,14 @@ export default function CreateAccount() {
 
   return (
     <div className="d-flex justify-content-center align-items-center w-100 position-relative overflow-hidden p-1 p-md-3" style={{ minHeight: '100vh', backgroundColor: '#020205' }}>
-
-      <div className="position-absolute rounded-circle pointer-events-none glow-sphere-1" style={{ width: '400px', height: '400px', top: '-10%', left: '-5%', zIndex: 0, background: 'radial-gradient(circle, rgba(255, 0, 128, 0.15) 0%, transparent 70%)', filter: 'blur(80px)' }} />
-      <div className="position-absolute rounded-circle pointer-events-none glow-sphere-2" style={{ width: '400px', height: '400px', bottom: '-10%', right: '-5%', zIndex: 0, background: 'radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%)', filter: 'blur(80px)' }} />
-
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        .custom-card {
-          width: 100% !important;
-          max-width: 480px !important;
-          border-radius: 20px !important;
-          background-color: rgba(15, 16, 26, 0.95) !important;
-          border: 1px solid rgba(255, 255, 255, 0.08) !important;
-          backdrop-filter: blur(20px);
-          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6) !important;
-          z-index: 2;
-        }
-        .input-icon-wrapper {
-          position: relative;
-          display: flex;
-          align-items: center;
-          width: 100%;
-        }
-        .input-icon-wrapper .icon-left {
-          position: absolute;
-          left: 14px;
-          color: #9ca3af;
-          font-size: 1rem;
-          z-index: 10;
-        }
-        .input-icon-wrapper .icon-right {
-          position: absolute;
-          right: 14px;
-          color: #9ca3af;
-          font-size: 1rem;
-          cursor: pointer;
-          z-index: 10;
-        }
-        .input-icon-wrapper .form-control {
-          padding-left: 42px !important;
-          padding-right: 42px !important;
-          background-color: rgba(255, 255, 255, 0.03) !important;
-          color: #ffffff !important;
-          border-color: rgba(255, 255, 255, 0.08) !important;
-        }
-        .input-icon-wrapper .form-control:focus {
-          border-color: #a855f7 !important;
-          box-shadow: 0 0 0 0.2rem rgba(168, 85, 247, 0.2) !important;
-        }
-      `}} />
-
-      <div className="position-relative overflow-hidden custom-card d-flex flex-column p-3 p-sm-4 p-md-5 my-1">
+      <div className="position-relative overflow-hidden custom-card d-flex flex-column p-3 p-sm-4 p-md-5 my-1" style={{ maxWidth: '480px', width: '100%', borderRadius: '20px', backgroundColor: 'rgba(15, 16, 26, 0.95)', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+        
         <div className="text-center mb-3">
           <div className="d-inline-flex align-items-center justify-content-center mb-2">
             <Image src="/images/awebgrow-logo-art-letter.png" alt="Logo" width={120} height={110} className="object-fit-contain" priority />
           </div>
           <h3 className="fw-bold text-white m-0" style={{ fontSize: '1.25rem' }}>Get Started!</h3>
-          <h2 className="fw-black m-0 mt-1" style={{ fontSize: '1.5rem' }}>
+          <h2 className="fw-black m-0 mt-1" style={{ fontSize: '1.5rem', fontWeight:999 }}>
             <span style={{ color: '#3b82f6' }}>Create </span>
             <span style={{ background: 'linear-gradient(135deg, #a855f7, #ec4899, #f97316)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Account </span>
           </h2>
@@ -194,35 +145,35 @@ export default function CreateAccount() {
           <form onSubmit={handleSignup} className="d-flex flex-column gap-2.5">
             <div>
               <label className="form-label extra-small fw-bold mb-1" style={{ color: '#9ca3af', fontSize: '0.78rem' }}>Full Name</label>
-              <div className="input-icon-wrapper">
-                <FiUser className="icon-left" />
-                <input type="text" placeholder="Hridesh Kumar" className="form-control" style={{ height: '46px', borderRadius: '10px', fontSize: '0.88rem' }} required onChange={e => setFormData({ ...formData, name: e.target.value })} />
+              <div className="position-relative d-flex align-items-center">
+                <FiUser className="position-absolute ms-3 text-secondary" style={{ zIndex: 10 }} />
+                <input type="text" placeholder="Hridesh Kumar" className="form-control text-white border" style={{ height: '46px', borderRadius: '10px', paddingLeft: '42px', fontSize: '0.88rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', borderColor: 'rgba(255, 255, 255, 0.08)' }} required onChange={e => setFormData({ ...formData, name: e.target.value })} />
               </div>
             </div>
 
             <div>
               <label className="form-label extra-small fw-bold mb-1" style={{ color: '#9ca3af', fontSize: '0.78rem' }}>Email Address</label>
-              <div className="input-icon-wrapper">
-                <FiMail className="icon-left" />
-                <input type="email" placeholder="user@example.com" className="form-control" style={{ height: '46px', borderRadius: '10px', fontSize: '0.88rem' }} required onChange={e => setFormData({ ...formData, email: e.target.value })} />
+              <div className="position-relative d-flex align-items-center">
+                <FiMail className="position-absolute ms-3 text-secondary" style={{ zIndex: 10 }} />
+                <input type="email" placeholder="user@example.com" className="form-control text-white border" style={{ height: '46px', borderRadius: '10px', paddingLeft: '42px', fontSize: '0.88rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', borderColor: 'rgba(255, 255, 255, 0.08)' }} required onChange={e => setFormData({ ...formData, email: e.target.value })} />
               </div>
             </div>
 
             <div>
               <label className="form-label extra-small fw-bold mb-1" style={{ color: '#9ca3af', fontSize: '0.78rem' }}>Mobile No.</label>
-              <div className="input-icon-wrapper">
-                <FiPhone className="icon-left" />
-                <input type="tel" placeholder="+91 xxxxx-xxxxx" className="form-control" style={{ height: '46px', borderRadius: '10px', fontSize: '0.88rem' }} required onChange={e => setFormData({ ...formData, phone: e.target.value })} />
+              <div className="position-relative d-flex align-items-center">
+                <FiPhone className="position-absolute ms-3 text-secondary" style={{ zIndex: 10 }} />
+                <input type="tel" placeholder="+91 xxxxx-xxxxx" className="form-control text-white border" style={{ height: '46px', borderRadius: '10px', paddingLeft: '42px', fontSize: '0.88rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', borderColor: 'rgba(255, 255, 255, 0.08)' }} required onChange={e => setFormData({ ...formData, phone: e.target.value })} />
               </div>
             </div>
 
             <div>
               <label className="form-label extra-small fw-bold mb-1" style={{ color: '#9ca3af', fontSize: '0.78rem' }}>Password</label>
-              <div className="input-icon-wrapper">
-                <FiLock className="icon-left" />
-                <input type={showPassword ? "text" : "password"} placeholder="••••••" className="form-control" style={{ height: '46px', borderRadius: '10px', fontSize: '0.88rem' }} required onChange={e => setFormData({ ...formData, password: e.target.value })} />
-                <span className="icon-right" onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? <FiEyeOff /> : <FiEye />}
+              <div className="position-relative d-flex align-items-center">
+                <FiLock className="position-absolute ms-3 text-secondary" style={{ zIndex: 10 }} />
+                <input type={showPassword ? "text" : "password"} placeholder="••••••" className="form-control text-white border" style={{ height: '46px', borderRadius: '10px', paddingLeft: '42px', paddingRight: '42px', fontSize: '0.88rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', borderColor: 'rgba(255, 255, 255, 0.08)' }} required onChange={e => setFormData({ ...formData, password: e.target.value })} />
+                <span className="position-absolute end-0 me-3 text-secondary cursor-pointer" style={{ zIndex: 10 }} onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <FiEyeOff size={16} /> : <FiEye size={16} />}
                 </span>
               </div>
             </div>
@@ -238,7 +189,6 @@ export default function CreateAccount() {
             <div className="flex-grow-1 border-top" style={{ borderColor: 'rgba(255,255,255,0.1)' }}></div>
           </div>
 
-          {/* Side-by-Side OAuth Buttons for Mobile & Desktop */}
           <div className="d-flex gap-2">
             <button type="button" className="btn w-50 rounded-pill py-2 fw-semibold d-flex align-items-center justify-content-center gap-1.5 border text-white" style={{ height: '44px', backgroundColor: 'rgba(255, 255, 255, 0.03)', borderColor: 'rgba(255, 255, 255, 0.1)', fontSize: '0.82rem' }} onClick={() => handleOAuthLogin('google')} disabled={loading}>
               <svg width="16" height="16" viewBox="0 0 24 24">

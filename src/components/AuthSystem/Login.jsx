@@ -29,7 +29,6 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();  
 
-  // Auto-restore check: if logged in -> navigate dashboard directly
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedSession = localStorage.getItem('awebgrow_user_session');
@@ -135,7 +134,7 @@ export default function Login() {
         uid: emailKey,
         email: targetEmail,
         name: dbUser.name,
-        profileImage: dbUser.profileImage,
+        profileImage: dbUser.profileImage || "/icons/default-avatar.png",
         role: ADMIN_EMAILS.includes(targetEmail) ? 'admin' : dbUser.role
       });
 
@@ -148,14 +147,14 @@ export default function Login() {
 
   return (
     <div className="d-flex justify-content-center align-items-center w-100 position-relative overflow-hidden p-1 p-md-3" style={{ minHeight: '100vh', backgroundColor: '#020205' }}>
-      <div className="position-relative overflow-hidden custom-card d-flex flex-column p-3 p-sm-4 p-md-5 my-1">
+      <div className="position-relative overflow-hidden custom-card d-flex flex-column p-3 p-sm-4 p-md-5 my-1" style={{ maxWidth: '480px', width: '100%', borderRadius: '20px', backgroundColor: 'rgba(15, 16, 26, 0.95)', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
         
         <div className="text-center mb-3">
           <div className="d-inline-flex align-items-center justify-content-center mb-2">
             <Image src="/images/awebgrow-logo-art-letter.png" alt="Logo" width={120} height={110} className="object-fit-contain" priority />
           </div>
           <h3 className="fw-bold text-white m-0" style={{ fontSize: '1.25rem' }}>Welcome Back!</h3>
-          <h2 className="fw-black m-0 mt-1" style={{ fontSize: '1.5rem' }}>
+          <h2 className="fw-black m-0 mt-1" style={{ fontSize: '1.5rem', fontWeight:999  }}>
             <span style={{ color: '#3b82f6' }}>User </span>
             <span style={{ background: 'linear-gradient(135deg, #a855f7, #ec4899, #f97316)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Control </span>
             <span style={{ color: '#f97316' }}>Center</span>
@@ -166,12 +165,12 @@ export default function Login() {
           <form onSubmit={handleSmartLogin} className="d-flex flex-column gap-2.5">
             <div className="position-relative my-1 d-flex align-items-center">
               <span className="position-absolute ms-3 text-secondary"><FiMail size={16} /></span>
-              <input type="text" placeholder="Email Address or Mobile No." className="form-control text-white border" style={{ height: '46px', borderRadius: '10px', paddingLeft: '42px', fontSize: '0.88rem' }} required onChange={e => setIdentifier(e.target.value)} />
+              <input type="text" placeholder="Email Address or Mobile No." className="form-control text-white border" style={{ height: '46px', borderRadius: '10px', paddingLeft: '42px', fontSize: '0.88rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', borderColor: 'rgba(255, 255, 255, 0.08)' }} required onChange={e => setIdentifier(e.target.value)} />
             </div>
             
             <div className="position-relative my-1 d-flex align-items-center">
               <span className="position-absolute ms-3 text-secondary"><FiLock size={16} /></span>
-              <input type={showPassword ? "text" : "password"} placeholder="Password" className="form-control text-white border" style={{ height: '46px', borderRadius: '10px', paddingLeft: '42px', paddingRight: '42px', fontSize: '0.88rem' }} required onChange={e => setPassword(e.target.value)} />
+              <input type={showPassword ? "text" : "password"} placeholder="Password" className="form-control text-white border" style={{ height: '46px', borderRadius: '10px', paddingLeft: '42px', paddingRight: '42px', fontSize: '0.88rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', borderColor: 'rgba(255, 255, 255, 0.08)' }} required onChange={e => setPassword(e.target.value)} />
               <span className="position-absolute end-0 me-3 text-secondary cursor-pointer" style={{ zIndex: 10 }} onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? <FiEyeOff size={16} /> : <FiEye size={16} />}
               </span>
@@ -196,7 +195,6 @@ export default function Login() {
             <div className="flex-grow-1 border-top" style={{ borderColor: 'rgba(255,255,255,0.1)' }}></div>
           </div>
 
-          {/* Side-by-Side OAuth Buttons for Mobile & Desktop */}
           <div className="d-flex gap-2">
             <button type="button" className="btn w-50 rounded-pill py-2 fw-semibold d-flex align-items-center justify-content-center gap-1.5 border text-white" style={{ height: '44px', backgroundColor: 'rgba(255, 255, 255, 0.03)', borderColor: 'rgba(255, 255, 255, 0.1)', fontSize: '0.82rem' }} onClick={() => handleOAuthLogin('google')} disabled={loading}>
               <svg width="16" height="16" viewBox="0 0 24 24">
