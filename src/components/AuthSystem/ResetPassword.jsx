@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { auth } from '@/lib/firebase';
 import { confirmPasswordReset, verifyPasswordResetCode } from 'firebase/auth';
 import { toast } from 'sonner';
-import { FiLock } from 'react-icons/fi';
+import { FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
 import Image from 'next/image';
 
 function ResetPasswordContent() {
@@ -13,6 +13,7 @@ function ResetPasswordContent() {
   const router = useRouter();
   const [oobCode, setOobCode] = useState(null);
   const [newPassword, setNewPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [isCodeValid, setIsCodeValid] = useState(false);
@@ -27,12 +28,12 @@ function ResetPasswordContent() {
           setIsCodeValid(true);
           setVerifying(false);
         })
-        .catch((err) => {
-          setMessage("❌ Link Expired or Invalid! Please request a new link.");
+        .catch(() => {
+          setMessage("Link Expired or Invalid! Please request a new recovery link.");
           setVerifying(false);
         });
     } else {
-      setMessage("❌ Missing Action Token. Please open this page via the link sent to your email.");
+      setMessage("Missing Action Token. Please open this page via the link sent to your email.");
       setVerifying(false);
     }
   }, [searchParams]);
@@ -49,13 +50,13 @@ function ResetPasswordContent() {
 
     try {
       await confirmPasswordReset(auth, oobCode, newPassword);
-      toast.success("🎉 Password updated successfully! Redirecting to login...");
+      toast.success("Password updated successfully! Redirecting to login...");
 
       setTimeout(() => {
         router.push('/login');
-      }, 3000);
+      }, 2500);
     } catch (error) {
-      setMessage("❌ Failed to update password: " + error.message);
+      setMessage("Failed to update password: " + error.message);
       toast.error(error.message);
     } finally {
       setLoading(false);
@@ -72,7 +73,7 @@ function ResetPasswordContent() {
   }
 
   return (
-    <div className="d-flex justify-content-center align-items-center w-100 position-relative overflow-hidden shell-wrapper" style={{ minHeight: '100vh', backgroundColor: '#020205', padding: '4px' }}>
+    <div className="d-flex justify-content-center align-items-center w-100 position-relative overflow-hidden shell-wrapper" style={{ minHeight: '100vh', backgroundColor: '#020205', padding: '16px' }}>
 
       <div className="position-absolute rounded-circle pointer-events-none glow-sphere-1" style={{ width: '500px', height: '500px', top: '-10%', left: '-5%', zIndex: 0, background: 'radial-gradient(circle, rgba(255, 0, 128, 0.15) 0%, transparent 70%)', filter: 'blur(80px)' }} />
       <div className="position-absolute rounded-circle pointer-events-none glow-sphere-2" style={{ width: '500px', height: '500px', bottom: '-10%', right: '-5%', zIndex: 0, background: 'radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%)', filter: 'blur(80px)' }} />
@@ -84,7 +85,7 @@ function ResetPasswordContent() {
             <Image src="/images/awebgrow-logo-art-letter.png" alt="Logo" width={146} height={140} className="object-fit-contain" priority />
           </div>
           <h3 className="fw-bold text-white m-0" style={{ fontSize: '1.4rem', fontWeight: 700 }}>Secure Reset</h3>
-          <h2 className="fw-black m-0 mt-1" style={{ fontSize: '1.7rem', fontWeight: 900 }}>
+          <h2 className="fw-black m-0 mt-1" style={{ fontSize: '1.7rem', fontWeight:900 }}>
             <span style={{ color: '#3b82f6' }}>Setup New </span>
             <span className="text-gradient-purple-blue" style={{ background: 'linear-gradient(135deg, #a855f7, #ec4899, #f97316)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Password </span>
           </h2>
@@ -107,14 +108,17 @@ function ResetPasswordContent() {
                   <FiLock size={18} />
                 </span>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Min 6 characters"
                   className="form-control text-theme-primary border"
-                  style={{ height: '50px', borderRadius: '12px', fontSize: '0.9rem', paddingLeft: '45px', backgroundColor: 'var(--bg-pill, rgba(255, 255, 255, 0.03))', borderColor: 'var(--border-subtle, rgba(255, 255, 255, 0.08))', color: '#fff' }}
+                  style={{ height: '50px', borderRadius: '12px', fontSize: '0.9rem', paddingLeft: '45px', paddingRight: '45px', backgroundColor: 'var(--bg-pill, rgba(255, 255, 255, 0.03))', borderColor: 'var(--border-subtle, rgba(255, 255, 255, 0.08))', color: '#fff' }}
                   required
                   value={newPassword}
                   onChange={e => setNewPassword(e.target.value)}
                 />
+                <span className="position-absolute end-0 me-3 text-secondary cursor-pointer" style={{ zIndex: 10 }} onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+                </span>
               </div>
 
               <button

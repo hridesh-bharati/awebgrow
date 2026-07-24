@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'; 
+import { auth } from '@/lib/firebase';
+import { signOut } from 'firebase/auth';
+import { toast } from 'sonner';
 
 export default function Logout() {
   const [asyncRunning, setAsyncRunning] = useState(false);
@@ -10,12 +13,16 @@ export default function Logout() {
   const performClearance = async () => {
     setAsyncRunning(true);
     try {
-      const res = await fetch('/api/auth/logout', { method: 'POST' });
-      if (res.ok) {
-        router.push('/'); 
-      }
+      // 1. Clear Backend Cookie
+      await fetch('/api/auth/logout', { method: 'POST' });
+      // 2. Clear Firebase Client Auth State
+      await signOut(auth);
+      
+      toast.success("Logged out successfully");
+      router.push('/login'); 
+      router.refresh();
     } catch (error) {
-      console.error("Logout execution fault: ", error);
+      toast.error("Logout error: " + error.message);
     } finally {
       setAsyncRunning(false);
     }
