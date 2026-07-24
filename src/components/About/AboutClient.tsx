@@ -529,7 +529,7 @@ export default function AboutClient() {
                   <div>
                     <div className="d-flex align-items-center gap-2">
                       <h6 className="fw-bold mb-0 text-theme-primary" style={{ fontSize: '0.9rem' }}>Hridesh Bharati</h6>
-                      <span className="badge rounded-pill text-white" style={{ background: 'linear-gradient(135deg, #a855f7, #3b82f6)', fontSize: '0.62rem' }}>Founder &amp; Lead</span>
+                      <span className="badge rounded-pill text-white" style={{ background: 'linear-gradient(135deg, #a855f7, #3b82f6)', fontSize: '0.62rem' }}>Developer</span>
                     </div>
                     <p className="small text-theme-secondary mb-0 mt-0.5" style={{ fontSize: '0.76rem', lineHeight: '1.3' }}>
                       Full-stack &amp; LLM Developer specializing in Next.js, React &amp; MERN Stack. Building scalable AI-powered web solutions from Nichlaul.

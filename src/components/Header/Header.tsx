@@ -244,7 +244,7 @@ export default function Header() {
                       alt={user.name || "user"} 
                       width="38" 
                       height="38" 
-                      className="rounded-circle object-fit-cover border border- border-light"
+                      className="rounded-circle object-fit-cover border border-1 border-light"
                       onError={(e) => { (e.target as HTMLImageElement).src = "/icons/default-avatar.png"; }}
                     />
                   </button>
