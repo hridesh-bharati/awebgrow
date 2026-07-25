@@ -4,9 +4,8 @@ import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { auth, rtdb } from '@/lib/firebase';
+import { auth } from '@/lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { ref, get } from 'firebase/database';
 import './Header.css';
 
 const SEARCH_INDEX = [
@@ -18,9 +17,16 @@ const SEARCH_INDEX = [
   { label: "FAQ & Help", path: "/faq", keywords: ["faq", "help"] }
 ];
 
+interface UserSession {
+  name: string;
+  email: string;
+  profileImage: string;
+  role?: string;
+}
+
 export default function Header() {
   const [mounted, setMounted] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<UserSession | null>(null);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -33,6 +39,7 @@ export default function Header() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
+  // 1. Initial Mount & Theme Setup
   useEffect(() => {
     setMounted(true);
     const savedTheme = (localStorage.getItem('app-theme') as 'dark' | 'light') || 'dark';
@@ -47,12 +54,12 @@ export default function Header() {
     document.documentElement.setAttribute('data-bs-theme', nextTheme);
   };
 
-  // ✅ FULLY FIXED MULTI-STAGE AUTH SYNC
+  // 2. Optimized Clean Auth Listener & Session Sync
   useEffect(() => {
     if (!mounted) return;
     let isCurrent = true;
 
-    // 1. Instant Fast-Load from LocalStorage (Syncs immediately with Login/Register)
+    // Fast-load initial cache from LocalStorage for seamless UI (No flash)
     if (typeof window !== 'undefined') {
       const savedSession = localStorage.getItem('awebgrow_user_session');
       if (savedSession) {
@@ -67,74 +74,55 @@ export default function Header() {
             });
           }
         } catch (e) {
-          console.error("Session parse error:", e);
+          console.error("Session cache error:", e);
         }
       }
     }
 
-    // 2. Server API Session Check (/api/auth/me)
-    const checkAuthStatus = async () => {
+    // Verify Ground-Truth Session from Server Cookie (`/api/auth/me`)
+    const verifyServerSession = async () => {
       try {
         const res = await fetch('/api/auth/me', { cache: 'no-store' });
         if (res.ok) {
           const data = await res.json();
           if (data.authenticated && data.user && isCurrent) {
-            setUser({
+            const serverUser: UserSession = {
               name: data.user.name || data.user.email?.split('@')[0],
               profileImage: data.user.profileImage || "/icons/default-avatar.png",
               email: data.user.email,
               role: data.user.role
-            });
+            };
+            setUser(serverUser);
+            localStorage.setItem('awebgrow_user_session', JSON.stringify(serverUser));
             return;
           }
         }
-        // If not authenticated via cookie & localStorage missing -> clear user state
-        if (!localStorage.getItem('awebgrow_user_session') && isCurrent) {
+
+        // If Server says NOT authenticated -> Purge local state
+        if (isCurrent) {
           setUser(null);
+          localStorage.removeItem('awebgrow_user_session');
         }
       } catch (error) {
-        console.error("Auth session check error:", error);
+        console.error("Session verification failed:", error);
       }
     };
 
-    // 3. Client Firebase Auth Observer
+    // If auth is null, fallback to server session check directly
     if (!auth) {
-      checkAuthStatus();
+      verifyServerSession();
       return;
     }
 
-    const unsubscribe = onAuthStateChanged(auth!, async (fbUser) => {
-      if (fbUser && isCurrent) {
-        try {
-          const emailKey = fbUser.email?.replace(/\./g, '_');
-          let dbUserData = null;
-          if (emailKey && rtdb) {
-            const userSnap = await get(ref(rtdb!, `users/${emailKey}`));
-            if (userSnap.exists()) {
-              dbUserData = userSnap.val();
-            }
-          }
-
-          const userPayload = {
-            name: dbUserData?.name || fbUser.displayName || fbUser.email?.split('@')[0] || "User",
-            profileImage: dbUserData?.profileImage || fbUser.photoURL || "/icons/default-avatar.png",
-            email: fbUser.email,
-            role: dbUserData?.role || 'user'
-          };
-
-          setUser(userPayload);
-          if (typeof window !== 'undefined') {
-            localStorage.setItem('awebgrow_user_session', JSON.stringify(userPayload));
-          }
-        } catch (e) {
-          setUser({
-            name: fbUser.displayName || fbUser.email?.split('@')[0] || "User",
-            profileImage: fbUser.photoURL || "/icons/default-avatar.png",
-            email: fbUser.email
-          });
-        }
+    // Safe Firebase Auth Listener
+    const unsubscribe = onAuthStateChanged(auth, (fbUser) => {
+      if (fbUser) {
+        verifyServerSession();
       } else {
-        checkAuthStatus();
+        if (isCurrent) {
+          setUser(null);
+          localStorage.removeItem('awebgrow_user_session');
+        }
       }
     });
 
@@ -144,6 +132,7 @@ export default function Header() {
     };
   }, [pathname, mounted]);
 
+  // Outside Click Listeners
   useEffect(() => {
     if (!mounted) return;
     const handleClickOutside = (event: MouseEvent) => {
@@ -158,6 +147,7 @@ export default function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [mounted]);
 
+  // Search Suggestions Filter
   useEffect(() => {
     if (searchQuery.trim() === '') {
       setFilteredSuggestions([]);
@@ -171,9 +161,13 @@ export default function Header() {
     }
   }, [searchQuery]);
 
+  // Clean Logout Handler
   const handleLogout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
+      if (auth) {
+        await auth.signOut();
+      }
       if (typeof window !== 'undefined') {
         localStorage.removeItem('awebgrow_user_session');
       }
@@ -183,7 +177,7 @@ export default function Header() {
       router.push('/login');
       router.refresh();
     } catch (error) {
-      console.error("Logout failure:", error);
+      console.error("Logout error:", error);
     }
   };
 
@@ -202,6 +196,7 @@ export default function Header() {
     <>
       <header className="fixed-top custom-header py-1 px-3 px-md-4">
         <div className="container-fluid max-width-xl d-flex align-items-center justify-content-between">
+
           {/* BRAND LOGO */}
           <Link href="/" className="text-decoration-none d-flex align-items-center m-0 p-0">
             <Image src="/icons/awebgrow-logo.png" alt="AWEBGROW Logo" width={120} height={50} className="object-fit-contain rounded-2 border border-2 border-dark m-0 p-0" priority />
@@ -266,16 +261,16 @@ export default function Header() {
             <div ref={dropdownRef} className="position-relative">
               {user ? (
                 <>
-                  <button 
-                    onClick={() => setShowDropdown(!showDropdown)} 
-                    className="btn p-0 border-0 rounded-circle overflow-hidden shadow-sm" 
+                  <button
+                    onClick={() => setShowDropdown(!showDropdown)}
+                    className="btn p-0 border-0 rounded-circle overflow-hidden shadow-sm"
                     style={{ width: '38px', height: '38px' }}
                   >
-                    <img 
-                      src={user.profileImage || "/icons/default-avatar.png"} 
-                      alt={user.name || "user"} 
-                      width="38" 
-                      height="38" 
+                    <img
+                      src={user.profileImage || "/icons/default-avatar.png"}
+                      alt={user.name || "user"}
+                      width="38"
+                      height="38"
                       className="rounded-circle object-fit-cover border border-1 border-light"
                       onError={(e) => { (e.target as HTMLImageElement).src = "/icons/default-avatar.png"; }}
                     />

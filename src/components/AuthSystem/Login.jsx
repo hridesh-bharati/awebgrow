@@ -15,12 +15,6 @@ import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
 import Image from 'next/image';
 import { toast } from 'sonner';
 
-const ADMIN_EMAILS = [
-  'awebgrow@gmail.com',
-  'hridesh027@gmail.com',
-  'kandusushil9@gmail.com'
-];
-
 export default function Login() {
   const [identifier, setIdentifier] = useState(''); 
   const [password, setPassword] = useState('');
@@ -33,7 +27,16 @@ export default function Login() {
     if (typeof window !== 'undefined') {
       const savedSession = localStorage.getItem('awebgrow_user_session');
       if (savedSession) {
-        router.push('/dashboard');
+        // Verify session with server
+        fetch('/api/auth/me')
+          .then(res => res.json())
+          .then(data => {
+            if (data.authenticated) {
+              router.push('/dashboard');
+            } else {
+              localStorage.removeItem('awebgrow_user_session');
+            }
+          });
       }
     }
   }, [router]);
@@ -46,8 +49,9 @@ export default function Login() {
     });
     
     if (res.ok) {
+      const data = await res.json();
       if (rememberMe && typeof window !== 'undefined') {
-        localStorage.setItem('awebgrow_user_session', JSON.stringify(userPayload));
+        localStorage.setItem('awebgrow_user_session', JSON.stringify(data.user));
       }
       toast.success("Welcome back!");
       router.push('/dashboard'); 
@@ -88,7 +92,7 @@ export default function Login() {
         email: targetEmail,
         name: dbUser?.name || targetEmail.split('@')[0],
         profileImage: dbUser?.profileImage || "/icons/default-avatar.png",
-        role: ADMIN_EMAILS.includes(targetEmail) ? 'admin' : (dbUser?.role || 'user')
+        role: dbUser?.role || 'user' // Will be overridden by server
       });
 
     } catch (err) {
@@ -117,14 +121,13 @@ export default function Login() {
       let dbUser = userSnap.exists() ? userSnap.val() : null;
 
       if (!dbUser) {
-        const isAdmin = ADMIN_EMAILS.includes(targetEmail);
         dbUser = {
           uid: emailKey,
           name: fbUser.displayName || targetEmail.split('@')[0],
           email: targetEmail,
           phone: fbUser.phoneNumber || '',
           profileImage: fbUser.photoURL || "/icons/default-avatar.png",
-          role: isAdmin ? 'admin' : 'user',
+          role: 'user', // Default role, server will override if admin
           createdAt: new Date().toISOString()
         };
         await set(userRef, dbUser);
@@ -135,7 +138,7 @@ export default function Login() {
         email: targetEmail,
         name: dbUser.name,
         profileImage: dbUser.profileImage || "/icons/default-avatar.png",
-        role: ADMIN_EMAILS.includes(targetEmail) ? 'admin' : dbUser.role
+        role: dbUser.role // Will be overridden by server
       });
 
     } catch (error) {

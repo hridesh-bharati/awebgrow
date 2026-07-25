@@ -1,5 +1,5 @@
 "use client";
-
+// src\components\Dashboard\Admin\AdminDashboard.jsx
 import { useEffect, useState } from 'react';
 import { rtdb } from '@/lib/firebase';
 import { ref, onValue } from 'firebase/database';

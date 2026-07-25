@@ -15,12 +15,6 @@ import { FiUser, FiMail, FiPhone, FiLock, FiEye, FiEyeOff } from 'react-icons/fi
 import Image from 'next/image';
 import { toast } from 'sonner';
 
-const ADMIN_EMAILS = [
-  'awebgrow@gmail.com',
-  'hridesh027@gmail.com',
-  'kandusushil9@gmail.com'
-];
-
 export default function CreateAccount() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
@@ -37,15 +31,14 @@ export default function CreateAccount() {
     if (snapshot.exists()) {
       finalUserData = snapshot.val();
     } else {
-      const isAdmin = ADMIN_EMAILS.includes(userEmail.toLowerCase());
-
+      // Role will be set by the server API during login
       finalUserData = {
         uid: emailKey,
         name: displayName || userEmail.split('@')[0],
         email: userEmail.toLowerCase(),
         phone: phoneNumber.trim(),
         profileImage: photoURL || "/icons/default-avatar.png",
-        role: isAdmin ? 'admin' : 'user',
+        role: 'user', // Default role, server will override if admin
         createdAt: new Date().toISOString()
       };
       await set(userRef, finalUserData);
@@ -61,22 +54,22 @@ export default function CreateAccount() {
     });
 
     if (res.ok) {
+      const data = await res.json();
       if (typeof window !== 'undefined') {
-        localStorage.setItem('awebgrow_user_session', JSON.stringify(userPayload));
+        localStorage.setItem('awebgrow_user_session', JSON.stringify(data.user));
       }
-      toast.success("OAuth Login Successful! Redirecting...");
+      toast.success("Login Successful! Redirecting...");
       router.push('/dashboard');
       router.refresh();
     }
   };
 
-  // 1. Email/Password Signup -> Redirects to Login Page
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-      await syncUserToDatabase(
+      const userData = await syncUserToDatabase(
         formData.email, 
         formData.name, 
         "/icons/default-avatar.png", 
@@ -99,7 +92,6 @@ export default function CreateAccount() {
     }
   };
 
-  // 2. Google / GitHub OAuth -> Direct to Dashboard
   const handleOAuthLogin = async (providerName) => {
     setLoading(true);
     try {
@@ -118,7 +110,14 @@ export default function CreateAccount() {
         fbUser.phoneNumber || ''
       );
 
-      await initSessionAndRedirect(dbUser);
+      // Let the server determine the role
+      await initSessionAndRedirect({
+        uid: dbUser.uid,
+        email: dbUser.email,
+        name: dbUser.name,
+        profileImage: dbUser.profileImage,
+        role: dbUser.role // Will be overridden by server
+      });
     } catch (error) {
       toast.error(`${providerName.toUpperCase()} Auth Failed: ${error.message}`);
     } finally {

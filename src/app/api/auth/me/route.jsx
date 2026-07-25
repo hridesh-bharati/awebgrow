@@ -18,7 +18,7 @@ export async function GET(request) {
         name: decoded.name,
         email: decoded.email,
         profileImage: decoded.profileImage || null,
-        role: decoded.role || 'user'
+        role: decoded.role
       }
     }, { status: 200 });
 
