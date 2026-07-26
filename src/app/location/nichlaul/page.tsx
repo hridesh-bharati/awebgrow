@@ -1,5 +1,3 @@
-"use client"
-
 // src/app/location/nichlaul/page.tsx
 import type { Metadata } from 'next';
 import Link from 'next/link';
