@@ -1,7 +1,6 @@
 // src/app/brand/page.tsx
 import type { Metadata } from 'next';
 import Link from 'next/link';
-
 export const metadata: Metadata = {
   title: "AWebGrow - India's Leading Web Development Company | Brand Story",
   description: "AWebGrow is a trusted web development company in India. We build custom websites, mobile apps, and digital solutions for startups and enterprises. Our story of innovation and excellence.",
@@ -20,8 +19,7 @@ export default function BrandPage() {
   return (
     <main className="container py-5">
       <h1 className="display-4 fw-bold mb-4" style={{ color: '#0f172a' }}>
-        AWebGrow - Our Brand Story
-      </h1>
+        AWebGrow - Our Brand Story</h1>
       
       <article className="row">
         <div className="col-lg-8 mx-auto">
@@ -30,7 +28,7 @@ export default function BrandPage() {
             <p className="lead" style={{ lineHeight: '1.8' }}>
               <strong>AWebGrow</strong> is a premium web development company headquartered in India, 
               serving clients globally. We specialize in custom website development, mobile app development, 
-              and digital transformation solutions.
+              and digital transformation solutions..
             </p>
             <p style={{ lineHeight: '1.8', color: '#475569' }}>
               Founded by <strong>Hridesh Bharati</strong> and <strong>Sushant Rai</strong>, 
