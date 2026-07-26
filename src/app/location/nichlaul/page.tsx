@@ -1,6 +1,7 @@
 // src/app/location/nichlaul/page.tsx
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Header from "@/components/Header/Header"
 
 export const metadata: Metadata = {
   title: "Web Development Company in Nichlaul | AWebGrow - Trusted Agency",
@@ -26,6 +27,9 @@ export const metadata: Metadata = {
 
 export default function NichlaulPage() {
   return (
+<>
+
+    <Header />
     <main style={{
       backgroundColor: '#020203',
       minHeight: '100vh',
@@ -194,5 +198,6 @@ export default function NichlaulPage() {
         />
       </div>
     </main>
+</>
   );
 }

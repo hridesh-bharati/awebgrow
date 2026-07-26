@@ -10,6 +10,7 @@ import {
   FaMapMarkerAlt,
   FaGlobe
 } from 'react-icons/fa';
+import Header from "@/components/Header/Header"
 
 export const metadata: Metadata = {
   title: "AWebGrow - India's Leading Web Development Company | Brand Story",
@@ -27,6 +28,8 @@ export const metadata: Metadata = {
 
 export default function BrandPage() {
   return (
+   <>
+   <Header />
     <main className="container py-5" style={{ backgroundColor: 'var(--bg-main)', color: 'var(--text-primary)' }}>
       {/* Hero Section */}
       <section className="row align-items-center g-5 py-4">
@@ -184,6 +187,7 @@ export default function BrandPage() {
         </div>
       </article>
     </main>
+   </>
   );
 }
 
