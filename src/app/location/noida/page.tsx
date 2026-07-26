@@ -1,14 +1,14 @@
 // src/app/brand/page.tsx
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { 
-  FaCheckCircle, 
-  FaRocket, 
-  FaUsers, 
-  FaCode, 
-  FaStar, 
-  FaMapMarkerAlt, 
-  FaGlobe 
+import {
+  FaCheckCircle,
+  FaRocket,
+  FaUsers,
+  FaCode,
+  FaStar,
+  FaMapMarkerAlt,
+  FaGlobe
 } from 'react-icons/fa';
 
 export const metadata: Metadata = {
@@ -42,13 +42,13 @@ export default function BrandPage() {
               <FaStar className="me-2" /> 4.9 Rating
             </span>
           </div>
-          
+
           <h1 className="display-3 fw-bold mb-3" style={{ color: 'var(--text-primary)' }}>
-            <span className="text-gradient-purple">AWebGrow</span> — 
+            <span className="text-gradient-purple">AWebGrow</span> —
             <span className="text-gradient-pink"> Our Brand Story</span>
           </h1>
           <p className="lead mb-4" style={{ color: 'var(--text-secondary)', maxWidth: '700px', margin: '0 auto', lineHeight: '1.8' }}>
-            From a passionate startup to India's trusted web development partner — 
+            From a passionate startup to India's trusted web development partner —
             built on innovation, transparency, and a relentless pursuit of excellence.
           </p>
           <div className="d-flex justify-content-center gap-3 flex-wrap">
@@ -65,7 +65,7 @@ export default function BrandPage() {
       {/* Story Content */}
       <article className="row mt-5" id="story">
         <div className="col-lg-10 mx-auto">
-          
+
           {/* Who We Are */}
           <section className="mb-5 p-4 p-md-5 rounded-4" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-subtle)', backdropFilter: 'blur(4px)' }}>
             <div className="d-flex align-items-center gap-3 mb-4">
@@ -73,13 +73,13 @@ export default function BrandPage() {
               <h2 className="h2 fw-bold mb-0" style={{ color: 'var(--text-primary)' }}>Who is AWebGrow?</h2>
             </div>
             <p className="lead" style={{ lineHeight: '1.9', color: 'var(--text-secondary)' }}>
-              <strong style={{ color: 'var(--text-primary)' }}>AWebGrow</strong> is a premium web development company headquartered in India, 
-              serving clients globally. We specialize in custom website development, mobile app development, 
+              <strong style={{ color: 'var(--text-primary)' }}>AWebGrow</strong> is a premium web development company headquartered in India,
+              serving clients globally. We specialize in custom website development, mobile app development,
               and digital transformation solutions.
             </p>
             <p style={{ lineHeight: '1.9', color: 'var(--text-secondary)' }}>
-              Founded by <strong style={{ color: 'var(--text-primary)' }}>Hridesh Bharati</strong> and <strong style={{ color: 'var(--text-primary)' }}>Sushant Rai</strong>, 
-              AWebGrow has grown from a small team of passionate developers to a full-service 
+              Founded by <strong style={{ color: 'var(--text-primary)' }}>Sushant Rai</strong> and <strong style={{ color: 'var(--text-primary)' }}> Hridesh Bharati</strong>,
+              AWebGrow has grown from a small team of passionate developers to a full-service
               digital agency trusted by businesses across India and beyond.
             </p>
             <div className="row g-3 mt-3">
@@ -102,8 +102,8 @@ export default function BrandPage() {
               <section className="p-4 p-md-5 rounded-4 h-100" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-subtle)' }}>
                 <h3 className="h4 fw-bold mb-3" style={{ color: 'var(--text-primary)' }}>🎯 Our Mission</h3>
                 <p style={{ lineHeight: '1.8', color: 'var(--text-secondary)' }}>
-                  To empower businesses with cutting-edge web and mobile solutions that drive growth, 
-                  enhance user experience, and create lasting digital impact. We believe in delivering 
+                  To empower businesses with cutting-edge web and mobile solutions that drive growth,
+                  enhance user experience, and create lasting digital impact. We believe in delivering
                   excellence through innovation, transparency, and client-centric approach.
                 </p>
               </section>
@@ -112,8 +112,8 @@ export default function BrandPage() {
               <section className="p-4 p-md-5 rounded-4 h-100" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-subtle)' }}>
                 <h3 className="h4 fw-bold mb-3" style={{ color: 'var(--text-primary)' }}>🌟 Our Vision</h3>
                 <p style={{ lineHeight: '1.8', color: 'var(--text-secondary)' }}>
-                  To be India's most admired digital transformation partner, recognized for our 
-                  technical excellence, creative innovation, and unwavering commitment to client success 
+                  To be India's most admired digital transformation partner, recognized for our
+                  technical excellence, creative innovation, and unwavering commitment to client success
                   across the globe.
                 </p>
               </section>
@@ -168,7 +168,7 @@ export default function BrandPage() {
           </section>
 
           {/* CTA */}
-          <div className="p-5 rounded-4 text-center" style={{ 
+          <div className="p-5 rounded-4 text-center" style={{
             background: 'linear-gradient(135deg, rgba(168,85,247,0.15) 0%, rgba(236,72,153,0.15) 100%)',
             border: '1px solid var(--border-subtle)',
           }}>

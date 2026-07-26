@@ -29,6 +29,8 @@ export default function Header() {
   const [user, setUser] = useState<UserSession | null>(null);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  const [showMobileLocationMenu, setShowMobileLocationMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
@@ -37,6 +39,7 @@ export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const locationDropdownRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
   // 1. Initial Mount & Theme Setup
@@ -54,12 +57,11 @@ export default function Header() {
     document.documentElement.setAttribute('data-bs-theme', nextTheme);
   };
 
-  // 2. Optimized Clean Auth Listener & Session Sync
+  // 2. Auth Listener & Session Sync
   useEffect(() => {
     if (!mounted) return;
     let isCurrent = true;
 
-    // Fast-load initial cache from LocalStorage for seamless UI (No flash)
     if (typeof window !== 'undefined') {
       const savedSession = localStorage.getItem('awebgrow_user_session');
       if (savedSession) {
@@ -79,7 +81,6 @@ export default function Header() {
       }
     }
 
-    // Verify Ground-Truth Session from Server Cookie (`/api/auth/me`)
     const verifyServerSession = async () => {
       try {
         const res = await fetch('/api/auth/me', { cache: 'no-store' });
@@ -98,7 +99,6 @@ export default function Header() {
           }
         }
 
-        // If Server says NOT authenticated -> Purge local state
         if (isCurrent) {
           setUser(null);
           localStorage.removeItem('awebgrow_user_session');
@@ -108,13 +108,11 @@ export default function Header() {
       }
     };
 
-    // If auth is null, fallback to server session check directly
     if (!auth) {
       verifyServerSession();
       return;
     }
 
-    // Safe Firebase Auth Listener
     const unsubscribe = onAuthStateChanged(auth, (fbUser) => {
       if (fbUser) {
         verifyServerSession();
@@ -139,6 +137,9 @@ export default function Header() {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setShowDropdown(false);
       }
+      if (locationDropdownRef.current && !locationDropdownRef.current.contains(event.target as Node)) {
+        setShowLocationDropdown(false);
+      }
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setIsSearchFocused(false);
       }
@@ -161,7 +162,7 @@ export default function Header() {
     }
   }, [searchQuery]);
 
-  // Clean Logout Handler
+  // Logout Handler
   const handleLogout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
@@ -191,6 +192,11 @@ export default function Header() {
     { path: '/contact', label: 'Contact' },
   ];
 
+  const locationLinks = [
+    { path: '/location/noida', label: 'Noida' },
+    { path: '/location/nichlaul', label: 'Nichlaul' },
+  ];
+
   if (!mounted) return <header className="fixed-top w-100" style={{ height: '65px', background: '#020203' }} />;
 
   return (
@@ -205,7 +211,47 @@ export default function Header() {
 
           {/* DESKTOP NAVIGATION */}
           <nav className="d-none d-lg-flex align-items-center nav-capsule">
-            {navLinks.map((link) => {
+            {navLinks.slice(0, 3).map((link) => {
+              const isActive = pathname === link.path;
+              return (
+                <Link key={link.path} href={link.path} className={`nav-link-custom ${isActive ? 'active' : ''}`}>
+                  {link.label}
+                </Link>
+              );
+            })}
+
+            {/* LOCATION DROPDOWN */}
+            <div ref={locationDropdownRef} className="position-relative">
+              <button
+                onClick={() => setShowLocationDropdown(!showLocationDropdown)}
+                className={`nav-link-custom border-0 bg-transparent d-flex align-items-center gap-1 ${pathname.startsWith('/location') ? 'active' : ''}`}
+                style={{ cursor: 'pointer' }}
+              >
+                <span>Locations</span>
+                <i className={`bi bi-chevron-down small transition-all ${showLocationDropdown ? 'rotate-180' : ''}`} style={{ fontSize: '0.7rem' }}></i>
+              </button>
+
+              {showLocationDropdown && (
+                <div className="position-absolute bg-dark border border-secondary p-2 mt-2 start-0 rounded-3 shadow-lg z-3" style={{ minWidth: '150px' }}>
+                  {locationLinks.map((loc) => (
+                    <Link
+                      key={loc.path}
+                      href={loc.path}
+                      className="dropdown-item py-2 px-3 small text-white d-block rounded-2 text-decoration-none"
+                      onClick={() => setShowLocationDropdown(false)}
+                      style={{
+                        backgroundColor: pathname === loc.path ? 'rgba(168, 85, 247, 0.2)' : 'transparent',
+                        fontSize: '0.82rem'
+                      }}
+                    >
+                      📍 {loc.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {navLinks.slice(3).map((link) => {
               const isActive = pathname === link.path;
               return (
                 <Link key={link.path} href={link.path} className={`nav-link-custom ${isActive ? 'active' : ''}`}>
@@ -350,8 +396,58 @@ export default function Header() {
         </div>
 
         {/* Navigation Links */}
-        <div className="d-flex flex-column gap-2 flex-grow-1">
-          {navLinks.map((link) => {
+        <div className="d-flex flex-column gap-2 flex-grow-1 overflow-auto">
+          {navLinks.slice(0, 3).map((link) => {
+            const isActive = pathname === link.path;
+            return (
+              <Link
+                key={link.path}
+                href={link.path}
+                onClick={() => setShowSidebar(false)}
+                className={`text-decoration-none fw-semibold fs-6 py-2.5 px-3 rounded-3 d-flex align-items-center justify-content-between transition-all ${isActive ? 'text-white' : 'text-secondary'}`}
+                style={{
+                  backgroundColor: isActive ? 'rgba(168, 85, 247, 0.15)' : 'transparent',
+                  border: isActive ? '1px solid rgba(168, 85, 247, 0.3)' : '1px solid transparent',
+                  color: isActive ? '#fff' : 'var(--text-secondary)'
+                }}
+              >
+                <span>{link.label}</span>
+                <i className={`bi bi-chevron-right small ${isActive ? 'text-purple' : 'opacity-50'}`} style={{ fontSize: '0.7rem' }}></i>
+              </Link>
+            );
+          })}
+
+          {/* MOBILE LOCATIONS ACCORDION */}
+          <div>
+            <button
+              onClick={() => setShowMobileLocationMenu(!showMobileLocationMenu)}
+              className="w-100 border-0 bg-transparent text-decoration-none fw-semibold fs-6 py-2.5 px-3 rounded-3 d-flex align-items-center justify-content-between text-secondary"
+            >
+              <span>Locations</span>
+              <i className={`bi bi-chevron-down small transition-all ${showMobileLocationMenu ? 'rotate-180' : ''}`} style={{ fontSize: '0.7rem' }}></i>
+            </button>
+
+            {showMobileLocationMenu && (
+              <div className="ps-3 d-flex flex-column gap-1 my-1">
+                {locationLinks.map((loc) => (
+                  <Link
+                    key={loc.path}
+                    href={loc.path}
+                    onClick={() => setShowSidebar(false)}
+                    className="text-decoration-none small py-2 px-3 rounded-2 text-secondary d-flex align-items-center gap-2"
+                    style={{
+                      backgroundColor: pathname === loc.path ? 'rgba(168, 85, 247, 0.15)' : 'transparent',
+                      color: pathname === loc.path ? '#fff' : 'var(--text-secondary)'
+                    }}
+                  >
+                    <span>📍 {loc.label}</span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {navLinks.slice(3).map((link) => {
             const isActive = pathname === link.path;
             return (
               <Link
