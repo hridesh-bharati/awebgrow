@@ -1,4 +1,4 @@
-// src/app/blog/[slug]/BlogPostClient.tsx
+// src\app\blog\[slug]\BlogPostClient.tsx
 "use client";
 
 import Link from 'next/link';

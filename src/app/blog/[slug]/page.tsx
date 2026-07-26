@@ -5,6 +5,10 @@ import Link from 'next/link';
 import { getPostBySlug, getAllPosts, getRelatedPosts } from '@/lib/posts';
 import BlogPostClient from './BlogPostClient';
 
+type PageProps = {
+  params: Promise<{ slug: string }>;
+};
+
 // Generate static paths
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -14,8 +18,9 @@ export async function generateStaticParams() {
 }
 
 // ✅ Enhanced Metadata for SEO
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const post = getPostBySlug(params.slug);
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
   if (!post) return { title: 'Post Not Found' };
 
   const baseUrl = 'https://www.awebgrow.com';
@@ -76,9 +81,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = getPostBySlug(params.slug);
-  const relatedPosts = getRelatedPosts(params.slug, 3);
+export default async function BlogPostPage({ params }: PageProps) {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+  const relatedPosts = getRelatedPosts(slug, 3);
 
   if (!post) {
     notFound();
