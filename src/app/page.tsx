@@ -282,9 +282,9 @@ export default function Home() {
                       height: '100%',
                       cursor: 'pointer'
                     }}>
-                      <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>📍</div>
+                      <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>🌍</div>
                       <h3 className="h5 fw-bold text-white mb-2">Noida</h3>
-                      <p className="text-secondary small mb-0">Sector 62, Noida, UP</p>
+                      <p className="text-secondary small mb-0">Noida, UP</p>
                       <span className="badge rounded-pill px-3 py-1 mt-2" style={{
                         background: 'rgba(59, 130, 246, 0.2)',
                         color: '#3b82f6',
@@ -308,7 +308,7 @@ export default function Home() {
                       height: '100%',
                       cursor: 'pointer'
                     }}>
-                      <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>📍</div>
+                      <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>🌍</div>
                       <h3 className="h5 fw-bold text-white mb-2">Nichlaul</h3>
                       <p className="text-secondary small mb-0">Nichlaul, Maharajganj, UP</p>
                       <span className="badge rounded-pill px-3 py-1 mt-2" style={{
@@ -321,28 +321,6 @@ export default function Home() {
                   </Link>
                 </div>
 
-                {/* Delhi NCR */}
-                <div className="col-md-4 col-lg-3">
-                  <div className="location-card" style={{
-                    background: 'rgba(10, 10, 12, 0.85)',
-                    backdropFilter: 'blur(12px)',
-                    borderRadius: '16px',
-                    border: '1px solid rgba(255, 255, 255, 0.05)',
-                    padding: '24px',
-                    textAlign: 'center',
-                    height: '100%',
-                  }}>
-                    <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>🌍</div>
-                    <h3 className="h5 fw-bold text-white mb-2">Delhi NCR</h3>
-                    <p className="text-secondary small mb-0">Serving Delhi & NCR Region</p>
-                    <span className="badge rounded-pill px-3 py-1 mt-2" style={{
-                      background: 'rgba(236, 72, 153, 0.2)',
-                      color: '#ec4899',
-                      border: '1px solid rgba(236, 72, 153, 0.3)',
-                      fontSize: '0.7rem'
-                    }}>Coming Soon</span>
-                  </div>
-                </div>
               </div>
             </div>
           </section>
@@ -520,7 +498,7 @@ export default function Home() {
                           padding: '16px',
                           borderLeft: '3px solid #a855f7'
                         }}>
-                          <h4 className="text-white h6 fw-bold">📍 Our Presence</h4>
+                          <h4 className="text-white h6 fw-bold">🌍 Our Presence</h4>
                           <p className="text-secondary small mb-0">Noida (Sector 62) • Nichlaul (Maharajganj) • Serving India & Global</p>
                         </div>
                       </div>
