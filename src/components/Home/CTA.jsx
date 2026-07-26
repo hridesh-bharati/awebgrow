@@ -58,8 +58,6 @@ export default function Home() {
                 fontSize: '0.95rem',
                 transition: 'all 0.3s ease'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#cceb3b'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#dffe52'}
             > Get Started </Link>
 
             {/* Secondary CTA: Dark Purple Button from Screenshot */}
@@ -74,8 +72,6 @@ export default function Home() {
                 border: '1px solid rgba(255,255,255,0.1)',
                 transition: 'all 0.3s ease'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#2d1b69'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#231454'}
             >
               Request a demo
             </Link>

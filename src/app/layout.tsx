@@ -1,3 +1,4 @@
+// src\app\layout.tsx
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import "bootstrap/dist/css/bootstrap.min.css";

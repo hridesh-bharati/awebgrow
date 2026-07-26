@@ -387,30 +387,30 @@ export default function Hero() {
 
         </div>
 
-     {/* STATS STRIP */}
-<div className="row g-2 my-4 pt-1">
-  {[
-    { delay: 200, border: '#3b82f6', icon: 'bi-globe text-info', number: '150+', label: 'Websites Built', numClass: 'text-gradient-purple-blue' },
-    { delay: 300, border: '#a855f7', icon: 'bi-emoji-smile', iconColor: '#c084fc', number: '250+', label: 'Happy Clients', grad: 'linear-gradient(135deg, #c084fc, #a855f7)' },
-    { delay: 400, border: '#f97316', icon: 'bi-graph-up-arrow text-warning', number: '45+', label: 'Leads Generated', grad: 'linear-gradient(135deg, #fb923c, #f97316)' },
-    { delay: 500, border: '#ec4899', icon: 'bi-trophy', iconColor: '#f472b6', number: '98%', label: 'Client Retention', numClass: 'text-gradient-pink-orange' }
-  ].map((stat, i) => (
-    <div key={i} className="col-6 col-md-3" data-aos="fade-up" data-aos-delay={stat.delay}>
-      <div className="stat-card-glow text-center" style={{ borderBottom: `3px solid ${stat.border}` }}>
-        <div className="d-flex align-items-center justify-content-center gap-2 mb-1">
-          <i className={`bi ${stat.icon} fs-6`} style={stat.iconColor ? { color: stat.iconColor } : {}}></i>
-          <h2 
-            className={`stat-number ${stat.numClass || ''}`}
-            style={stat.grad ? { background: stat.grad, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' } : {}}
-          >
-            {stat.number}
-          </h2>
+        {/* STATS STRIP */}
+        <div className="row g-2 my-4 pt-1">
+          {[
+            { delay: 200, border: '#3b82f6', icon: 'bi-globe text-info', number: '150+', label: 'Websites Built', numClass: 'text-gradient-purple-blue' },
+            { delay: 300, border: '#a855f7', icon: 'bi-emoji-smile', iconColor: '#c084fc', number: '250+', label: 'Happy Clients', grad: 'linear-gradient(135deg, #c084fc, #a855f7)' },
+            { delay: 400, border: '#f97316', icon: 'bi-graph-up-arrow text-warning', number: '45+', label: 'Leads Generated', grad: 'linear-gradient(135deg, #fb923c, #f97316)' },
+            { delay: 500, border: '#ec4899', icon: 'bi-trophy', iconColor: '#f472b6', number: '98%', label: 'Client Retention', numClass: 'text-gradient-pink-orange' }
+          ].map((stat, i) => (
+            <div key={i} className="col-6 col-md-3" data-aos="fade-up" data-aos-delay={stat.delay}>
+              <div className="stat-card-glow text-center" style={{ borderBottom: `3px solid ${stat.border}` }}>
+                <div className="d-flex align-items-center justify-content-center gap-2 mb-1">
+                  <i className={`bi ${stat.icon} fs-6`} style={stat.iconColor ? { color: stat.iconColor } : {}}></i>
+                  <h2 
+                    className={`stat-number ${stat.numClass || ''}`}
+                    style={stat.grad ? { background: stat.grad, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' } : {}}
+                  >
+                    {stat.number}
+                  </h2>
+                </div>
+                <p className="text-secondary fw-medium mb-0" style={{ fontSize: '0.7rem' }}>{stat.label}</p>
+              </div>
+            </div>
+          ))}
         </div>
-        <p className="text-secondary fw-medium mb-0" style={{ fontSize: '0.7rem' }}>{stat.label}</p>
-      </div>
-    </div>
-  ))}
-</div>
       </div>
 
       <WebServicesSection />

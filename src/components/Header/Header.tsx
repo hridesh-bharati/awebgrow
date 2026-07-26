@@ -186,6 +186,7 @@ export default function Header() {
     { path: '/about', label: 'About Us' },
     { path: '/services', label: 'Services' },
     { path: '/team', label: 'Team' },
+    { path: '/blog', label: 'Blog' },
     { path: '/faq', label: 'FAQ' },
     { path: '/contact', label: 'Contact' },
   ];

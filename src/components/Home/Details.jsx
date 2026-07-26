@@ -307,14 +307,7 @@ export default function WebGrowApp() {
           transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
           border: '1px solid rgba(255, 255, 255, 0.15)'
         }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'translateY(-6px) scale(1.03)';
-          e.currentTarget.style.boxShadow = `0 20px 40px ${stat.shadow}`;
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'translateY(0) scale(1)';
-          e.currentTarget.style.boxShadow = `0 8px 32px ${stat.shadow}`;
-        }}
+       
       >
         {/* Ambient Top Glow / Radial Shimmer Design inside card */}
         <div className="position-absolute top-0 start-50 translate-middle rounded-circle" style={{
