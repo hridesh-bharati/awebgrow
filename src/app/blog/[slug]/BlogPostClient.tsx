@@ -1,4 +1,4 @@
-// src\app\blog\[slug]\BlogPostClient.tsx
+// src/app/blog/[slug]/BlogPostClient.tsx
 "use client";
 
 import Link from 'next/link';
@@ -10,21 +10,26 @@ interface BlogPostClientProps {
   relatedPosts: BlogPost[];
 }
 
+interface Heading {
+  id: string;
+  title: string;
+}
+
 export default function BlogPostClient({ post, relatedPosts }: BlogPostClientProps) {
   const baseUrl = 'https://www.awebgrow.com';
   const pageUrl = `${baseUrl}/blog/${post.slug}`;
   const readingTime = Math.ceil(post.content.split(' ').length / 200);
 
-  // Extract headings for TOC
-  const headings = post.content
+  // Extract headings for TOC with strict TypeScript filtering
+  const headings: Heading[] = post.content
     .split('<h2')
     .slice(1)
-    .map(section => {
+    .map((section) => {
       const match = section.match(/id="([^"]+)"/);
       const title = section.split('</h2>')[0]?.replace(/[^>]*>/, '').trim();
       return match && title ? { id: match[1], title } : null;
     })
-    .filter(Boolean);
+    .filter((heading): heading is Heading => heading !== null);
 
   // Smooth scroll for TOC links
   useEffect(() => {
@@ -39,12 +44,13 @@ export default function BlogPostClient({ post, relatedPosts }: BlogPostClientPro
       }
     };
 
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    const anchors = document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]');
+    anchors.forEach((anchor) => {
       anchor.addEventListener('click', handleAnchorClick);
     });
 
     return () => {
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchors.forEach((anchor) => {
         anchor.removeEventListener('click', handleAnchorClick);
       });
     };
@@ -137,8 +143,8 @@ export default function BlogPostClient({ post, relatedPosts }: BlogPostClientPro
               <ul className="list-unstyled mb-0">
                 {headings.map((heading, index) => (
                   <li key={index} style={{ padding: '4px 0' }}>
-                    <a href={`#${heading!.id}`} className="text-decoration-none text-primary">
-                      {index + 1}. {heading!.title}
+                    <a href={`#${heading.id}`} className="text-decoration-none text-primary">
+                      {index + 1}. {heading.title}
                     </a>
                   </li>
                 ))}

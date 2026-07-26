@@ -1,8 +1,8 @@
-// src\app\blog\BlogClient.tsx
+// src/app/blog/BlogClient.tsx
 "use client";
 
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useState } from 'react';
 import type { BlogPost } from '@/lib/posts';
 
 interface BlogClientProps {
@@ -11,36 +11,13 @@ interface BlogClientProps {
 }
 
 export default function BlogClient({ posts, categories }: BlogClientProps) {
-  // Category filter functionality
-  useEffect(() => {
-    const buttons = document.querySelectorAll('.category-btn');
-    const grid = document.getElementById('blog-posts-grid');
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
-    buttons.forEach(button => {
-      button.addEventListener('click', function() {
-        buttons.forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        
-        const category = this.getAttribute('data-category');
-        const items = grid?.querySelectorAll('.blog-post-item');
-        
-        items?.forEach(item => {
-          if (category === 'All' || item.getAttribute('data-category') === category) {
-            item.style.display = 'block';
-          } else {
-            item.style.display = 'none';
-          }
-        });
-      });
-    });
-
-    // Cleanup
-    return () => {
-      buttons.forEach(button => {
-        button.removeEventListener('click', function() {});
-      });
-    };
-  }, []);
+  // Filter posts based on active React state
+  const filteredPosts = posts.filter((post) => {
+    if (selectedCategory === 'All') return true;
+    return (post.category || 'Web Development') === selectedCategory;
+  });
 
   return (
     <main className="blog-page" style={{ 
@@ -124,14 +101,17 @@ export default function BlogClient({ posts, categories }: BlogClientProps) {
 
         {/* Category Filters */}
         <div className="mb-4 d-flex justify-content-center gap-2 flex-wrap">
-          <button className="btn btn-sm btn-outline-light rounded-pill category-btn active" data-category="All">
+          <button 
+            className={`btn btn-sm btn-outline-light rounded-pill category-btn ${selectedCategory === 'All' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('All')}
+          >
             All
           </button>
           {categories.map(cat => (
             <button 
               key={cat} 
-              className="btn btn-sm btn-outline-light rounded-pill category-btn"
-              data-category={cat}
+              className={`btn btn-sm btn-outline-light rounded-pill category-btn ${selectedCategory === cat ? 'active' : ''}`}
+              onClick={() => setSelectedCategory(cat)}
             >
               {cat}
             </button>
@@ -140,12 +120,11 @@ export default function BlogClient({ posts, categories }: BlogClientProps) {
 
         {/* Blog Posts Grid */}
         <div className="row g-4" id="blog-posts-grid">
-          {posts.length > 0 ? (
-            posts.map((post, index) => (
+          {filteredPosts.length > 0 ? (
+            filteredPosts.map((post) => (
               <div 
                 key={post.slug} 
                 className="col-md-6 col-lg-4 blog-post-item" 
-                data-category={post.category || 'Web Development'}
               >
                 <article className="blog-card" style={{
                   background: 'rgba(10, 10, 12, 0.85)',
@@ -266,7 +245,7 @@ export default function BlogClient({ posts, categories }: BlogClientProps) {
             ))
           ) : (
             <div className="col-12 text-center py-5">
-              <p className="text-secondary">No blog posts yet. Check back soon!</p>
+              <p className="text-secondary">No blog posts found in this category.</p>
             </div>
           )}
         </div>
