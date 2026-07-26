@@ -1,4 +1,4 @@
-// src\lib\posts.ts
+// src/lib/posts.ts
 export interface BlogPost {
   slug: string;
   title: string;
@@ -76,7 +76,18 @@ const posts: BlogPost[] = [
     updatedDate: "2026-07-26",
     category: "Web Development",
     image: "/images/blog/trends-2026.jpg",
-    keywords: "web development trends 2026, AI in web development, Next.js trends, edge computing, WebAssembly, JAMstack, PWA, cybersecurity, green web development, no-code platforms",
+    keywords: [
+      "web development trends 2026",
+      "AI in web development",
+      "Next.js trends",
+      "edge computing",
+      "WebAssembly",
+      "JAMstack",
+      "PWA",
+      "cybersecurity",
+      "green web development",
+      "no-code platforms"
+    ],
   },
   {
     slug: "why-choose-nextjs-for-web-development",
@@ -163,7 +174,16 @@ const posts: BlogPost[] = [
     updatedDate: "2026-07-21",
     category: "Framework",
     image: "/images/blog/nextjs-guide.jpg",
-    keywords: "next js development, react framework, web development india, next.js vs react, next.js features, SSR, SSG, next.js advantages",
+    keywords: [
+      "next js development",
+      "react framework",
+      "web development india",
+      "next.js vs react",
+      "next.js features",
+      "SSR",
+      "SSG",
+      "next.js advantages"
+    ],
   },
   {
     slug: "seo-tips-for-web-developers",
@@ -254,7 +274,15 @@ const posts: BlogPost[] = [
     updatedDate: "2026-07-16",
     category: "SEO",
     image: "/images/blog/seo-tips.jpg",
-    keywords: "seo for developers, web development seo, core web vitals, semantic HTML, schema markup, local SEO India, web performance optimization",
+    keywords: [
+      "seo for developers",
+      "web development seo",
+      "core web vitals",
+      "semantic HTML",
+      "schema markup",
+      "local SEO India",
+      "web performance optimization"
+    ],
   },
   {
     slug: "best-web-development-company-in-noida",
@@ -321,7 +349,13 @@ const posts: BlogPost[] = [
     updatedDate: "2026-07-12",
     category: "Local SEO",
     image: "/images/blog/noida-web-dev.jpg",
-    keywords: "web development company in noida, best web development noida, web development Delhi NCR, AWebGrow Noida, web development services India",
+    keywords: [
+      "web development company in noida",
+      "best web development noida",
+      "web development Delhi NCR",
+      "AWebGrow Noida",
+      "web development services India"
+    ],
   },
   {
     slug: "how-to-improve-website-speed",
@@ -399,7 +433,14 @@ const posts: BlogPost[] = [
     updatedDate: "2026-07-06",
     category: "Performance",
     image: "/images/blog/website-speed.jpg",
-    keywords: "website speed optimization, page speed, core web vitals, web performance, website loading time, improve website speed",
+    keywords: [
+      "website speed optimization",
+      "page speed",
+      "core web vitals",
+      "web performance",
+      "website loading time",
+      "improve website speed"
+    ],
   },
   {
     slug: "react-vs-nextjs-which-to-choose",
@@ -499,7 +540,13 @@ const posts: BlogPost[] = [
     updatedDate: "2026-06-30",
     category: "Framework",
     image: "/images/blog/react-nextjs.jpg",
-    keywords: "react vs nextjs, choose react or nextjs, react framework comparison, nextjs vs react, web development framework 2026",
+    keywords: [
+      "react vs nextjs",
+      "choose react or nextjs",
+      "react framework comparison",
+      "nextjs vs react",
+      "web development framework 2026"
+    ],
   },
 ];
 
