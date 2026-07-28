@@ -31,7 +31,7 @@ export default function BrandPage() {
               and digital transformation solutions..
             </p>
             <p style={{ lineHeight: '1.8', color: '#475569' }}>
-              Founded by <strong>Hridesh Bharati</strong> and <strong>Sushant Rai</strong>, 
+              Founded by <strong>Sushant Rai </strong> and <strong> Hridesh Bharati</strong>, 
               AWebGrow has grown from a small team of passionate developers to a full-service 
               digital agency trusted by businesses across India and beyond.
             </p>

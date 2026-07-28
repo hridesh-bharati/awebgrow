@@ -206,7 +206,7 @@ export default function Header() {
 
           {/* BRAND LOGO */}
           <Link href="/" className="text-decoration-none d-flex align-items-center m-0 p-0">
-            <Image src="/icons/awebgrow-logo.png" alt="AWEBGROW Logo" width={120} height={50} className="object-fit-contain rounded-2 border border-2 border-dark m-0 p-0" priority />
+            <Image src="/icons/awebgrow-logo.png" alt="AWEBGROW Logo" width={120} height={50} className="object-fit-contain rounded-2  m-0 p-0" priority />
           </Link>
 
           {/* DESKTOP NAVIGATION */}
@@ -346,7 +346,7 @@ export default function Header() {
             </div>
 
             {/* MOBILE MENU TOGGLE */}
-            <button onClick={() => setShowSidebar(true)} className="btn p-0 border-0 text-white d-lg-none ms-1">
+            <button onClick={() => setShowSidebar(true)} className="btn p-0 border-0 text-secondary d-lg-none ms-1">
               <i className="bi bi-list fs-2"></i>
             </button>
 
