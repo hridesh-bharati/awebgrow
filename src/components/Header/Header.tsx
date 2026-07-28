@@ -206,7 +206,7 @@ export default function Header() {
 
           {/* BRAND LOGO */}
           <Link href="/" className="text-decoration-none d-flex align-items-center m-0 p-0">
-            <Image src="/icons/awebgrow-logo.png" alt="AWEBGROW Logo" width={120} height={50} className="object-fit-contain rounded-2  m-0 p-0" priority />
+            <Image src="/icons/awebgrow-awebgrow-logo-art-letter.png" alt="AWEBGROW Logo" width={120} height={50} className="object-fit-contain rounded-2  m-0 p-0" priority />
           </Link>
 
           {/* DESKTOP NAVIGATION */}

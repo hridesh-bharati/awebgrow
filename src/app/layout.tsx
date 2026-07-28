@@ -120,7 +120,7 @@ const organizationSchema = {
   "@type": "Organization",
   "name": "AWebGrow",
   "url": BASE_URL,
-  "logo": `${BASE_URL}/images/logo.png`,
+  "logo": `${BASE_URL}/images/awebgrow-logo-art-letter.png`,
   "sameAs": [
     "https://github.com/hrideshbharati",
     "https://linkedin.com/company/AWebGrow",
@@ -195,7 +195,7 @@ const localBusinessSchemaNoida = {
   "@type": "LocalBusiness",
   "name": "AWebGrow - Web Development Company in Noida",
   "url": BASE_URL,
-  "logo": `${BASE_URL}/images/logo.png`,
+  "logo": `${BASE_URL}/images/awebgrow-logo-art-letter.png`,
   "description": "AWebGrow is a top web development company in Noida offering website development, mobile app development, SEO services, and digital marketing.",
   "telephone": "+91-7267995307",
   "address": {
@@ -216,7 +216,7 @@ const localBusinessSchemaNichlaul = {
   "@type": "LocalBusiness",
   "name": "AWebGrow - Web Development Company in Nichlaul",
   "url": BASE_URL,
-  "logo": `${BASE_URL}/images/logo.png`,
+  "logo": `${BASE_URL}/images/awebgrow-logo-art-letter.png`,
   "description": "AWebGrow is a trusted web development company in Nichlaul offering custom website design, app development, SEO, and digital marketing solutions.",
   "telephone": "+91-7267995307",
   "address": {

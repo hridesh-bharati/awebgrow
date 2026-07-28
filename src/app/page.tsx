@@ -23,7 +23,7 @@ const schemas = [
     "@type": "Organization",
     "name": "AWebGrow",
     "url": BASE_URL,
-    "logo": `${BASE_URL}/images/logo.png`,
+    "logo": `${BASE_URL}/images/awebgrow-logo-art-letter.png`,
     "sameAs": [
       "https://github.com/hrideshbharati",
       "https://linkedin.com/company/AWebGrow",
@@ -47,7 +47,7 @@ const schemas = [
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "AWebGrow",
-    "image": `${BASE_URL}/images/logo.png`,
+    "image": `${BASE_URL}/images/awebgrow-logo-art-letter.png`,
     "url": BASE_URL,
     "telephone": "+91-7267995307",
     "description": "Professional web development company in India offering website design, mobile app development, and digital marketing services.",
