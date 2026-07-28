@@ -1,4 +1,4 @@
-// src/app/brand/page.tsx
+// src\app\location\noida\page.tsx
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
@@ -12,17 +12,19 @@ import {
 } from 'react-icons/fa';
 import Header from "@/components/Header/Header"
 
+
 export const metadata: Metadata = {
-  title: "AWebGrow - India's Leading Web Development Company | Brand Story",
-  description: "AWebGrow is a trusted web development company in India. We build custom websites, mobile apps, and digital solutions for startups and enterprises. Our story of innovation and excellence.",
-  keywords: "awebgrow, awebgrow brand, awebgrow story, awebgrow company, web development company india",
+  title: "Best Website & App Development Company in Noida | AWebGrow",
+  description: "AWebGrow is a leading web development company in Noida. We offer custom website design, mobile apps, SEO, and enterprise software solutions.",
+  keywords: "website development company in noida, web developer in noida, app development company noida, seo services noida, awebgrow noida",
   openGraph: {
-    title: "AWebGrow - Leading Web Development Company India",
-    description: "Our story, mission, and vision - AWebGrow",
-    url: "https://www.awebgrow.com/brand",
+    title: "Best Website & App Development Company in Noida | AWebGrow",
+    description: "Leading IT & web development agency in Noida Sector 62. Custom websites, apps, and digital growth.",
+    url: "https://www.awebgrow.com/location/noida",
+    type: "website",
   },
   alternates: {
-    canonical: "https://www.awebgrow.com/brand",
+    canonical: "https://www.awebgrow.com/location/noida",
   },
 };
 
