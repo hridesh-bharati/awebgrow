@@ -120,6 +120,42 @@ export default function PricingPackages() {
   return (
     <div className="w-100 min-vh-100 py-5 px-0 position-relative overflow-hidden bg-theme-main border-top" id="pricingpackages" style={{ borderColor: 'var(--border-subtle)' }}>
       
+      {/* INJECT ANIMATION KEYFRAMES & HOVER STYLES */}
+      <style jsx global>{`
+        @keyframes dynamicGlowShift {
+          0% {
+            background-position: 0% 50%;
+            transform: scale(0.98);
+          }
+          50% {
+            background-position: 100% 50%;
+            transform: scale(1.03);
+          }
+          100% {
+            background-position: 0% 50%;
+            transform: scale(0.98);
+          }
+        }
+
+        .card-anim-bg {
+          position: absolute;
+          inset: -3px;
+          border-radius: 1.25rem;
+          background-size: 200% 200% !important;
+          animation: dynamicGlowShift 6s ease-in-out infinite;
+          opacity: 0.15;
+          filter: blur(14px);
+          transition: opacity 0.4s ease, filter 0.4s ease;
+          z-index: 0;
+          pointer-events: none;
+        }
+
+        .pricing-card-wrapper:hover .card-anim-bg {
+          opacity: 0.85;
+          filter: blur(18px);
+        }
+      `}</style>
+
       {/* AMBIENT BACKGROUND GLOWS */}
       <div 
         className="position-absolute top-0 start-0 rounded-circle pointer-events-none glow-sphere-1" 
@@ -175,57 +211,9 @@ export default function PricingPackages() {
                   backgroundColor: 'var(--bg-card)',
                   borderColor: 'var(--border-subtle)',
                   boxShadow: '0 10px 30px var(--shadow-color)',
-                  transition: 'background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease',
-                  '--card-animation': 'cardGlow 4s ease-in-out infinite'
+                  transition: 'background-color 0.3s ease, border-color 0.3s ease'
                 }}
               >
-                {/* ANIMATED BACKGROUND ORB */}
-                <div 
-                  className="position-absolute rounded-circle pointer-events-none"
-                  style={{
-                    width: '300px',
-                    height: '300px',
-                    background: category.gradient,
-                    opacity: '0.03',
-                    top: '-100px',
-                    right: '-100px',
-                    filter: 'blur(80px)',
-                    animation: 'floatingOrb 8s ease-in-out infinite',
-                    transform: 'translate(0, 0)'
-                  }}
-                />
-                
-                {/* SECONDARY ANIMATED ORB */}
-                <div 
-                  className="position-absolute rounded-circle pointer-events-none"
-                  style={{
-                    width: '200px',
-                    height: '200px',
-                    background: category.gradient,
-                    opacity: '0.02',
-                    bottom: '-80px',
-                    left: '-80px',
-                    filter: 'blur(60px)',
-                    animation: 'floatingOrb 10s ease-in-out infinite reverse',
-                    transform: 'translate(0, 0)'
-                  }}
-                />
-
-                {/* PULSING GLOW RING */}
-                <div 
-                  className="position-absolute rounded-circle pointer-events-none"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    top: 0,
-                    left: 0,
-                    border: `2px solid ${category.color}`,
-                    opacity: '0.03',
-                    animation: 'pulsingRing 3s ease-in-out infinite',
-                    borderRadius: 'inherit'
-                  }}
-                />
-
                 {/* CATEGORY HEADER */}
                 <div className="d-flex align-items-center flex-wrap gap-3 mb-4 pb-3 position-relative border-bottom" style={{ borderColor: 'var(--border-subtle)' }}>
                   <div 
@@ -256,55 +244,27 @@ export default function PricingPackages() {
                     const isHovered = hoveredPlan === planKey;
 
                     return (
-                      <div key={planIndex} className="col-12 col-sm-6 col-lg-4 col-xl-3 col-xxl">
+                      <div key={planIndex} className="col-12 col-sm-6 col-lg-4 col-xl-3 col-xxl pricing-card-wrapper position-relative">
+                        
+                        {/* 🌟 CARD KE PICHHE ANIMATED GLOW BACKDROP */}
                         <div 
-                          className="h-100 d-flex flex-column position-relative p-4 rounded-4 border"
+                          className="card-anim-bg"
+                          style={{ background: category.gradient }}
+                        />
+
+                        {/* MAIN CARD BOX */}
+                        <div 
+                          className="h-100 d-flex flex-column position-relative p-4 rounded-4 border z-1"
                           onMouseEnter={() => setHoveredPlan(planKey)}
                           onMouseLeave={() => setHoveredPlan(null)}
                           style={{
                             backgroundColor: 'var(--bg-card)',
-                            borderColor: plan.popular ? category.color : 'var(--border-subtle)',
-                            boxShadow: isHovered ? `0 15px 30px var(--shadow-color)` : '0 5px 15px var(--shadow-color)',
-                            transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
-                            transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                            borderColor: plan.popular ? category.color : (isHovered ? category.color : 'var(--border-subtle)'),
+                            boxShadow: isHovered ? `0 15px 35px var(--shadow-color)` : 'none',
+                            transform: isHovered ? 'translateY(-6px)' : 'none',
+                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                           }}
                         >
-                          {/* CARD ANIMATED BACKGROUND GLOW */}
-                          <div 
-                            className="position-absolute rounded-circle pointer-events-none"
-                            style={{
-                              width: '100%',
-                              height: '100%',
-                              top: 0,
-                              left: 0,
-                              background: `radial-gradient(circle at 50% 50%, ${category.color}10, transparent 70%)`,
-                              opacity: isHovered ? '1' : '0',
-                              transition: 'opacity 0.6s ease',
-                              borderRadius: 'inherit',
-                              pointerEvents: 'none'
-                            }}
-                          />
-
-                          {/* CARD BORDER ANIMATION ON HOVER */}
-                          {isHovered && (
-                            <div 
-                              className="position-absolute pointer-events-none"
-                              style={{
-                                top: '-2px',
-                                left: '-2px',
-                                right: '-2px',
-                                bottom: '-2px',
-                                borderRadius: 'inherit',
-                                padding: '2px',
-                                background: `conic-gradient(from var(--angle, 0deg), ${category.color}22, ${category.color}66, ${category.color}22, transparent, ${category.color}22)`,
-                                animation: 'borderRotate 2s linear infinite',
-                                mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                                maskComposite: 'exclude',
-                                WebkitMaskComposite: 'source-out'
-                              }}
-                            />
-                          )}
-
                           {/* POPULAR BADGE */}
                           {plan.popular && (
                             <div 
@@ -314,16 +274,14 @@ export default function PricingPackages() {
                                 borderRadius: '0 14px 0 14px', 
                                 fontSize: '0.62rem', 
                                 letterSpacing: '0.06em',
-                                fontWeight: 900,
-                                zIndex: 2,
-                                animation: 'pulseBadge 2s ease-in-out infinite'
+                                fontWeight: 900
                               }}
                             >
                               ★ POPULAR CHOICE
                             </div>
                           )}
 
-                          <div className="d-flex justify-content-between align-items-center mb-3 position-relative" style={{ zIndex: 1 }}>
+                          <div className="d-flex justify-content-between align-items-center mb-3">
                             <span className="badge rounded-circle d-flex align-items-center justify-content-center text-white fw-black" style={{ background: category.gradient, width: '24px', height: '24px', fontSize: '0.65rem', fontWeight: 900 }}>
                               {plan.id}
                             </span>
@@ -332,12 +290,12 @@ export default function PricingPackages() {
                             </span>
                           </div>
 
-                          <h4 className="fw-black text-theme-primary mb-3 position-relative" style={{ fontSize: '0.98rem', fontWeight: 900, zIndex: 1 }}>
+                          <h4 className="fw-black text-theme-primary mb-3" style={{ fontSize: '0.98rem', fontWeight: 900 }}>
                             {plan.type}
                           </h4>
 
                           {/* FEATURES LIST */}
-                          <ul className="list-unstyled mb-4 flex-grow-1 position-relative" style={{ zIndex: 1 }}>
+                          <ul className="list-unstyled mb-4 flex-grow-1">
                             {plan.features.map((feature, fIdx) => (
                               <li key={fIdx} className="d-flex align-items-start gap-2 mb-2" style={{ fontSize: '0.8rem', lineHeight: '1.45' }}>
                                 <i className="bi bi-patch-check-fill mt-0.5 flex-shrink-0" style={{ color: category.color, fontSize: '0.8rem' }}></i>
@@ -349,31 +307,17 @@ export default function PricingPackages() {
                           {/* ACTION BUTTON */}
                           <Link
                             href={`/booking?title=${encodeURIComponent(category.title)}&type=${encodeURIComponent(plan.type)}&price=${encodeURIComponent(plan.price)}&features=${encodeURIComponent(plan.features.join(','))}&icon=${encodeURIComponent(category.icon)}&gradient=${encodeURIComponent(category.gradient)}`}
-                            className="btn w-100 rounded-pill py-2.5 fw-black text-white text-center border-0 d-flex align-items-center justify-content-center gap-1 mt-auto position-relative"
+                            className="btn w-100 rounded-pill py-2.5 fw-black text-white text-center border-0 d-flex align-items-center justify-content-center gap-1 mt-auto"
                             style={{ 
                               background: isHovered ? '#0f172a' : category.gradient, 
                               fontSize: '0.82rem',
                               fontWeight: 800,
-                              transition: 'all 0.25s ease',
-                              zIndex: 1,
-                              overflow: 'hidden'
+                              transition: 'all 0.25s'
                             }}
                           >
                             <span>Choose Blueprint</span>
-                            <i className="bi bi-arrow-right" style={{ fontSize: '0.75rem', transition: 'transform 0.3s ease' }}></i>
+                            <i className="bi bi-arrow-right" style={{ fontSize: '0.75rem' }}></i>
                           </Link>
-
-                          {/* BOTTOM GLOW LINE */}
-                          <div 
-                            className="position-absolute bottom-0 start-0 rounded-bottom"
-                            style={{
-                              height: '3px',
-                              width: isHovered ? '100%' : '0%',
-                              background: category.gradient,
-                              transition: 'width 0.4s ease',
-                              borderRadius: '0 0 4px 4px'
-                            }}
-                          />
 
                         </div>
                       </div>
@@ -387,58 +331,6 @@ export default function PricingPackages() {
         </div>
 
       </div>
-
-      {/* STYLES FOR ANIMATIONS */}
-      <style jsx>{`
-        @keyframes floatingOrb {
-          0% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(20px, -20px) scale(1.1); }
-          66% { transform: translate(-10px, 15px) scale(0.9); }
-          100% { transform: translate(0, 0) scale(1); }
-        }
-
-        @keyframes pulsingRing {
-          0% { transform: scale(1); opacity: 0.03; }
-          50% { transform: scale(1.05); opacity: 0.08; }
-          100% { transform: scale(1); opacity: 0.03; }
-        }
-
-        @keyframes borderRotate {
-          from { --angle: 0deg; }
-          to { --angle: 360deg; }
-        }
-
-        @keyframes pulseBadge {
-          0% { transform: scale(1); }
-          50% { transform: scale(1.05); }
-          100% { transform: scale(1); }
-        }
-
-        @keyframes cardGlow {
-          0% { box-shadow: 0 10px 30px var(--shadow-color); }
-          50% { box-shadow: 0 15px 40px var(--shadow-color); }
-          100% { box-shadow: 0 10px 30px var(--shadow-color); }
-        }
-
-        @property --angle {
-          syntax: '<angle>';
-          initial-value: 0deg;
-          inherits: false;
-        }
-      `}</style>
-
-      {/* ADDITIONAL GLOBAL STYLES FOR OLDER BROWSER SUPPORT */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes borderRotateFallback {
-          from { filter: hue-rotate(0deg); }
-          to { filter: hue-rotate(360deg); }
-        }
-        /* Fallback for browsers that don't support @property */
-        .border-animation-fallback {
-          animation: borderRotateFallback 2s linear infinite;
-        }
-      ` }} />
-
     </div>
   );
 }
