@@ -2,7 +2,7 @@
 
 import Services from "@/components/Home/Services";
 import Header from "@/components/Header/Header";
-import { seoKeywords } from "@/data/seo-keywords";
+import { seoKeywords } from "@/app/data/seo-keywords";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.awebgrow.com';
 
