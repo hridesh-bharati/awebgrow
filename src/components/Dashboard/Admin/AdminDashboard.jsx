@@ -1,5 +1,5 @@
 "use client";
-// src\components\Dashboard\Admin\AdminDashboard.jsx
+
 import { useEffect, useState } from 'react';
 import { rtdb } from '@/lib/firebase';
 import { ref, onValue } from 'firebase/database';
@@ -13,7 +13,6 @@ import WebsiteOrders from './WebsiteOrders';
 import RecentProjects from './RecentProjects';
 import AdminProfile from './AdminProfile';
 
-
 export default function AdminDashboard({ session, onLogout }) {
   const [allUsers, setAllUsers] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -22,9 +21,10 @@ export default function AdminDashboard({ session, onLogout }) {
   const [theme, setTheme] = useState("dark");
 
   useEffect(() => {
-    // Current Document Theme Fetching
     const currentTheme = document.documentElement.getAttribute('data-bs-theme') || 'dark';
     setTheme(currentTheme);
+
+    if (!rtdb) return;
 
     const usersRef = ref(rtdb, 'users');
     const unsubscribe = onValue(usersRef, (snapshot) => {
@@ -99,8 +99,9 @@ export default function AdminDashboard({ session, onLogout }) {
                   setIsMobileMenuOpen(false);
                 }
               }}
-              className={`w-100 btn border-0 text-start d-flex align-items-center rounded-4 ${isActive ? 'btn-neon-cta shadow-lg' : 'btn-secondary-glow'
-                }`}
+              className={`w-100 btn border-0 text-start d-flex align-items-center rounded-4 ${
+                isActive ? 'btn-neon-cta shadow-lg' : 'btn-secondary-glow'
+              }`}
               style={{
                 padding: '11px 16px',
                 gap: '14px',

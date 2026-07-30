@@ -1,4 +1,3 @@
-// src/lib/firebase.js
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getDatabase } from "firebase/database"; 
 import { getAuth } from "firebase/auth";
@@ -10,32 +9,10 @@ const firebaseConfig = {
   databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
 };
 
-// ✅ FIX: Only initialize on client side (browser)
-const getFirebaseApp = () => {
-  // 🔥 CRITICAL: Check if we're on the server (during build/SSR)
-  if (typeof window === 'undefined') {
-    return null; // Don't initialize on server
-  }
-  
-  // Client-side: initialize Firebase
-  return getApps().length ? getApp() : initializeApp(firebaseConfig);
-};
+// Safe Browser Initialization
+const app = typeof window !== 'undefined' 
+  ? (!getApps().length ? initializeApp(firebaseConfig) : getApp()) 
+  : null;
 
-const app = getFirebaseApp();
-
-// ✅ FIX: Export null-safe instances
 export const rtdb = app ? getDatabase(app) : null;
 export const auth = app ? getAuth(app) : null;
-
-// ✅ Helper to check if Firebase is ready (use this in components)
-export const isFirebaseReady = () => {
-  return typeof window !== 'undefined' && app !== null;
-};
-
-// ✅ Optional: Debug helper
-export const getFirebaseStatus = () => ({
-  isReady: app !== null,
-  isServer: typeof window === 'undefined',
-  hasConfig: !!firebaseConfig.projectId,
-  projectId: firebaseConfig.projectId
-});

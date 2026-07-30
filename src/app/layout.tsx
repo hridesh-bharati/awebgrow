@@ -1,4 +1,4 @@
-// src\app\layout.tsx
+// src/app/layout.tsx
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -262,10 +262,10 @@ export default function RootLayout({
         style={{ fontFamily: "var(--font-inter), sans-serif" }}
         suppressHydrationWarning
       >
-        <VisitorTracker /> {/* ✅ Active Live Visitor Tracking Initialized */}
-        {children}
-        <PWAInstallPrompt />
-        <Toaster position="top-center" richColors closeButton />
+          <VisitorTracker />
+          {children}
+          <PWAInstallPrompt />
+          <Toaster position="top-center" richColors closeButton />
 
         <Script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

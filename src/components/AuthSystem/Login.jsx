@@ -7,7 +7,8 @@ import {
   signInWithEmailAndPassword, 
   signInWithPopup, 
   GoogleAuthProvider, 
-  GithubAuthProvider 
+  GithubAuthProvider,
+  onAuthStateChanged
 } from 'firebase/auth';
 import { ref, get, child, set } from 'firebase/database';
 import Link from 'next/link';
@@ -15,51 +16,24 @@ import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
 import Image from 'next/image';
 import { toast } from 'sonner';
 
+const ADMIN_EMAILS = ['awebgrow@gmail.com', 'hridesh027@gmail.com'];
+
 export default function Login() {
   const [identifier, setIdentifier] = useState(''); 
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const router = useRouter();  
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedSession = localStorage.getItem('awebgrow_user_session');
-      if (savedSession) {
-        // Verify session with server
-        fetch('/api/auth/me')
-          .then(res => res.json())
-          .then(data => {
-            if (data.authenticated) {
-              router.push('/dashboard');
-            } else {
-              localStorage.removeItem('awebgrow_user_session');
-            }
-          });
+    if (!auth) return;
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.replace('/dashboard');
       }
-    }
-  }, [router]);
-
-  const initSession = async (userPayload) => {
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userPayload)
     });
-    
-    if (res.ok) {
-      const data = await res.json();
-      if (rememberMe && typeof window !== 'undefined') {
-        localStorage.setItem('awebgrow_user_session', JSON.stringify(data.user));
-      }
-      toast.success("Welcome back!");
-      router.push('/dashboard'); 
-      router.refresh();
-    } else {
-      toast.error("Session creation failed.");
-    }
-  };
+    return () => unsubscribe();
+  }, [router]);
 
   const handleSmartLogin = async (e) => {
     e.preventDefault();
@@ -67,9 +41,10 @@ export default function Login() {
     let targetEmail = identifier.trim().toLowerCase();
 
     try {
+      // Mobile Number to Email Lookup
       if (/^\d+$/.test(targetEmail)) {
         const snapshot = await get(child(ref(rtdb), 'users'));
-        if (!snapshot.exists()) throw new Error("No users database found.");
+        if (!snapshot.exists()) throw new Error("Database empty or unavailable.");
         
         let foundEmail = null;
         snapshot.forEach((childSnapshot) => {
@@ -82,18 +57,8 @@ export default function Login() {
       }
 
       await signInWithEmailAndPassword(auth, targetEmail, password);
-      const emailKey = targetEmail.replace(/\./g, '_');
-      
-      const userSnap = await get(ref(rtdb, `users/${emailKey}`));
-      const dbUser = userSnap.val();
-
-      await initSession({
-        uid: emailKey,
-        email: targetEmail,
-        name: dbUser?.name || targetEmail.split('@')[0],
-        profileImage: dbUser?.profileImage || "/icons/default-avatar.png",
-        role: dbUser?.role || 'user' // Will be overridden by server
-      });
+      toast.success("Welcome back!");
+      router.replace('/dashboard');
 
     } catch (err) {
       toast.error("Login Failed: " + err.message);
@@ -113,33 +78,28 @@ export default function Login() {
         throw new Error("Email permissions required.");
       }
 
-      const targetEmail = fbUser.email.toLowerCase();
+      const targetEmail = fbUser.email.toLowerCase().trim();
       const emailKey = targetEmail.replace(/\./g, '_');
       const userRef = ref(rtdb, `users/${emailKey}`);
       
       const userSnap = await get(userRef);
-      let dbUser = userSnap.exists() ? userSnap.val() : null;
+      const assignedRole = ADMIN_EMAILS.includes(targetEmail) ? 'admin' : 'user';
 
-      if (!dbUser) {
-        dbUser = {
+      if (!userSnap.exists()) {
+        const dbUser = {
           uid: emailKey,
           name: fbUser.displayName || targetEmail.split('@')[0],
           email: targetEmail,
           phone: fbUser.phoneNumber || '',
           profileImage: fbUser.photoURL || "/icons/default-avatar.png",
-          role: 'user', // Default role, server will override if admin
+          role: assignedRole,
           createdAt: new Date().toISOString()
         };
         await set(userRef, dbUser);
       }
 
-      await initSession({
-        uid: emailKey,
-        email: targetEmail,
-        name: dbUser.name,
-        profileImage: dbUser.profileImage || "/icons/default-avatar.png",
-        role: dbUser.role // Will be overridden by server
-      });
+      toast.success("Welcome back!");
+      router.replace('/dashboard');
 
     } catch (error) {
       toast.error(`${providerName.toUpperCase()} Login failed: ${error.message}`);
@@ -157,7 +117,7 @@ export default function Login() {
             <Image src="/images/awebgrow-logo-art-letter.png" alt="Logo" width={120} height={110} className="object-fit-contain" priority />
           </div>
           <h3 className="fw-bold text-white m-0" style={{ fontSize: '1.25rem' }}>Welcome Back!</h3>
-          <h2 className="fw-black m-0 mt-1" style={{ fontSize: '1.5rem', fontWeight:999  }}>
+          <h2 className="fw-black m-0 mt-1" style={{ fontSize: '1.5rem', fontWeight: 900 }}>
             <span style={{ color: '#3b82f6' }}>User </span>
             <span style={{ background: 'linear-gradient(135deg, #a855f7, #ec4899, #f97316)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Control </span>
             <span style={{ color: '#f97316' }}>Center</span>
@@ -179,11 +139,7 @@ export default function Login() {
               </span>
             </div>
 
-            <div className="d-flex justify-content-between align-items-center small my-1">
-              <div className="form-check d-flex align-items-center gap-1.5">
-                <input type="checkbox" className="form-check-input rounded-1" id="rememberMe" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
-                <label className="form-check-label text-secondary cursor-pointer" htmlFor="rememberMe" style={{ fontSize: '0.8rem' }}>Remember Me</label>
-              </div>
+            <div className="d-flex justify-content-end align-items-center small my-1">
               <Link href="/forgot-password" className="text-decoration-none text-secondary" style={{ fontSize: '0.8rem' }}>Forgot Password?</Link>
             </div>
 

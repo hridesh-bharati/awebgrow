@@ -15,52 +15,33 @@ import { FiUser, FiMail, FiPhone, FiLock, FiEye, FiEyeOff } from 'react-icons/fi
 import Image from 'next/image';
 import { toast } from 'sonner';
 
+const ADMIN_EMAILS = ['awebgrow@gmail.com', 'hridesh027@gmail.com'];
+
 export default function CreateAccount() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const syncUserToDatabase = async (userEmail, displayName, photoURL = '', phoneNumber = '') => {
-    const emailKey = userEmail.toLowerCase().replace(/\./g, '_');
+  const syncUserToRTDB = async (fbUser, customData = {}) => {
+    const userEmail = fbUser.email.toLowerCase().trim();
+    const emailKey = userEmail.replace(/\./g, '_');
     const userRef = ref(rtdb, `users/${emailKey}`);
 
-    const snapshot = await get(userRef);
-    let finalUserData;
+    const assignedRole = ADMIN_EMAILS.includes(userEmail) ? 'admin' : 'user';
 
-    if (snapshot.exists()) {
-      finalUserData = snapshot.val();
-    } else {
-      // Role will be set by the server API during login
-      finalUserData = {
+    const snapshot = await get(userRef);
+    if (!snapshot.exists()) {
+      const newUserPayload = {
         uid: emailKey,
-        name: displayName || userEmail.split('@')[0],
-        email: userEmail.toLowerCase(),
-        phone: phoneNumber.trim(),
-        profileImage: photoURL || "/icons/default-avatar.png",
-        role: 'user', // Default role, server will override if admin
+        name: customData.name || fbUser.displayName || userEmail.split('@')[0],
+        email: userEmail,
+        phone: (customData.phone || fbUser.phoneNumber || '').trim(),
+        profileImage: fbUser.photoURL || "/icons/default-avatar.png",
+        role: assignedRole,
         createdAt: new Date().toISOString()
       };
-      await set(userRef, finalUserData);
-    }
-    return finalUserData;
-  };
-
-  const initSessionAndRedirect = async (userPayload) => {
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userPayload)
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('awebgrow_user_session', JSON.stringify(data.user));
-      }
-      toast.success("Login Successful! Redirecting...");
-      router.push('/dashboard');
-      router.refresh();
+      await set(userRef, newUserPayload);
     }
   };
 
@@ -68,20 +49,15 @@ export default function CreateAccount() {
     e.preventDefault();
     setLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-      const userData = await syncUserToDatabase(
-        formData.email, 
-        formData.name, 
-        "/icons/default-avatar.png", 
-        formData.phone
-      );
+      const res = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      await syncUserToRTDB(res.user, { name: formData.name, phone: formData.phone });
 
-      toast.success("Account Created Successfully! Please login now.");
-      router.push('/login');
+      toast.success("Account Created Successfully!");
+      router.replace('/dashboard');
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
         toast.error("Email is already registered! Please login.");
-        router.push('/login');
+        router.replace('/login');
       } else if (error.code === 'auth/weak-password') {
         toast.error("Password should be at least 6 characters!");
       } else {
@@ -97,27 +73,14 @@ export default function CreateAccount() {
     try {
       const provider = providerName === 'google' ? new GoogleAuthProvider() : new GithubAuthProvider();
       const result = await signInWithPopup(auth, provider);
-      const fbUser = result.user;
 
-      if (!fbUser.email) {
+      if (!result.user.email) {
         throw new Error("Email permissions required.");
       }
 
-      const dbUser = await syncUserToDatabase(
-        fbUser.email,
-        fbUser.displayName,
-        fbUser.photoURL || "/icons/default-avatar.png",
-        fbUser.phoneNumber || ''
-      );
-
-      // Let the server determine the role
-      await initSessionAndRedirect({
-        uid: dbUser.uid,
-        email: dbUser.email,
-        name: dbUser.name,
-        profileImage: dbUser.profileImage,
-        role: dbUser.role // Will be overridden by server
-      });
+      await syncUserToRTDB(result.user);
+      toast.success("Login Successful!");
+      router.replace('/dashboard');
     } catch (error) {
       toast.error(`${providerName.toUpperCase()} Auth Failed: ${error.message}`);
     } finally {
@@ -134,7 +97,7 @@ export default function CreateAccount() {
             <Image src="/images/awebgrow-logo-art-letter.png" alt="Logo" width={120} height={110} className="object-fit-contain" priority />
           </div>
           <h3 className="fw-bold text-white m-0" style={{ fontSize: '1.25rem' }}>Get Started!</h3>
-          <h2 className="fw-black m-0 mt-1" style={{ fontSize: '1.5rem', fontWeight:999 }}>
+          <h2 className="fw-black m-0 mt-1" style={{ fontSize: '1.5rem', fontWeight: 900 }}>
             <span style={{ color: '#3b82f6' }}>Create </span>
             <span style={{ background: 'linear-gradient(135deg, #a855f7, #ec4899, #f97316)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Account </span>
           </h2>
@@ -170,7 +133,7 @@ export default function CreateAccount() {
               <label className="form-label extra-small fw-bold mb-1" style={{ color: '#9ca3af', fontSize: '0.78rem' }}>Password</label>
               <div className="position-relative d-flex align-items-center">
                 <FiLock className="position-absolute ms-3 text-secondary" style={{ zIndex: 10 }} />
-                <input type={showPassword ? "text" : "password"} placeholder="••••••" className="form-control text-white border" style={{ height: '46px', borderRadius: '10px', paddingLeft: '42px', paddingRight: '42px', fontSize: '0.88rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', borderColor: 'rgba(255, 255, 255, 0.08)' }} required onChange={e => setFormData({ ...formData, password: e.target.value })} />
+                <input type={showPassword ? "text" : "password"} placeholder="••••••••" className="form-control text-white border" style={{ height: '46px', borderRadius: '10px', paddingLeft: '42px', paddingRight: '42px', fontSize: '0.88rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', borderColor: 'rgba(255, 255, 255, 0.08)' }} required onChange={e => setFormData({ ...formData, password: e.target.value })} />
                 <span className="position-absolute end-0 me-3 text-secondary cursor-pointer" style={{ zIndex: 10 }} onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? <FiEyeOff size={16} /> : <FiEye size={16} />}
                 </span>

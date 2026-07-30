@@ -7,36 +7,31 @@ import { signOut } from 'firebase/auth';
 import { toast } from 'sonner';
 
 export default function Logout() {
-  const [asyncRunning, setAsyncRunning] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();  
 
-  const performClearance = async () => {
-    setAsyncRunning(true);
+  const handleLogout = async () => {
+    setLoading(true);
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
-      await signOut(auth);
-
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('awebgrow_user_session');
+      if (auth) {
+        await signOut(auth);
       }
-      
       toast.success("Logged out successfully");
-      router.push('/login'); 
-      router.refresh();
+      router.replace('/'); 
     } catch (error) {
       toast.error("Logout error: " + error.message);
     } finally {
-      setAsyncRunning(false);
+      setLoading(false);
     }
   };
 
   return (
     <button 
-      onClick={performClearance} 
+      onClick={handleLogout} 
       className="btn btn-outline-danger rounded-pill px-4 py-1.5 d-inline-flex align-items-center gap-2"
-      disabled={asyncRunning}
+      disabled={loading}
     >
-      {asyncRunning ? (
+      {loading ? (
         <span className="spinner-border spinner-border-sm" role="status"></span>
       ) : (
         <>

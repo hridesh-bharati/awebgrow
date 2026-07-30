@@ -1,13 +1,17 @@
-'use client';
+"use client";
+
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { auth, rtdb } from '@/lib/firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { ref, get } from 'firebase/database';
 import AdminDashboard from '@/components/Dashboard/Admin/AdminDashboard';
 import UserDashboard from '@/components/Dashboard/User/UserDashboard';
+import { toast } from 'sonner';
 
 const ADMIN_EMAILS = [
-  'sushantkumar867695@gmail.com',
+  'awebgrow@gmail.com',
   'hridesh027@gmail.com',
-  'kandusushil9@gmail.com'
 ];
 
 export default function DashboardPage() {
@@ -16,44 +20,64 @@ export default function DashboardPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const res = await fetch('/api/auth/me', { cache: 'no-store' });
-        if (!res.ok) {
-          router.push('/login');
-          return;
-        }
-        const data = await res.json();
-        if (data.authenticated) {
-          setSession(data.user);
-        } else {
-          router.push('/login');
-        }
-      } catch (error) {
-        console.error("Dashboard security handshake failed:", error);
-        router.push('/login');
-      } finally {
-        setLoading(false); 
-      }
-    };
+    if (!auth) return;
 
-    checkSession();
+    // Direct Realtime Auth State Listener
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const email = user.email ? user.email.toLowerCase().trim() : '';
+          const emailKey = email.replace(/\./g, '_');
+          const isMasterAdmin = ADMIN_EMAILS.includes(email);
+
+          let dbData = {};
+          if (rtdb) {
+            const userRef = ref(rtdb, `users/${emailKey}`);
+            const snapshot = await get(userRef);
+            if (snapshot.exists()) {
+              dbData = snapshot.val();
+            }
+          }
+
+          const userRole = isMasterAdmin ? 'admin' : (dbData.role || 'user');
+
+          setSession({
+            uid: user.uid,
+            email: email,
+            name: dbData.name || user.displayName || email.split('@')[0],
+            profileImage: dbData.profileImage || user.photoURL || "/icons/default-avatar.png",
+            role: userRole
+          });
+        } catch (error) {
+          console.error("Dashboard Session Error:", error);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        setSession(null);
+        setLoading(false);
+        router.replace('/login'); // Prevent redirect history loop
+      }
+    });
+
+    return () => unsubscribe();
   }, [router]);
 
   const handleLogout = async () => {
     try {
-      const res = await fetch('/api/auth/logout', { method: 'POST' });
-      if (res.ok) {
-        router.push('/'); 
+      if (auth) {
+        await signOut(auth);
       }
+      toast.success("Logged out successfully");
+      router.replace('/login');
     } catch (error) {
-      console.error("Logout failed:", error);
+      toast.error("Logout error: " + error.message);
     }
   };
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+      <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundColor: '#020205' }}>
         <div className="spinner-border text-primary" role="status">
           <span className="visually-hidden">Syncing core views...</span>
         </div>
@@ -61,13 +85,11 @@ export default function DashboardPage() {
     );
   }
 
-  const isAdmin = 
-    ADMIN_EMAILS.includes(session?.email?.toLowerCase()) || 
-    session?.role === 'admin';
+  if (!session) return null;
 
   return (
     <main className="container-fluid p-0 m-0 min-vh-100">
-      {isAdmin ? (
+      {session.role === 'admin' ? (
         <AdminDashboard session={session} onLogout={handleLogout} />
       ) : (
         <UserDashboard session={session} onLogout={handleLogout} />
