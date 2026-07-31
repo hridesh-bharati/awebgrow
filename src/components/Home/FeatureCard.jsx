@@ -120,7 +120,6 @@ export default function FeaturesCard() {
         
         {/* SECTION HEADER */}
         <div className="text-center mb-5">
-          {/* BOLDER BADGE */}
           <div 
             className="d-inline-flex align-items-center gap-2 px-3.5 py-1.5 rounded-pill mb-3"
             style={{
@@ -136,7 +135,6 @@ export default function FeaturesCard() {
             </span>
           </div>
 
-          {/* MAXIMUM BOLDER HEADING */}
           <h2 
             className="display-5 fw-black text-theme-primary mb-3"
             style={{ fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.15 }}
@@ -157,55 +155,67 @@ export default function FeaturesCard() {
           </p>
         </div>
 
-        {/* FLUID RESPONSIVE GRID (CLICKABLE CARDS) */}
+        {/* FLUID RESPONSIVE GRID (360° ANIMATED BORDER CARDS) */}
         <div className="row g-4 justify-content-center">
           {FEATURES_DATA.map((item) => (
             <div key={item.id} className="col-12 col-md-6 col-xl-3">
               <div
                 onClick={() => setActiveFeature(item)}
                 role="button"
-                className="h-100 p-4 text-center text-md-start position-relative overflow-hidden rounded-4 border feature-card-hover"
+                className="feature-card-wrapper h-100 rounded-4 position-relative overflow-hidden p-0.5"
                 style={{
-                  backgroundColor: 'var(--bg-card)',
-                  borderColor: 'var(--border-subtle)',
-                  boxShadow: `0 10px 30px var(--shadow-color)`,
+                  '--card-theme': item.themeColor,
+                  '--card-glow': item.glowColor,
                   cursor: 'pointer',
-                  transition: 'all 0.35s cubic-bezier(0.25, 1, 0.5, 1)'
                 }}
               >
-                {/* Micro Ambient Glow Aura inside card */}
-                <div
-                  className="position-absolute top-0 start-0 w-100 h-100 pointer-events-none opacity-20"
-                  style={{
-                    background: item.colorGradient,
-                    transform: 'scale(1.4) translate(-25%, -25%)',
-                    filter: 'blur(50px)'
-                  }}
-                />
+                {/* 360 Degree Spinning Gradient Background */}
+                <div className="animated-border-bg position-absolute" />
 
-                {/* Floating Icon Box with Intense Neon Glow */}
+                {/* Inner Card Container */}
                 <div
-                  className="d-inline-flex align-items-center justify-content-center rounded-4 mb-3 text-white fs-4 position-relative z-2"
+                  className="h-100 p-4 text-center text-md-start position-relative rounded-4 overflow-hidden"
                   style={{
-                    width: '52px',
-                    height: '52px',
-                    background: item.colorGradient,
-                    boxShadow: `0 0 20px ${item.glowColor}`
+                    backgroundColor: 'var(--bg-card, #0d0e15)',
+                    backdropFilter: 'blur(12px)',
+                    zIndex: 1
                   }}
                 >
-                  <i className={`bi ${item.icon}`}></i>
+                  {/* Micro Ambient Glow Aura inside card */}
+                  <div
+                    className="position-absolute top-0 start-0 w-100 h-100 pointer-events-none opacity-20"
+                    style={{
+                      background: item.colorGradient,
+                      transform: 'scale(1.4) translate(-25%, -25%)',
+                      filter: 'blur(50px)'
+                    }}
+                  />
+
+                  {/* Floating Icon Box */}
+                  <div
+                    className="d-inline-flex align-items-center justify-content-center rounded-4 mb-3 text-white fs-4 position-relative z-2"
+                    style={{
+                      width: '52px',
+                      height: '52px',
+                      background: item.colorGradient,
+                      boxShadow: `0 0 20px ${item.glowColor}`
+                    }}
+                  >
+                    <i className={`bi ${item.icon}`}></i>
+                  </div>
+
+                  {/* Typography */}
+                  <div className="position-relative z-2">
+                    <h5 className="text-theme-primary mb-2 fs-6 fw-black d-flex align-items-center justify-content-between" style={{ fontWeight: 800 }}>
+                      <span>{item.title}</span>
+                      <i className="bi bi-arrow-up-right-short text-secondary fs-5"></i>
+                    </h5>
+                    <p className="text-theme-secondary small mb-0 lh-base" style={{ fontSize: '0.84rem', fontWeight: 500 }}>
+                      {item.desc}
+                    </p>
+                  </div>
                 </div>
 
-                {/* Typography */}
-                <div className="position-relative z-2">
-                  <h5 className="text-theme-primary mb-2 fs-6 fw-black d-flex align-items-center justify-content-between" style={{ fontWeight: 800 }}>
-                    <span>{item.title}</span>
-                    <i className="bi bi-arrow-up-right-short text-secondary fs-5"></i>
-                  </h5>
-                  <p className="text-theme-secondary small mb-0 lh-base" style={{ fontSize: '0.84rem', fontWeight: 500 }}>
-                    {item.desc}
-                  </p>
-                </div>
               </div>
             </div>
           ))}
@@ -234,7 +244,6 @@ export default function FeaturesCard() {
                 boxShadow: `0 0 25px ${activeFeature.themeColor}40`
               }}
             >
-              {/* Modal Header */}
               <div className="modal-header border-0 pb-0">
                 <div className="d-flex align-items-center gap-2">
                   <i className={`bi ${activeFeature.icon} fs-4`} style={{ color: activeFeature.themeColor }}></i>
@@ -249,7 +258,6 @@ export default function FeaturesCard() {
                 ></button>
               </div>
 
-              {/* Modal Body */}
               <div className="modal-body my-2">
                 <h3 className="fw-bold mb-2 text-white" style={{ fontSize: '1.4rem' }}>
                   {activeFeature.headline}
@@ -274,7 +282,6 @@ export default function FeaturesCard() {
                 </ul>
               </div>
 
-              {/* Modal Footer */}
               <div className="modal-footer border-0 pt-2 d-flex justify-content-between align-items-center">
                 <button 
                   className="btn btn-sm btn-outline-secondary rounded-pill px-3" 
@@ -296,12 +303,42 @@ export default function FeaturesCard() {
         </div>
       )}
 
-      {/* Subtle hover effect for cards */}
+      {/* CSS Animation & Hover FX */}
       <style jsx>{`
-        .feature-card-hover:hover {
+        .feature-card-wrapper {
+          padding: 1.5px;
+          box-shadow: 0 6px 20px -4px var(--card-glow);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card-wrapper:hover {
           transform: translateY(-5px);
-          border-color: rgba(255, 0, 128, 0.4) !important;
-          box-shadow: 0 15px 35px rgba(255, 0, 128, 0.15) !important;
+          box-shadow: 0 12px 30px -2px var(--card-glow);
+        }
+
+        .animated-border-bg {
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: conic-gradient(
+            from 0deg,
+            transparent 0deg,
+            var(--card-theme) 90deg,
+            transparent 180deg,
+            var(--card-theme) 270deg,
+            transparent 360deg
+          );
+          animation: rotateBorder 4s linear infinite;
+        }
+
+        @keyframes rotateBorder {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
         }
       `}</style>
 

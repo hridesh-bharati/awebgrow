@@ -7,7 +7,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import './Hero.css';
 import WebServicesSection from './WebServicesSection.jsx';
-import ColorPaletteSelector from './ColorPaletteSelector';
 // Detailed data for each service node
 const SERVICES_DATA = {
   webdev: {
@@ -523,7 +522,6 @@ export default function Hero() {
           </p>
         </div>
 
-        <ColorPaletteSelector />
       </div>
     </section>
   );

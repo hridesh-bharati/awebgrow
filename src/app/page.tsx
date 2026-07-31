@@ -11,6 +11,8 @@ import CTA from "@/components/Home/CTA";
 import FeatureCard from "@/components/Home/FeatureCard";
 import CustomCursor from "./CustomCursor";
 import Link from "next/link";
+import ColorPaletteSelector from '@/components/Home/ColorPaletteSelector';
+
 import { getLatestPosts } from "@/lib/posts";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.awebgrow.com';
@@ -216,6 +218,7 @@ export default function Home() {
           <WhyChooseUs />
           <FeatureCard />
           <OurProjects />
+          <ColorPaletteSelector />
           <Process />
           <CTA />
           <PricingPackages />
