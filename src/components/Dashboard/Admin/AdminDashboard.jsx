@@ -146,7 +146,6 @@ export default function AdminDashboard({ session, onLogout }) {
           position: 'sticky',
           top: 0,
           height: '100vh',
-          zIndex: 1030,
           overflowX: 'hidden'
         }}
       >
