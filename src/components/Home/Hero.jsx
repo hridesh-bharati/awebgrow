@@ -7,7 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import './Hero.css';
 import WebServicesSection from './WebServicesSection.jsx';
-
+import ColorPaletteSelector from './ColorPaletteSelector';
 // Detailed data for each service node
 const SERVICES_DATA = {
   webdev: {
@@ -413,8 +413,9 @@ export default function Hero() {
         </div>
       </div>
 
-      <WebServicesSection />
+     <WebServicesSection />
 
+    
       {/* --- SERVICE DETAILS MODAL --- */}
       {activeService && (
         <div 
@@ -500,7 +501,22 @@ export default function Hero() {
           </div>
         </div>
       )}
+  {/* NEW COLOR PALETTE SELECTION SECTION FOR USERS */}
+      <div className="container py-5">
+        <div className="text-center mb-4">
+          <span className="badge rounded-pill px-3 py-1 mb-2" style={{ backgroundColor: 'rgba(255, 0, 128, 0.1)', color: '#ff77bc', border: '1px solid rgba(255, 0, 128, 0.3)' }}>
+            ✦ COLOR CUSTOMIZATION
+          </span>
+          <h2 className="display-6 fw-bold text-white">
+            Choose Your Favorite <span className="text-gradient-pink-orange">Color Scheme</span>
+          </h2>
+          <p className="text-secondary small">
+            Select a color combination you like for your upcoming website project and submit it to us.
+          </p>
+        </div>
 
+        <ColorPaletteSelector />
+      </div>
     </section>
   );
 }

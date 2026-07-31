@@ -1,5 +1,5 @@
 "use client";
-
+// src\app\dashboard\page.jsx
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth, rtdb } from '@/lib/firebase';

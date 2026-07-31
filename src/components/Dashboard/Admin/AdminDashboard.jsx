@@ -12,6 +12,7 @@ import CouponManager from './CouponManager';
 import WebsiteOrders from './WebsiteOrders';
 import RecentProjects from './RecentProjects';
 import AdminProfile from './AdminProfile';
+import PaletteQueriesManager from './PaletteQueriesManager';
 
 export default function AdminDashboard({ session, onLogout }) {
   const [allUsers, setAllUsers] = useState([]);
@@ -57,6 +58,7 @@ export default function AdminDashboard({ session, onLogout }) {
 
   const navItems = [
     { name: 'Dashboard', icon: 'bi-grid-1x2', view: 'dashboard' },
+    { name: 'Color Queries', icon: 'bi-palette', view: 'color-queries' },
     { name: 'Live Analytics', icon: 'bi-activity', view: 'analytics-live' },
     { name: 'Users Network', icon: 'bi-people', view: 'users' },
     { name: 'Website Coupons', icon: 'bi-graph-up', view: 'analytics' },
@@ -69,6 +71,8 @@ export default function AdminDashboard({ session, onLogout }) {
     switch (currentView) {
       case 'dashboard':
         return <DashboardHome usersCount={allUsers.length} />;
+      case 'color-queries':
+        return <PaletteQueriesManager />;
       case 'analytics-live':
         return <LiveAnalytics />;
       case 'users':
