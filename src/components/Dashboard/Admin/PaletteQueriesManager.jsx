@@ -70,7 +70,6 @@ export default function PaletteQueriesManager() {
             const hex1 = q.selectedPalette?.color1?.hex || '#ff0080';
             const hex2 = q.selectedPalette?.color2?.hex || '#a855f7';
             
-            // Alternating Neon Themes: Pink vs Dark Blue / Cyan
             const isBlue = index % 2 !== 0;
             const accentColor = isBlue ? '#3b82f6' : '#ff0080';
             const shadowGlow = isBlue ? 'rgba(59, 130, 246, 0.15)' : 'rgba(255, 0, 128, 0.15)';
@@ -84,7 +83,6 @@ export default function PaletteQueriesManager() {
                     boxShadow: `0 0 20px ${shadowGlow}`
                   }}
                 >
-                  
                   {/* TOP HEADER */}
                   <div>
                     <div className="d-flex align-items-center justify-content-between mb-3">
@@ -146,25 +144,27 @@ export default function PaletteQueriesManager() {
         </div>
       )}
 
-      {/* BOOTSTRAP NATIVE BOTTOM OFFCANVAS WITH TOP PADDING & DRAG HANDLE */}
+      {/* BOOTSTRAP BOTTOM OFFCANVAS */}
       <div 
-        className="offcanvas offcanvas-bottom bg-dark text-white rounded-top-4" 
+        className="offcanvas offcanvas-bottom text-white rounded-top-4" 
         tabIndex="-1" 
         id="queryDetailsOffcanvas"
+        data-bs-backdrop="true" /* Set to "false" if you want to remove dark overlay completely */
         style={{ 
           height: 'auto', 
           maxHeight: '85vh', 
+          backgroundColor: '#121212', /* Explicit dark background */
           borderTop: '2px solid #ff0080',
-          zIndex:2,
-          boxShadow: '0 -10px 40px rgba(255, 0, 128, 0.25)' 
+          zIndex: 1065, /* MUST be higher than Bootstrap backdrop (1050) */
+          boxShadow: '0 -10px 40px rgba(255, 0, 128, 0.35)' 
         }}
       >
-        {/* DRAG HANDLE BAR & TOP PADDING */}
+        {/* DRAG HANDLE BAR */}
         <div className="pt-3 pb-1 d-flex justify-content-center">
           <div className="rounded-pill" style={{ width: '42px', height: '4px', backgroundColor: '#ff0080', opacity: 0.8 }}></div>
         </div>
 
-        <div className="offcanvas-header pt-4 pb-2">
+        <div className="offcanvas-header pt-3 pb-2">
           <div className="d-flex align-items-center gap-2">
             <span className="hero-badge">
               <span className="badge-text-glow">{selectedQuery?.selectedPalette?.id || 'COMBO'}</span>
