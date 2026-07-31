@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "aos/dist/aos.css";
 import "./globale.css";
+import "./rotating-border.css";
 import "./theme.css";
 import { Toaster } from 'sonner';
 import type { Viewport } from 'next';

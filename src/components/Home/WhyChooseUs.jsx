@@ -10,36 +10,32 @@ const features = [
     icon: <FaRocket size={16} />,
     title: "Fast Delivery",
     description: "Agile development methodology ensuring quick project completion.",
-    borderColor: "rgba(244, 63, 94, 0.4)",
     accentColor: "#f43f5e",
-    glowColor: "rgba(244, 63, 94, 0.25)",
+    glowColor: "rgba(244, 63, 94, 0.3)",
     delay: 100
   },
   {
     icon: <FaUsers size={16} />,
     title: "Expert Team",
     description: "Skilled professionals with years of industry experience.",
-    borderColor: "rgba(16, 185, 129, 0.4)",
     accentColor: "#10b981",
-    glowColor: "rgba(16, 185, 129, 0.25)",
+    glowColor: "rgba(16, 185, 129, 0.3)",
     delay: 200
   },
   {
     icon: <FaClock size={16} />,
     title: "24/7 Support",
     description: "Round-the-clock technical support and maintenance.",
-    borderColor: "rgba(168, 85, 247, 0.4)",
     accentColor: "#a855f7",
-    glowColor: "rgba(168, 85, 247, 0.25)",
+    glowColor: "rgba(168, 85, 247, 0.3)",
     delay: 300
   },
   {
     icon: <FaAward size={16} />,
     title: "Quality Assured",
     description: "Industry-standard quality checks and testing procedures.",
-    borderColor: "rgba(249, 115, 22, 0.4)",
     accentColor: "#f97316",
-    glowColor: "rgba(249, 115, 22, 0.25)",
+    glowColor: "rgba(249, 115, 22, 0.3)",
     delay: 400
   }
 ];
@@ -97,10 +93,10 @@ export default function WhyChooseUs() {
       <div className="container py-4 position-relative z-1">
         <div className="row align-items-center g-4 g-lg-5">
 
-          {/* LEFT COLUMN: TEXT CONTENT & COMPACT CARDS */}
+          {/* LEFT COLUMN: TEXT CONTENT & CARDS */}
           <div className="col-lg-6 text-center text-lg-start">
 
-            {/* EXTRA BOLD BADGE */}
+            {/* BADGE */}
             <div
               className="d-inline-flex align-items-center gap-2 px-3.5 py-1.5 rounded-pill mb-3"
               style={{
@@ -118,7 +114,7 @@ export default function WhyChooseUs() {
               </span>
             </div>
 
-            {/* MAXIMUM BOLD HEADING */}
+            {/* HEADING */}
             <h2
               className="display-5 fw-black tracking-tight mb-3 text-theme-primary"
               style={{
@@ -142,7 +138,7 @@ export default function WhyChooseUs() {
               </span>
             </h2>
 
-            {/* BOLDER & CLEAR DESCRIPTION */}
+            {/* DESCRIPTION */}
             <p
               className="fs-6 mb-4 mx-auto mx-lg-0 text-theme-secondary"
               style={{
@@ -157,59 +153,58 @@ export default function WhyChooseUs() {
             >
               With deep structural engineering expertise, we configure highly resilient web assets and scalable native components optimized to support long-term traffic and computational density.
             </p>
-            {/* CARDS GRID WITH COMPACT HEIGHT */}
+
+            {/* CARDS GRID WITH 360-DEGREE ROTATING BORDER */}
             <div className="row g-2.5 text-start mt-2">
               {features.map((feature, index) => (
                 <div className="col-sm-6 my-1" key={index}>
+                  
+                  {/* WRAPPER WITH ROTATING BORDER CLASS */}
                   <div
-                    className="p-3  h-100 position-relative overflow-hidden rounded-4 border feature-card-item"
+                    className="rotating-border-card rounded-4"
                     style={{
-                      backgroundColor: 'var(--bg-card)',
-                      borderColor: feature.borderColor,
-                      boxShadow: `0 6px 18px -4px ${feature.glowColor}`,
-                      backdropFilter: 'blur(12px)',
-                      transition: 'all 0.25s ease'
+                      '--card-accent': feature.accentColor,
+                      '--card-glow': feature.glowColor,
                     }}
                     data-aos="fade-up"
                     data-aos-delay={feature.delay}
                   >
-                    {/* Top Subtle Neon Edge Line */}
-                    <div
-                      className="position-absolute top-0 start-0 w-100"
-                      style={{ height: '2px', background: `linear-gradient(90deg, ${feature.accentColor}, transparent)` }}
-                    />
+                    {/* INNER CONTENT AREA */}
+                    <div className="rotating-border-inner p-3">
+                      <div className="d-flex align-items-center gap-2.5">
+                        <div
+                          className="d-flex align-items-center justify-content-center flex-shrink-0 rounded-circle me-2"
+                          style={{
+                            width: '36px',
+                            height: '36px',
+                            backgroundColor: 'var(--bg-pill, rgba(255, 255, 255, 0.05))',
+                            border: `1px solid ${feature.accentColor}55`,
+                            color: feature.accentColor,
+                            boxShadow: `0 0 12px ${feature.glowColor}`
+                          }}
+                        >
+                          {feature.icon}
+                        </div>
 
-                    <div className="d-flex align-items-center gap-2.5 position-relative z-2">
-                      <div
-                        className="d-flex align-items-center justify-content-center flex-shrink-0 rounded-circle me-2"
-                        style={{
-                          width: '36px',
-                          height: '36px',
-                          backgroundColor: 'var(--bg-pill)',
-                          border: `1px solid ${feature.borderColor}`,
-                          color: feature.accentColor,
-                          boxShadow: `0 0 12px ${feature.glowColor}`
-                        }}
-                      >
-                        {feature.icon}
-                      </div>
-
-                      <div>
-                        <h6 className="fw-bold mb-0.5 text-theme-primary" style={{ fontSize: '0.88rem', letterSpacing: '-0.01em' }}>
-                          {feature.title}
-                        </h6>
-                        <p className="small m-0 text-theme-secondary" style={{ fontSize: '0.75rem', lineHeight: '1.35' }}>
-                          {feature.description}
-                        </p>
+                        <div>
+                          <h6 className="fw-bold mb-0.5 text-theme-primary" style={{ fontSize: '0.88rem', letterSpacing: '-0.01em' }}>
+                            {feature.title}
+                          </h6>
+                          <p className="small m-0 text-theme-secondary" style={{ fontSize: '0.75rem', lineHeight: '1.35' }}>
+                            {feature.description}
+                          </p>
+                        </div>
                       </div>
                     </div>
+
                   </div>
+
                 </div>
               ))}
             </div>
           </div>
 
-          {/* RIGHT COLUMN: CLEAN GALLERY */}
+          {/* RIGHT COLUMN: GALLERY */}
           <div className="col-lg-6 mt-4 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
             <div className="row g-3 align-items-end">
 
@@ -254,13 +249,6 @@ export default function WhyChooseUs() {
 
         </div>
       </div>
-
-      <style jsx>{`
-        .feature-card-item:hover {
-          transform: translateY(-3px);
-          border-color: rgba(255, 255, 255, 0.3) !important;
-        }
-      `}</style>
     </section>
   );
 }

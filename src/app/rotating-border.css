@@ -1,0 +1,65 @@
+/* ====================================================
+   MINIMAL UTILITY FOR 360° ROTATING GRADIENT BORDER
+   ==================================================== */
+
+/* Outer wrapper class to attach to any container */
+.rotating-border-card {
+  position: relative;
+  overflow: hidden;
+  padding: 1.5px; /* Border thickness */
+  border-radius: inherit; /* Inherits rounded corners automatically */
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  
+  /* Fallback defaults if inline styles aren't passed */
+  --card-accent: #f43f5e;
+  --card-glow: rgba(244, 63, 94, 0.3);
+  
+  box-shadow: 0 6px 18px -4px var(--card-glow);
+}
+
+/* Hover elevation effect */
+.rotating-border-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px -2px var(--card-glow);
+}
+
+/* The spinning 360deg conic gradient layer */
+.rotating-border-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    var(--card-accent) 90deg,
+    transparent 180deg,
+    var(--card-accent) 270deg,
+    transparent 360deg
+  );
+  animation: rotateBorder360 4s linear infinite;
+  z-index: 0;
+}
+
+/* Inner content area overlay (masks the background) */
+.rotating-border-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--bg-card, #0d0e15);
+  backdrop-filter: blur(12px);
+}
+
+/* Keyframes for smooth 360 degree rotation */
+@keyframes rotateBorder360 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
