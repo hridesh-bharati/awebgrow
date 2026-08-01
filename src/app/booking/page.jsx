@@ -1,10 +1,11 @@
 'use client';
-// src\app\booking\page.jsx
+
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { websitePackagesData } from '@/components/Home/PricingPackages';
 import Link from 'next/link';
 import Header from '@/components/Header/Header';
+
 function BookingContent() {
   const searchParams = useSearchParams();
 
@@ -14,7 +15,7 @@ function BookingContent() {
   const basePriceRaw = searchParams.get('price') || '0';
   const featuresList = searchParams.get('features') ? searchParams.get('features').split(',') : [];
   const packageIcon = searchParams.get('icon') || 'bi-layers-fill';
-  const packageGradient = searchParams.get('gradient') || 'linear-gradient(135deg, #1e293b, #0f172a)';
+  const packageGradient = searchParams.get('gradient') || 'linear-gradient(135deg, #a855f7, #ec4899)';
 
   const currentPackage = websitePackagesData.find(
     pkg => pkg.title?.toLowerCase() === packageTitle?.toLowerCase()
@@ -31,15 +32,15 @@ function BookingContent() {
   const [isOrderedSuccessfully, setIsOrderedSuccessfully] = useState(false);
   const [generatedOrderId, setGeneratedOrderId] = useState('');
 
-  // User details state
+  // User details state (Kept unchanged)
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
 
-  // Parsing absolute numbers for arithmetic manipulation
+  // Parsing numbers
   const basePriceNum = parseInt(basePriceRaw.replace(/[^0-9]/g, '')) || 0;
   const discountAmount = appliedCoupon ? (basePriceNum * appliedCoupon.discount) / 100 : 0;
   const finalPayablePrice = basePriceNum - discountAmount;
 
-  // Fetch Coupons from production API
+  // Fetch Coupons
   useEffect(() => {
     const fetchCoupons = async () => {
       try {
@@ -47,7 +48,7 @@ function BookingContent() {
         const data = await res.json();
         if (data.success) setCoupons(data.coupons);
       } catch (err) {
-        console.error("Error connecting to Live Token Database Matrix:", err);
+        console.error("Error connecting to Live Token Database:", err);
       }
     };
     fetchCoupons();
@@ -71,7 +72,7 @@ function BookingContent() {
 
     if (matchingCoupon) {
       setAppliedCoupon(matchingCoupon);
-      setCouponSuccess(`Code "${matchingCoupon.code}" applied successfully! (${matchingCoupon.discount}% Off applied)`);
+      setCouponSuccess(`Code "${matchingCoupon.code}" applied successfully! (${matchingCoupon.discount}% Off)`);
     } else {
       setCouponError('Invalid coupon code or not applicable for this category.');
     }
@@ -98,7 +99,6 @@ function BookingContent() {
     };
 
     try {
-      // 1. POST payload metadata to production server endpoint
       const response = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -111,7 +111,6 @@ function BookingContent() {
         setGeneratedOrderId(resData.id);
         setIsOrderedSuccessfully(true);
 
-        // 2. Initialize WhatsApp fallback redirection mapping
         const whatsappMessage = `*🚀 NEW WEBSITE ORDER ARCHITECTURE*%0A` +
           `----------------------------------------%0A` +
           `*Order ID:* ${resData.id}%0A` +
@@ -122,9 +121,8 @@ function BookingContent() {
           `----------------------------------------%0A` +
           `*Requirements:* ${orderPayload.architectureRequirements || 'Standard Architecture.'}`;
 
-        const whatsappUrl = `https://wa.me/91XXXXXXXXXX?text=${whatsappMessage}`; // Replace XXXXXXXXXX with your number
+        const whatsappUrl = `https://wa.me/917267995307?text=${whatsappMessage}`;
 
-        // Delayed trigger for native UX feel
         setTimeout(() => {
           window.open(whatsappUrl, '_blank');
         }, 1200);
@@ -138,56 +136,56 @@ function BookingContent() {
     }
   };
 
-  // SUCCESS GREETING CONTEXT PANEL
+  // SUCCESS GREETING SCREEN (Neon Theme)
   if (isOrderedSuccessfully) {
     return (
       <>
         <Header />
-        <div className="w-100  d-flex align-items-center justify-content-center mt-5 py-3" style={{ backgroundColor: '#f1f3f6' }}>
-          <div className="card border-0 shadow-sm p-4 p-md-5 text-center mt-3 bg-white" style={{ borderRadius: '16px', maxWidth: '540px' }}>
+        <div className="w-100 min-vh-100 d-flex align-items-center justify-content-center py-5 bg-theme-main px-3" style={{ marginTop: '60px' }}>
+          <div 
+            className="card border p-4 p-md-5 text-center rounded-4 shadow-lg animate__animated animate__zoomIn" 
+            style={{ 
+              backgroundColor: 'var(--bg-card, #0f101a)', 
+              borderColor: 'rgba(168, 85, 247, 0.3)', 
+              maxWidth: '540px' 
+            }}
+          >
 
-            {/* Success Flag / Badge */}
-            <div className="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" >
-              <i className="bi bi-check-circle-fill text-success me-2" style={{ fontSize: '2.5rem' }}></i>
-              <h3 className="fw-bold text-primary mb-2" style={{ color: '#212121' }}>Order Placed Successfully!</h3>
-
+            {/* Success Icon */}
+            <div className="mb-3">
+              <i className="bi bi-check-circle-fill text-gradient-pink display-3"></i>
             </div>
 
-            {/* Main Heading */}
+            <h3 className="fw-extrabold text-white mb-2 display-6">Order Placed Successfully!</h3>
 
-            {/* Friendly Greeting */}
-            <p className="text-muted mb-4" style={{ fontSize: '0.95rem', lineHeight: '1.5' }}>
-              Thank you, <span className="fw-bold text-dark">{formData.name}</span>! Your order for <span className="fw-bold text-primary">{packageTitle} ({planType})</span> has been received and is being processed.
+            <p className="text-theme-secondary mb-4" style={{ fontSize: '0.95rem', lineHeight: '1.6' }}>
+              Thank you, <span className="fw-bold text-white">{formData.name}</span>! Your order for <span className="text-gradient-purple-blue fw-bold">{packageTitle} ({planType})</span> has been received.
             </p>
 
-            {/* Order Details Receipt Box */}
-            <div className="p-3 mb-4 text-start" style={{ backgroundColor: '#f9f9f9', borderRadius: '12px', border: '1px dashed #e0e0e0', fontSize: '0.9rem' }}>
+            {/* Receipt Box */}
+            <div className="p-3 mb-4 text-start rounded-3 border" style={{ backgroundColor: 'rgba(255, 255, 255, 0.03)', borderColor: 'rgba(255, 255, 255, 0.1)', fontSize: '0.9rem' }}>
               <div className="d-flex justify-content-between mb-2">
-                <span className="text-muted">Order ID:</span>
-                <span className="fw-bold text-dark">{generatedOrderId}</span>
+                <span className="text-theme-secondary">Order ID:</span>
+                <span className="fw-bold text-white font-monospace">{generatedOrderId}</span>
               </div>
               <div className="d-flex justify-content-between mb-2">
-                <span className="text-muted">Payment Mode:</span>
-                <span className="text-dark fw-medium">WhatsApp Gateway</span>
+                <span className="text-theme-secondary">Payment Gateway:</span>
+                <span className="text-white fw-medium">WhatsApp Activation</span>
               </div>
-              <hr className="my-2" style={{ borderColor: '#e0e0e0' }} />
+              <hr className="my-2" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
               <div className="d-flex justify-content-between align-items-center">
-                <span className="fw-bold text-dark">Total Amount:</span>
-                <span className="fw-bold fs-5" style={{ color: '#388e3c' }}>₹{finalPayablePrice.toLocaleString('en-IN')}</span>
+                <span className="fw-bold text-white">Total Amount:</span>
+                <span className="fw-bold fs-5 text-gradient-pink font-monospace">₹{finalPayablePrice.toLocaleString('en-IN')}</span>
               </div>
             </div>
 
-            {/* Info Message */}
-            <p className="small text-muted mb-4">
-              <i className="bi bi-whatsapp text-success me-1"></i> We are redirecting you to WhatsApp for instant updates. If it doesn't open, please wait.
+            <p className="small text-theme-secondary mb-4">
+              <i className="bi bi-whatsapp text-success me-1"></i> We are redirecting you to WhatsApp for instant updates.
             </p>
 
-            {/* Navigation Button */}
-            <div className="d-flex flex-column gap-2">
-              <Link href="/" className="btn w-100 py-2.5 fw-bold text-white rounded-3" style={{ backgroundColor: '#ff6145', border: 'none', boxShadow: '0 2px 4px 0 rgba(0,0,0,.2)' }}>
-                Continue Shopping
-              </Link>
-            </div>
+            <Link href="/" className="btn-neon-cta w-100 justify-content-center py-2.5">
+              Back to Home Page
+            </Link>
           </div>
         </div>
       </>
@@ -196,146 +194,209 @@ function BookingContent() {
 
   if (!packageTitle) {
     return (
-      <div className="container py-5 text-center">
-        <div className="card p-5 shadow-sm border-0 rounded-4 max-width-md mx-auto" style={{ maxWidth: '500px' }}>
-          <i className="bi bi-exclamation-triangle-fill text-warning display-4 mb-3"></i>
-          <h4 className="fw-bold text-dark">No Plan Selected</h4>
-          <p className="text-muted small">Please access the pricing tables index array to complete checkout routing execution pipeline.</p>
+      <>
+        <Header />
+        <div className="container py-5 text-center min-vh-100 d-flex align-items-center justify-content-center" style={{ marginTop: '60px' }}>
+          <div className="card p-5 shadow-lg border rounded-4 bg-theme-main" style={{ maxWidth: '500px', backgroundColor: 'var(--bg-card, #0f101a)', borderColor: 'rgba(255,255,255,0.1)' }}>
+            <i className="bi bi-exclamation-triangle-fill text-warning display-4 mb-3"></i>
+            <h4 className="fw-bold text-white">No Plan Selected</h4>
+            <p className="text-theme-secondary small mb-4">Please select a website package plan from our pricing tables to proceed.</p>
+            <Link href="/#pricingpackages" className="btn-neon-cta">
+              View Pricing Packages
+            </Link>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="w-100 min-vh-100 py-5 px-2" style={{ background: 'linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)' }}>
-      <div className="container" style={{ maxWidth: '1140px' }}>
-        <div className="row g-4">
+    <>
+      <Header />
+      <main className="w-100 min-vh-100 py-5 px-2 bg-theme-main" style={{ marginTop: '65px' }}>
+        <div className="container" style={{ maxWidth: '1140px' }}>
+          <div className="row g-4">
 
-          {/* LEFT: Checkout Form & User Matrix */}
-          <div className="col-12 col-lg-7">
-            <div className="card border-0 shadow-sm p-4 bg-white" style={{ borderRadius: '24px' }}>
-              <h5 className="fw-bold text-dark mb-4 d-flex align-items-center gap-2">
-                <i className="bi bi-person-bounding-box text-primary"></i> Client Registration Profile
-              </h5>
+            {/* LEFT: Checkout Form */}
+            <div className="col-12 col-lg-7">
+              <div 
+                className="card border p-4 shadow-lg rounded-4" 
+                style={{ 
+                  backgroundColor: 'var(--bg-card, #0f101a)', 
+                  borderColor: 'rgba(255, 255, 255, 0.08)' 
+                }}
+              >
+                <h5 className="fw-bold text-white mb-4 d-flex align-items-center gap-2">
+                  <i className="bi bi-person-bounding-box text-gradient-pink"></i> Client Registration Profile
+                </h5>
 
-              <form onSubmit={handleCheckoutSubmit}>
-                <div className="row g-3">
-                  <div className="col-12">
-                    <label className="form-label text-secondary small fw-bold">FULL NAME</label>
-                    <input type="text" required className="form-control rounded-3 py-2" placeholder="John Doe" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
-                  </div>
-                  <div className="col-12 col-md-6">
-                    <label className="form-label text-secondary small fw-bold">EMAIL ADDRESS</label>
-                    <input type="email" required className="form-control rounded-3 py-2" placeholder="john@example.com" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
-                  </div>
-                  <div className="col-12 col-md-6">
-                    <label className="form-label text-secondary small fw-bold">WHATSAPP CONTACT</label>
-                    <input type="tel" required className="form-control rounded-3 py-2" placeholder="+91 XXXXX XXXXX" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
-                  </div>
-                  <div className="col-12">
-                    <label className="form-label text-secondary small fw-bold">SPECIFIC ARCHITECTURE REQUIREMENTS (OPTIONAL)</label>
-                    <textarea className="form-control rounded-3" rows="3" placeholder="Tell us more about your business scale configuration..." value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })}></textarea>
-                  </div>
-                </div>
-
-                <hr className="my-4 opacity-50" />
-
-                {/* COUPON INPUT NODE INTERFACE */}
-                <div className="mb-3">
-                  <label className="form-label text-secondary small fw-bold">APPLY PROMO ENGINE TOKEN</label>
-                  <div className="input-group">
-                    <input
-                      type="text"
-                      className="form-control text-uppercase font-monospace rounded-start-3"
-                      placeholder="E.G. REAL40"
-                      value={couponCode}
-                      onChange={(e) => setCouponCode(e.target.value)}
-                    />
-                    <button className="btn btn-dark px-4 fw-bold rounded-end-3" type="button" onClick={handleApplyCoupon}>
-                      Apply Token
-                    </button>
-                  </div>
-                  {couponError && <div className="text-danger small mt-2 fw-semibold"><i className="bi bi-x-circle-fill"></i> {couponError}</div>}
-                  {couponSuccess && <div className="text-success small mt-2 fw-semibold"><i className="bi bi-check-circle-fill"></i> {couponSuccess}</div>}
-                </div>
-
-                <button type="submit" disabled={isSubmitting} className="btn btn-primary w-100 py-3 rounded-pill fw-bold text-uppercase mt-4 shadow-sm d-flex align-items-center justify-content-center gap-2">
-                  {isSubmitting ? (
-                    <span className="spinner-border spinner-border-sm" role="status"></span>
-                  ) : (
-                    <>Proceed to Activation Protocol <i className="bi bi-arrow-right"></i></>
-                  )}
-                </button>
-              </form>
-            </div>
-          </div>
-
-          {/* RIGHT: Dynamic Invoice */}
-          <div className="col-12 col-lg-5">
-            <div className="card border-0 shadow-sm bg-white overflow-hidden h-100" style={{ borderRadius: '24px' }}>
-              <div className="p-4 text-white d-flex align-items-center gap-3" style={{ background: packageGradient }}>
-                <div className="d-flex align-items-center justify-content-center bg-white bg-opacity-20 rounded-3" style={{ width: '48px', height: '48px', fontSize: '20px' }}>
-                  <i className={`bi ${packageIcon}`}></i>
-                </div>
-                <div>
-                  <h6 className="fw-bold m-0 text-uppercase tracking-wider" style={{ fontSize: '0.75rem', opacity: 0.8 }}>Target Profile Blueprint</h6>
-                  <h4 className="fw-bold m-0" style={{ fontSize: '1.25rem' }}>{packageTitle} System</h4>
-                </div>
-              </div>
-
-              <div className="p-4 flex-grow-1 d-flex flex-column justify-content-between">
-                <div>
-                  <div className="d-flex justify-content-between align-items-center mb-3">
-                    <span className="badge bg-dark bg-opacity-10 text-dark px-2.5 py-1.5 fw-bold rounded-pill text-uppercase" style={{ fontSize: '0.65rem' }}>
-                      {planType} Package Deployment
-                    </span>
-                    <span className="fw-bold text-secondary font-monospace">₹{basePriceNum.toLocaleString('en-IN')}</span>
-                  </div>
-
-                  <h6 className="fw-bold text-secondary tracking-wide mb-2.5" style={{ fontSize: '0.7rem' }}>INCLUDED TARGET METRICS:</h6>
-                  <ul className="list-unstyled mb-0 d-flex flex-column gap-2">
-                    {featuresList.map((feat, index) => (
-                      <li key={index} className="d-flex align-items-start gap-2 text-dark" style={{ fontSize: '0.8rem' }}>
-                        <i className="bi bi-patch-check-fill text-success flex-shrink-0" style={{ fontSize: '0.9rem' }}></i>
-                        <span>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="mt-4 pt-3 border-top border-light">
-                  <div className="d-flex justify-content-between align-items-center mb-2" style={{ fontSize: '0.85rem' }}>
-                    <span className="text-muted">System Value Valuation</span>
-                    <span className="font-monospace text-dark">₹{basePriceNum.toLocaleString('en-IN')}.00</span>
-                  </div>
-
-                  {discountAmount > 0 && (
-                    <div className="d-flex justify-content-between align-items-center mb-2" style={{ fontSize: '0.85rem' }}>
-                      <span className="text-success fw-semibold">Cloud Promo Reduction Token</span>
-                      <span className="font-monospace text-success">-₹{discountAmount.toLocaleString('en-IN')}.00</span>
+                <form onSubmit={handleCheckoutSubmit}>
+                  <div className="row g-3">
+                    <div className="col-12">
+                      <label className="form-label text-theme-secondary small fw-bold">FULL NAME</label>
+                      <input 
+                        type="text" 
+                        required 
+                        className="form-control dark-input rounded-3 py-2" 
+                        placeholder="John Doe" 
+                        value={formData.name} 
+                        onChange={e => setFormData({ ...formData, name: e.target.value })} 
+                      />
                     </div>
-                  )}
+                    <div className="col-12 col-md-6">
+                      <label className="form-label text-theme-secondary small fw-bold">EMAIL ADDRESS</label>
+                      <input 
+                        type="email" 
+                        required 
+                        className="form-control dark-input rounded-3 py-2" 
+                        placeholder="john@example.com" 
+                        value={formData.email} 
+                        onChange={e => setFormData({ ...formData, email: e.target.value })} 
+                      />
+                    </div>
+                    <div className="col-12 col-md-6">
+                      <label className="form-label text-theme-secondary small fw-bold">WHATSAPP CONTACT</label>
+                      <input 
+                        type="tel" 
+                        required 
+                        className="form-control dark-input rounded-3 py-2" 
+                        placeholder="+91 XXXXX XXXXX" 
+                        value={formData.phone} 
+                        onChange={e => setFormData({ ...formData, phone: e.target.value })} 
+                      />
+                    </div>
+                    <div className="col-12">
+                      <label className="form-label text-theme-secondary small fw-bold">SPECIFIC ARCHITECTURE REQUIREMENTS (OPTIONAL)</label>
+                      <textarea 
+                        className="form-control dark-input rounded-3" 
+                        rows="3" 
+                        placeholder="Tell us more about your business requirements..." 
+                        value={formData.message} 
+                        onChange={e => setFormData({ ...formData, message: e.target.value })}
+                      ></textarea>
+                    </div>
+                  </div>
 
-                  <div className="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-dashed">
-                    <span className="fw-bold text-dark">Net Payable Invoice Matrix</span>
-                    <span className="fw-bold text-primary font-monospace fs-4">₹{finalPayablePrice.toLocaleString('en-IN')}.00</span>
+                  <hr className="my-4 border-secondary opacity-25" />
+
+                  {/* COUPON INPUT NODE */}
+                  <div className="mb-3">
+                    <label className="form-label text-theme-secondary small fw-bold">APPLY PROMO TOKEN</label>
+                    <div className="input-group">
+                      <input
+                        type="text"
+                        className="form-control dark-input text-uppercase font-monospace rounded-start-3"
+                        placeholder="E.G. REAL40"
+                        value={couponCode}
+                        onChange={(e) => setCouponCode(e.target.value)}
+                      />
+                      <button className="btn-secondary-glow px-4 fw-bold rounded-end-3 border-0" type="button" onClick={handleApplyCoupon}>
+                        Apply Token
+                      </button>
+                    </div>
+                    {couponError && <div className="text-danger small mt-2 fw-semibold"><i className="bi bi-x-circle-fill me-1"></i> {couponError}</div>}
+                    {couponSuccess && <div className="text-success small mt-2 fw-semibold"><i className="bi bi-check-circle-fill me-1"></i> {couponSuccess}</div>}
+                  </div>
+
+                  <button 
+                    type="submit" 
+                    disabled={isSubmitting} 
+                    className="btn-neon-cta w-100 py-3 rounded-pill fw-bold text-uppercase mt-4 shadow-sm justify-content-center"
+                  >
+                    {isSubmitting ? (
+                      <span className="spinner-border spinner-border-sm" role="status"></span>
+                    ) : (
+                      <>Proceed to Activation <i className="bi bi-arrow-right ms-1"></i></>
+                    )}
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            {/* RIGHT: Invoice Panel */}
+            <div className="col-12 col-lg-5">
+              <div className="card border shadow-lg overflow-hidden h-100 rounded-4" style={{ backgroundColor: 'var(--bg-card, #0f101a)', borderColor: 'rgba(255,255,255,0.08)' }}>
+                <div className="p-4 text-white d-flex align-items-center gap-3" style={{ background: packageGradient }}>
+                  <div className="d-flex align-items-center justify-content-center bg-white bg-opacity-20 rounded-3" style={{ width: '48px', height: '48px', fontSize: '20px' }}>
+                    <i className={`bi ${packageIcon}`}></i>
+                  </div>
+                  <div>
+                    <h6 className="fw-bold m-0 text-uppercase tracking-wider opacity-75" style={{ fontSize: '0.72rem' }}>Selected Package</h6>
+                    <h4 className="fw-bold m-0" style={{ fontSize: '1.25rem' }}>{packageTitle}</h4>
+                  </div>
+                </div>
+
+                <div className="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                  <div>
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                      <span className="badge rounded-pill px-3 py-1.5 fw-bold text-uppercase" style={{ background: 'rgba(168, 85, 247, 0.2)', color: '#a855f7', border: '1px solid rgba(168, 85, 247, 0.3)', fontSize: '0.68rem' }}>
+                        {planType} PLAN
+                      </span>
+                      <span className="fw-bold text-white font-monospace fs-5">₹{basePriceNum.toLocaleString('en-IN')}</span>
+                    </div>
+
+                    <h6 className="fw-bold text-theme-secondary tracking-wide mb-3" style={{ fontSize: '0.72rem' }}>INCLUDED FEATURES:</h6>
+                    <ul className="list-unstyled mb-0 d-flex flex-column gap-2">
+                      {featuresList.map((feat, index) => (
+                        <li key={index} className="d-flex align-items-start gap-2 text-theme-secondary" style={{ fontSize: '0.82rem' }}>
+                          <i className="bi bi-patch-check-fill text-gradient-pink flex-shrink-0" style={{ fontSize: '0.9rem' }}></i>
+                          <span>{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-top border-secondary opacity-75">
+                    <div className="d-flex justify-content-between align-items-center mb-2" style={{ fontSize: '0.85rem' }}>
+                      <span className="text-theme-secondary">Base Package Price</span>
+                      <span className="font-monospace text-white">₹{basePriceNum.toLocaleString('en-IN')}.00</span>
+                    </div>
+
+                    {discountAmount > 0 && (
+                      <div className="d-flex justify-content-between align-items-center mb-2" style={{ fontSize: '0.85rem' }}>
+                        <span className="text-success fw-semibold">Promo Discount Token</span>
+                        <span className="font-monospace text-success">-₹{discountAmount.toLocaleString('en-IN')}.00</span>
+                      </div>
+                    )}
+
+                    <div className="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-secondary">
+                      <span className="fw-bold text-white">Total Payable Amount</span>
+                      <span className="fw-bold text-gradient-pink font-monospace fs-4">₹{finalPayablePrice.toLocaleString('en-IN')}.00</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
+          </div>
         </div>
-      </div>
-    </div>
+
+        {/* Input Styling */}
+        <style jsx>{`
+          .dark-input {
+            background-color: rgba(255, 255, 255, 0.04) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: #ffffff !important;
+          }
+          .dark-input:focus {
+            background-color: rgba(255, 255, 255, 0.07) !important;
+            border-color: #a855f7 !important;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.2) !important;
+          }
+          .dark-input::placeholder {
+            color: rgba(255, 255, 255, 0.3) !important;
+          }
+        `}</style>
+      </main>
+    </>
   );
 }
 
 export default function CheckoutPage() {
   return (
     <Suspense fallback={
-      <div className="w-100 min-vh-100 d-flex align-items-center justify-content-center bg-light">
-        <div className="spinner-border text-primary" role="status"></div>
+      <div className="w-100 min-vh-100 d-flex align-items-center justify-content-center bg-theme-main">
+        <div className="spinner-border text-purple" role="status"></div>
       </div>
     }>
       <BookingContent />
