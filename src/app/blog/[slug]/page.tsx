@@ -1,7 +1,6 @@
 // src/app/blog/[slug]/page.tsx
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
 import { getPostBySlug, getAllPosts, getRelatedPosts } from '@/lib/posts';
 import BlogPostClient from './BlogPostClient';
 
@@ -9,7 +8,7 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-// Generate static paths
+// Generate static paths for SSG
 export async function generateStaticParams() {
   const posts = getAllPosts();
   return posts.map((post) => ({
@@ -17,21 +16,22 @@ export async function generateStaticParams() {
   }));
 }
 
-// ✅ Enhanced Metadata for SEO
+// Enhanced Dynamic Metadata for Google & Social SEO
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
-  if (!post) return { title: 'Post Not Found' };
+  if (!post) return { title: 'Post Not Found | AWebGrow' };
 
   const baseUrl = 'https://www.awebgrow.com';
   const pageUrl = `${baseUrl}/blog/${post.slug}`;
-  
+  const ogImageUrl = post.image && post.image.trim() !== '' ? post.image : `${baseUrl}/images/og-image.jpg`;
+
   return {
     title: `${post.title} | AWebGrow Blog`,
     description: post.excerpt,
-    keywords: post.keywords || ['web development', 'awebgrow', 'blog'],
+    keywords: post.keywords || ['web development', 'nextjs', 'seo', 'awebgrow', 'blog'],
     
-    // ✅ Open Graph for social sharing
+    // Open Graph (Facebook / LinkedIn)
     openGraph: {
       title: post.title,
       description: post.excerpt,
@@ -39,11 +39,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: 'article',
       publishedTime: post.date,
       modifiedTime: post.updatedDate || post.date,
-      authors: ['AWebGrow Team'],
+      authors: ['Hridesh Bharati', 'AWebGrow Team'],
       tags: post.keywords || [],
       images: [
         {
-          url: post.image || `${baseUrl}/images/og-image.jpg`,
+          url: ogImageUrl,
           width: 1200,
           height: 630,
           alt: post.title,
@@ -51,22 +51,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ],
     },
     
-    // ✅ Twitter Cards
+    // Twitter Cards
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: [post.image || `${baseUrl}/images/og-image.jpg`],
+      images: [ogImageUrl],
       creator: '@awebgrow',
       site: '@awebgrow',
     },
     
-    // ✅ Canonical URL
+    // Canonical URL
     alternates: {
       canonical: pageUrl,
     },
     
-    // ✅ Robots
+    // Search Engine Crawling Rules
     robots: {
       index: true,
       follow: true,

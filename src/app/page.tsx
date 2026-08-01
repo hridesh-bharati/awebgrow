@@ -16,8 +16,9 @@ import ColorPaletteSelector from '@/components/Home/ColorPaletteSelector';
 import { getLatestPosts } from "@/lib/posts";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.awebgrow.com';
+const DEFAULT_FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1200&auto=format&fit=crop';
 
-// ✅ COMPLETE SCHEMA COLLECTION
+// ✅ COMPLETE & ENHANCED SCHEMA COLLECTION FOR SEO
 const schemas = [
   // Organization Schema
   {
@@ -31,7 +32,14 @@ const schemas = [
       "https://linkedin.com/company/AWebGrow",
       "https://twitter.com/AWebGrow"
     ],
-    "description": "Leading web development company in India specializing in custom websites, mobile apps, and enterprise software solutions.",
+    "description": "Leading web development company in India specializing in custom websites, mobile apps, Next.js applications, and digital marketing.",
+    "founder": [
+      {
+        "@type": "Person",
+        "name": "hridesh",
+        "url": "https://github.com/hrideshbharati"
+      }
+    ],
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+91-7267995307",
@@ -44,7 +52,7 @@ const schemas = [
     }
   },
 
-  // ✅ LOCAL BUSINESS SCHEMA
+  // LOCAL BUSINESS SCHEMA
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -52,7 +60,7 @@ const schemas = [
     "image": `${BASE_URL}/images/awebgrow-logo-art-letter.png`,
     "url": BASE_URL,
     "telephone": "+91-7267995307",
-    "description": "Professional web development company in India offering website design, mobile app development, and digital marketing services.",
+    "description": "Professional web development agency in India offering custom website development, mobile app design, and SEO services.",
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "IN"
@@ -85,7 +93,7 @@ const schemas = [
     }
   },
 
-  // ✅ SERVICE SCHEMA
+  // SERVICE SCHEMA
   {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -107,7 +115,7 @@ const schemas = [
           "itemOffered": {
             "@type": "Service",
             "name": "Custom Website Development",
-            "description": "Professional custom website development using modern technologies"
+            "description": "Professional custom website development using React, Next.js and MERN stack"
           }
         },
         {
@@ -123,14 +131,14 @@ const schemas = [
           "itemOffered": {
             "@type": "Service",
             "name": "eCommerce Development",
-            "description": "Full-featured eCommerce website development"
+            "description": "Full-featured eCommerce website development solutions"
           }
         }
       ]
     }
   },
 
-  // ✅ BREADCRUMB SCHEMA
+  // BREADCRUMB SCHEMA
   {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -148,7 +156,7 @@ export default function Home() {
 
   return (
     <>
-      {/* Pure CSS replacement for hover states to prevent Server-Client component errors */}
+      {/* Dynamic Hover Styles */}
       <style>{`
         .location-card-noida {
           transition: all 0.3s ease;
@@ -374,33 +382,32 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="row g-4">
+              <div className="row g-4 justify-content-center">
                 {latestPosts && latestPosts.length > 0 ? (
                   latestPosts.map((post) => (
-                    <div key={post.slug} className="col-md-4">
-                      <div className="blog-card blog-card-hover" style={{
+                    <div key={post.slug} className="col-md-4 d-flex">
+                      <div className="blog-card blog-card-hover rounded-4 border overflow-hidden w-100 d-flex flex-column" style={{
                         background: 'rgba(10, 10, 12, 0.85)',
                         backdropFilter: 'blur(12px)',
-                        borderRadius: '16px',
-                        border: '1px solid rgba(255, 255, 255, 0.05)',
-                        overflow: 'hidden',
-                        height: '100%',
+                        borderColor: 'rgba(255, 255, 255, 0.05)'
                       }}>
-                        {post.image && (
-                          <div style={{ height: '180px', overflow: 'hidden' }}>
-                            <img
-                              src={post.image}
-                              alt={post.title}
-                              style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'cover',
-                                transition: 'transform 0.3s ease'
-                              }}
-                            />
-                          </div>
-                        )}
-                        <div className="p-4">
+                        
+                        {/* Image Container with Fallback */}
+                        <div style={{ height: '180px', overflow: 'hidden', backgroundColor: 'rgba(255, 255, 255, 0.03)' }}>
+                          <img
+                            src={post.image && post.image.trim() !== '' ? post.image : DEFAULT_FALLBACK_IMAGE}
+                            alt={post.title}
+                            loading="lazy"
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                              transition: 'transform 0.3s ease'
+                            }}
+                          />
+                        </div>
+
+                        <div className="p-4 d-flex flex-column flex-grow-1">
                           <div className="d-flex justify-content-between align-items-center mb-2">
                             <span className="badge rounded-pill px-3 py-1" style={{
                               background: 'rgba(168, 85, 247, 0.2)',
@@ -414,26 +421,39 @@ export default function Home() {
                               {new Date(post.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
                             </small>
                           </div>
-                          <h3 className="h6 fw-bold text-white mb-2" style={{ lineHeight: '1.3' }}>
+
+                          <h3 className="h6 fw-bold text-white mb-2" style={{ lineHeight: '1.4', minHeight: '2.8em' }}>
                             <Link href={`/blog/${post.slug}`} className="blog-title-link" style={{ textDecoration: 'none' }}>
                               {post.title}
                             </Link>
                           </h3>
-                          <p className="text-secondary small mb-3" style={{ fontSize: '0.8rem', lineHeight: '1.5' }}>
-                            {post.excerpt && post.excerpt.length > 100 ? post.excerpt.substring(0, 100) + '...' : post.excerpt}
+
+                          <p className="text-secondary small mb-4 flex-grow-1" style={{
+                            fontSize: '0.8rem',
+                            lineHeight: '1.5',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 3,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden'
+                          }}>
+                            {post.excerpt}
                           </p>
-                          <Link
-                            href={`/blog/${post.slug}`}
-                            className="btn rounded-pill px-3 py-1 fw-bold blog-btn-hover"
-                            style={{
-                              background: 'linear-gradient(135deg, #a855f7, #6366f1)',
-                              color: '#fff',
-                              border: 'none',
-                              fontSize: '0.75rem',
-                            }}>
-                            Read More <i className="bi bi-arrow-right ms-1"></i>
-                          </Link>
+
+                          <div className="mt-auto">
+                            <Link
+                              href={`/blog/${post.slug}`}
+                              className="btn rounded-pill px-3 py-1.5 fw-bold blog-btn-hover d-inline-flex align-items-center"
+                              style={{
+                                background: 'linear-gradient(135deg, #a855f7, #6366f1)',
+                                color: '#fff',
+                                border: 'none',
+                                fontSize: '0.75rem',
+                              }}>
+                              Read More <i className="bi bi-arrow-right ms-1"></i>
+                            </Link>
+                          </div>
                         </div>
+
                       </div>
                     </div>
                   ))
@@ -485,7 +505,7 @@ export default function Home() {
                     </h2>
                     <p style={{ lineHeight: '1.8', color: '#d1d5db' }}>
                       <strong className="text-white">AWebGrow</strong> is a premier <strong className="text-white">web development company in India</strong>, 
-                      delivering cutting-edge digital solutions since 2021. We specialize in custom website development, 
+                      delivering cutting-edge digital solutions. We specialize in custom website development, 
                       mobile app development, UI/UX design, and SEO services.
                     </p>
                     <p style={{ lineHeight: '1.8', color: '#d1d5db' }}>
@@ -525,7 +545,7 @@ export default function Home() {
                       }}>
                         Explore Our Services
                       </Link>
-                      <Link href="/brand" className="btn rounded-pill px-4 py-2 fw-bold" style={{
+                      <Link href="/about" className="btn rounded-pill px-4 py-2 fw-bold" style={{
                         background: 'rgba(255, 255, 255, 0.05)',
                         border: '1px solid rgba(255, 255, 255, 0.1)',
                         color: '#ffffff',
@@ -552,15 +572,3 @@ export default function Home() {
     </>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-

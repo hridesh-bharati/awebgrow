@@ -243,12 +243,12 @@ export default function RootLayout({
       <head>
         <meta name="google-site-verification" content="Zce3KX6aOJA6UHKpJVkl9JUMIFTLtLankJbNCvTT0Rw" />
 
-        {/* Google AdSense Script */}
      <script
-    async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2660059673395664"
-    crossOrigin="anonymous"
-  ></script>
+  id="adsense-script"
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2660059673395664"
+  crossOrigin="anonymous"
+></script>
         
         <script
     async

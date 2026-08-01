@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { auth } from '@/lib/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import './Header.css';
 
 const SEARCH_INDEX = [
@@ -57,17 +57,16 @@ export default function Header() {
     document.documentElement.setAttribute('data-bs-theme', nextTheme);
   };
 
-  // 2. Auth Listener & Session Sync
+  // 2. Pure Firebase Auth Listener & Local Cache Sync
   useEffect(() => {
     if (!mounted) return;
-    let isCurrent = true;
 
     if (typeof window !== 'undefined') {
       const savedSession = localStorage.getItem('awebgrow_user_session');
       if (savedSession) {
         try {
           const parsed = JSON.parse(savedSession);
-          if (parsed && isCurrent) {
+          if (parsed) {
             setUser({
               name: parsed.name || parsed.email?.split('@')[0],
               profileImage: parsed.profileImage || "/icons/default-avatar.png",
@@ -81,54 +80,26 @@ export default function Header() {
       }
     }
 
-    const verifyServerSession = async () => {
-      try {
-        const res = await fetch('/api/auth/me', { cache: 'no-store' });
-        if (res.ok) {
-          const data = await res.json();
-          if (data.authenticated && data.user && isCurrent) {
-            const serverUser: UserSession = {
-              name: data.user.name || data.user.email?.split('@')[0],
-              profileImage: data.user.profileImage || "/icons/default-avatar.png",
-              email: data.user.email,
-              role: data.user.role
-            };
-            setUser(serverUser);
-            localStorage.setItem('awebgrow_user_session', JSON.stringify(serverUser));
-            return;
-          }
-        }
-
-        if (isCurrent) {
-          setUser(null);
-          localStorage.removeItem('awebgrow_user_session');
-        }
-      } catch (error) {
-        console.error("Session verification failed:", error);
-      }
-    };
-
-    if (!auth) {
-      verifyServerSession();
-      return;
-    }
+    if (!auth) return;
 
     const unsubscribe = onAuthStateChanged(auth, (fbUser) => {
       if (fbUser) {
-        verifyServerSession();
+        const activeUser: UserSession = {
+          name: fbUser.displayName || fbUser.email?.split('@')[0] || 'User',
+          profileImage: fbUser.photoURL || "/icons/default-avatar.png",
+          email: fbUser.email || '',
+          role: 'user'
+        };
+        setUser(activeUser);
+        localStorage.setItem('awebgrow_user_session', JSON.stringify(activeUser));
       } else {
-        if (isCurrent) {
-          setUser(null);
-          localStorage.removeItem('awebgrow_user_session');
-        }
+        setUser(null);
+        localStorage.removeItem('awebgrow_user_session');
       }
     });
 
-    return () => {
-      isCurrent = false;
-      unsubscribe();
-    };
-  }, [pathname, mounted]);
+    return () => unsubscribe();
+  }, [mounted, pathname]);
 
   // Outside Click Listeners
   useEffect(() => {
@@ -162,12 +133,11 @@ export default function Header() {
     }
   }, [searchQuery]);
 
-  // Logout Handler
+  // Logout Handler (Pure Firebase)
   const handleLogout = async () => {
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
       if (auth) {
-        await auth.signOut();
+        await signOut(auth);
       }
       if (typeof window !== 'undefined') {
         localStorage.removeItem('awebgrow_user_session');
@@ -206,7 +176,7 @@ export default function Header() {
 
           {/* BRAND LOGO */}
           <Link href="/" className="text-decoration-none d-flex align-items-center m-0 p-0">
-            <Image src="/icons/awebgrow-logo.png" alt="AWEBGROW Logo" width={120} height={50} className="object-fit-contain rounded-2  m-0 p-0" priority />
+            <Image src="/icons/awebgrow-logo.png" alt="AWEBGROW Logo" width={120} height={50} className="object-fit-contain rounded-2 m-0 p-0" priority />
           </Link>
 
           {/* DESKTOP NAVIGATION */}
