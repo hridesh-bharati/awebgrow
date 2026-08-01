@@ -126,8 +126,8 @@ export default function Footer() {
           </div>
           <div className="col-md-auto">
             <div className="d-flex justify-content-center gap-4">
-              <a href="#" className="text-decoration-none text-theme-secondary">Privacy Policy</a>
-              <a href="#" className="text-decoration-none text-theme-secondary">Terms of Service</a>
+              <Link href="/privacy-policy" className="text-decoration-none text-theme-secondary">Privacy Policy</Link>
+              <Link href="/terms-and-conditions" className="text-decoration-none text-theme-secondary">Terms of Service</Link>
             </div>
           </div>
         </div>

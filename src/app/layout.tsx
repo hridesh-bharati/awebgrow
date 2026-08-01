@@ -10,7 +10,7 @@ import "./theme.css";
 import { Toaster } from 'sonner';
 import type { Viewport } from 'next';
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
-import VisitorTracker from "@/components/VisitorTracker";
+import VisitorTracker from "@/components/VisitorTracker"; 
 import { allKeywords } from "@/app/data/seo-keywords";
 
 const inter = Inter({
@@ -243,12 +243,18 @@ export default function RootLayout({
       <head>
         <meta name="google-site-verification" content="Zce3KX6aOJA6UHKpJVkl9JUMIFTLtLankJbNCvTT0Rw" />
 
-
+        {/* Google AdSense Script */}
+     <script
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2660059673395664"
+    crossOrigin="anonymous"
+  ></script>
+        
         <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2660059673395664"
-          crossOrigin="anonymous"
-        ></script>
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2660059673395664"
+    crossOrigin="anonymous"
+  ></script>
 
         <script
           type="application/ld+json"
@@ -270,10 +276,10 @@ export default function RootLayout({
         style={{ fontFamily: "var(--font-inter), sans-serif" }}
         suppressHydrationWarning
       >
-        <VisitorTracker />
-        {children}
-        <PWAInstallPrompt />
-        <Toaster position="top-center" richColors closeButton />
+          <VisitorTracker />
+          {children}
+          <PWAInstallPrompt />
+          <Toaster position="top-center" richColors closeButton />
 
         <Script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
