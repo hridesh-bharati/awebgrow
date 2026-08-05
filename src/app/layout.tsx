@@ -1,14 +1,16 @@
-// src/app/layout.tsx
 import { Inter } from "next/font/google";
 import Script from "next/script";
+import type { Viewport } from "next";
+import { Toaster } from "sonner";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "aos/dist/aos.css";
+
 import "./globale.css";
 import "./rotating-border.css";
 import "./theme.css";
-import { Toaster } from 'sonner';
-import type { Viewport } from 'next';
+
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 import VisitorTracker from "@/components/VisitorTracker";
 import { allKeywords } from "@/app/data/seo-keywords";
@@ -17,57 +19,44 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
   variable: "--font-inter",
-  display: 'swap',
+  display: "swap",
 });
 
-const FALLBACK_URL = 'https://www.awebgrow.com';
+const FALLBACK_URL = "https://www.awebgrow.com";
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL;
 
 export const metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
     default: "Web Development Company India | Website & App Development Services | AWebGrow",
-    template: "%s | AWebGrow"
+    template: "%s | AWebGrow",
   },
-  description: "AWebGrow is a leading web development company in India offering custom website development, eCommerce solutions, mobile app development, UI/UX design, SEO services, digital marketing, and enterprise software development. Hire expert Next.js, React & MERN stack developers.",
+  description:
+    "AWebGrow is a professional web development company in India providing website development, mobile app development, ecommerce solutions, UI UX design, SEO and digital marketing services.",
   keywords: allKeywords,
-  authors: [
-    { name: "hridesh", url: "https://github.com/hrideshbharati" },
-    { name: "hridesh" },
-    { name: "hridesh Nichlaul" },
-    { name: "hrideh Bharati" },
-    { name: "Sushant Rai" },
-    { name: "Sushant" },
-    { name: "Sushant Noida" },
-    { name: "Sushant Delhi" },
-    { name: "Sushil Kandu" },
-    { name: "Sushil" },
-  ],
+  authors: [{ name: "AWebGrow Team", url: BASE_URL }],
   creator: "AWebGrow Team",
   publisher: "AWebGrow Digital Agency",
+  applicationName: "AWebGrow",
+  generator: "Next.js",
   manifest: "/manifest.json",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
   robots: {
     index: true,
     follow: true,
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      maxVideoPreview: -1,
+      maxImagePreview: "large",
+      maxSnippet: -1,
     },
   },
   verification: {
     google: "Zce3KX6aOJA6UHKpJVkl9JUMIFTLtLankJbNCvTT0Rw",
   },
   openGraph: {
-    title: "Web Development Company India | Website & App Development | AWebGrow",
-    description: "Transform your business with India's leading web development company. Custom websites, mobile apps, eCommerce solutions & digital marketing services.",
+    title: "Web Development Company India | AWebGrow",
+    description: "Professional website development, app development, ecommerce and digital marketing services.",
     url: BASE_URL,
     siteName: "AWebGrow",
     images: [
@@ -75,7 +64,7 @@ export const metadata = {
         url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "AWebGrow - Leading Web Development Company in India",
+        alt: "AWebGrow Web Development Company",
       },
     ],
     locale: "en_IN",
@@ -83,10 +72,9 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Web Development Company India | AWebGrow",
-    description: "India's trusted web & app development agency. Custom solutions for startups & enterprises.",
+    title: "AWebGrow Web Development Company",
+    description: "India's trusted web and app development agency.",
     images: ["/images/twitter-image.jpg"],
-    creator: "@AWebGrow",
   },
   alternates: {
     canonical: BASE_URL,
@@ -95,13 +83,13 @@ export const metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#00378a',
-  colorScheme: 'light',
-  width: 'device-width',
+  themeColor: "#00378a",
+  colorScheme: "light",
+  width: "device-width",
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  viewportFit: 'cover',
+  viewportFit: "cover",
 };
 
 const organizationSchema = {
@@ -109,77 +97,55 @@ const organizationSchema = {
   "@type": "Organization",
   "name": "AWebGrow",
   "url": BASE_URL,
-  "logo": `${BASE_URL}/images/awebgrow-logo-art-letter.png`,
-  "sameAs": [
-    "https://github.com/hrideshbharati",
-    "https://linkedin.com/company/AWebGrow",
-    "https://twitter.com/AWebGrow"
-  ],
-  "description": "Leading web development company in India offering website, app development, UI/UX design, SEO and digital marketing services. Serving clients in Noida, Nichlaul, and across India.",
-  "founder": [
-    { "@type": "Person", "name": "hridesh", "url": "https://github.com/hrideshbharati" },
-    { "@type": "Person", "name": "hridesh" },
-    { "@type": "Person", "name": "hrideh Bharati" },
-    { "@type": "Person", "name": "Sushant Rai" },
-    { "@type": "Person", "name": "Sushil Kandu" }
-  ],
+  "logo": {
+    "@type": "ImageObject",
+    "url": `${BASE_URL}/images/awebgrow-logo-art-letter.png`,
+  },
+  "description":
+    "AWebGrow is a web development company in India providing website development, mobile apps, ecommerce solutions, UI UX design, SEO and digital marketing services.",
+  "founder": {
+    "@type": "Person",
+    "name": "Hridesh Bharati",
+  },
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "+91-7267995307",
     "contactType": "customer service",
-    "availableLanguage": ["English", "Hindi"]
+    "availableLanguage": ["English", "Hindi"],
   },
-  "address": [
-    { "@type": "PostalAddress", "addressLocality": "Noida", "addressRegion": "Uttar Pradesh", "addressCountry": "IN" },
-    { "@type": "PostalAddress", "addressLocality": "Nichlaul", "addressRegion": "Uttar Pradesh", "addressCountry": "IN" }
+  "sameAs": [
+    "https://github.com/hrideshbharati",
+    "https://linkedin.com/company/AWebGrow",
+    "https://twitter.com/AWebGrow",
   ],
-  "areaServed": [
-    { "@type": "City", "name": "Noida" },
-    { "@type": "City", "name": "Nichlaul" },
-    { "@type": "Country", "name": "India" }
-  ]
 };
 
-const localBusinessSchemaNoida = {
+const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "name": "AWebGrow - Web Development Company in Noida",
+  "name": "AWebGrow - Web Development Company",
   "url": BASE_URL,
-  "logo": `${BASE_URL}/images/awebgrow-logo-art-letter.png`,
-  "description": "AWebGrow is a top web development company in Noida offering website development, mobile app development, SEO services, and digital marketing.",
+  "image": `${BASE_URL}/images/awebgrow-logo-art-letter.png`,
+  "description":
+    "AWebGrow provides professional website development, app development, SEO and digital marketing services in India.",
   "telephone": "+91-7267995307",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Noida",
     "addressRegion": "Uttar Pradesh",
-    "addressCountry": "IN"
+    "addressCountry": "IN",
   },
-  "sameAs": [
-    "https://github.com/hrideshbharati",
-    "https://linkedin.com/company/AWebGrow",
-    "https://twitter.com/AWebGrow"
-  ]
+  "areaServed": {
+    "@type": "Country",
+    "name": "India",
+  },
 };
 
-const localBusinessSchemaNichlaul = {
+const websiteSchema = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "AWebGrow - Web Development Company in Nichlaul",
+  "@type": "WebSite",
+  "name": "AWebGrow",
   "url": BASE_URL,
-  "logo": `${BASE_URL}/images/awebgrow-logo-art-letter.png`,
-  "description": "AWebGrow is a trusted web development company in Nichlaul offering custom website design, app development, SEO, and digital marketing solutions.",
-  "telephone": "+91-7267995307",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Nichlaul",
-    "addressRegion": "Uttar Pradesh",
-    "addressCountry": "IN"
-  },
-  "sameAs": [
-    "https://github.com/hrideshbharati",
-    "https://linkedin.com/company/AWebGrow",
-    "https://twitter.com/AWebGrow"
-  ]
 };
 
 export default function RootLayout({
@@ -190,44 +156,52 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        <meta name="google-site-verification" content="Zce3KX6aOJA6UHKpJVkl9JUMIFTLtLankJbNCvTT0Rw" />
+        <meta
+          name="google-site-verification"
+          content="Zce3KX6aOJA6UHKpJVkl9JUMIFTLtLankJbNCvTT0Rw"
+        />
+
+        {/* Favicons */}
         <link rel="icon" type="image/x-icon" href="/icons/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+
+        {/* Google AdSense - strategy="beforeInteractive" head ke andar valid hai */}
+        <Script
+          id="google-adsense"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2660059673395664"
+          strategy="beforeInteractive"
+          crossOrigin="anonymous"
+        />
       </head>
+
       <body
         style={{ fontFamily: "var(--font-inter), sans-serif" }}
         suppressHydrationWarning
       >
         <VisitorTracker />
+
         {children}
+
         <PWAInstallPrompt />
+
         <Toaster position="top-center" richColors closeButton />
 
-        {/* 1. JSON-LD in <body> with id and suppressHydrationWarning */}
+        {/* Structured Data (Schema) */}
         <script
-          id="jsonld-structured-data"
+          id="jsonld-schema"
           type="application/ld+json"
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: JSON.stringify([
               organizationSchema,
-              localBusinessSchemaNoida,
-              localBusinessSchemaNichlaul
-            ])
+              localBusinessSchema,
+              websiteSchema,
+            ]),
           }}
         />
 
-        {/* 2. Single AdSense Script using Next.js Script component */}
-        <Script
-          id="google-adsense"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2660059673395664"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
-
-        {/* 3. Bootstrap Bundle */}
+        {/* Bootstrap JS Bundle */}
         <Script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
           strategy="afterInteractive"
