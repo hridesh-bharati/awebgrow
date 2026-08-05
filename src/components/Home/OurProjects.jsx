@@ -239,7 +239,7 @@ export default function RecentProjectsGrid() {
                             className="btn btn-sm btn-outline-secondary py-0 px-2 rounded-pill"
                             style={{ fontSize: '0.75rem' }}
                           >
-                            {activeFeedbackForm === project.id ? 'Cancel' : '+ Rate'}
+                            {activeFeedbackForm === project.id ? 'Cancel' : '+Feedback'}
                           </button>
                         </div>
 
@@ -261,14 +261,14 @@ export default function RecentProjectsGrid() {
                             </div>
                             <input
                               type="text"
-                              placeholder="Your Name (Optional)"
+                              placeholder="Your Name"
                               className="form-control form-control-sm mb-1 bg-transparent text-theme-primary"
                               value={userName}
                               onChange={(e) => setUserName(e.target.value)}
                             />
                             <textarea
                               rows="2"
-                              placeholder="Write your review..."
+                              placeholder="Write your review...*"
                               className="form-control form-control-sm mb-2 bg-transparent text-theme-primary"
                               value={userComment}
                               onChange={(e) => setUserComment(e.target.value)}
