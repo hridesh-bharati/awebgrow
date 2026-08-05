@@ -28,7 +28,6 @@ export default function RecentProjects() {
           const feedbacksObj = item.feedbacks || {};
           const feedbackList = Object.keys(feedbacksObj).map(fKey => feedbacksObj[fKey]);
 
-          // Average Rating Calculation
           const avgRating = feedbackList.length > 0
             ? (feedbackList.reduce((acc, curr) => acc + Number(curr.rating || 0), 0) / feedbackList.length).toFixed(1)
             : '5.0';
@@ -178,19 +177,20 @@ export default function RecentProjects() {
   };
 
   return (
-    <div className="container-fluid px-2 px-md-3 position-relative" style={{ zIndex: 1 }}>
-      <div className="row g-3 m-0">
+    <div className="container-fluid px-1 px-sm-2 position-relative" style={{ zIndex: 1 }}>
+      <div className="row g-2 g-md-3 m-0">
+
         {/* Dynamic Form: Add / Edit Project */}
-        <div className="col-12 col-xl-8 ps-0">
+        <div className="col-12 col-xl-8 px-0 pe-xl-2">
           <div
-            className="rounded-4 p-4 border"
+            className="rounded-4 p-3 p-md-4 border w-100"
             style={{
               backgroundColor: 'var(--bg-card)',
               borderColor: 'var(--border-subtle)',
               boxShadow: '0 10px 30px var(--shadow-color)'
             }}
           >
-            <h5 className="fw-black text-theme-primary mb-4 d-flex align-items-center gap-2" style={{ fontWeight: 800 }}>
+            <h5 className="fw-black text-theme-primary mb-3 mb-md-4 d-flex align-items-center gap-2" style={{ fontWeight: 800 }}>
               <i className={`bi ${isEditing ? 'bi-pencil-square text-info' : 'bi-plus-circle-fill text-pink'}`}></i>
               {isEditing ? "Edit Project Details" : "Add New Project"}
             </h5>
@@ -285,9 +285,9 @@ export default function RecentProjects() {
         </div>
 
         {/* Deployments List View */}
-        <div className="col-12 col-xl-4 pe-0">
+        <div className="col-12 col-xl-4 px-0 ps-xl-2 mt-3 mt-xl-0">
           <div
-            className="rounded-4 p-4 border"
+            className="rounded-4 p-3 p-md-4 border w-100"
             style={{
               backgroundColor: 'var(--bg-card)',
               borderColor: 'var(--border-subtle)',
@@ -296,12 +296,12 @@ export default function RecentProjects() {
           >
             <h5 className="fw-black text-theme-primary mb-3" style={{ fontWeight: 800 }}>Recent Deployments</h5>
 
-            <div className="overflow-auto pe-1" style={{ maxHeight: '480px' }}>
-              <div className="row row-cols-1 g-3 m-0">
+            <div className="overflow-auto" style={{ maxHeight: '480px' }}>
+              <div className="row row-cols-1 g-2 m-0">
                 {dbProjects.map((project) => (
                   <div key={project.id} className="col px-0">
                     <div
-                      className="p-3 rounded-3 border h-100 d-flex flex-column justify-content-between"
+                      className="p-2.5 p-sm-3 rounded-3 border h-100 d-flex flex-column justify-content-between"
                       style={{ backgroundColor: 'var(--bg-pill)', borderColor: 'var(--border-subtle)' }}
                     >
                       <div className="text-truncate mb-2">
@@ -309,7 +309,6 @@ export default function RecentProjects() {
                           <h6 className="fw-black text-theme-primary m-0 text-truncate" title={project.title} style={{ fontWeight: 800 }}>
                             {project.title}
                           </h6>
-                          {/* Rating display on Admin Card */}
                           <div className="text-warning small d-flex align-items-center gap-1 fw-bold">
                             <i className="bi bi-star-fill"></i>
                             <span>{project.avgRating}</span>
@@ -360,6 +359,7 @@ export default function RecentProjects() {
 
           </div>
         </div>
+
       </div>
     </div>
   );
