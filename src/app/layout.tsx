@@ -10,7 +10,7 @@ import "./theme.css";
 import { Toaster } from 'sonner';
 import type { Viewport } from 'next';
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
-import VisitorTracker from "@/components/VisitorTracker"; 
+import VisitorTracker from "@/components/VisitorTracker";
 import { allKeywords } from "@/app/data/seo-keywords";
 
 const inter = Inter({
@@ -25,16 +25,12 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL;
 
 export const metadata = {
   metadataBase: new URL(BASE_URL),
-
   title: {
     default: "Web Development Company India | Website & App Development Services | AWebGrow",
     template: "%s | AWebGrow"
   },
-
   description: "AWebGrow is a leading web development company in India offering custom website development, eCommerce solutions, mobile app development, UI/UX design, SEO services, digital marketing, and enterprise software development. Hire expert Next.js, React & MERN stack developers.",
-
   keywords: allKeywords,
-
   authors: [
     { name: "hridesh", url: "https://github.com/hrideshbharati" },
     { name: "hridesh" },
@@ -49,15 +45,12 @@ export const metadata = {
   ],
   creator: "AWebGrow Team",
   publisher: "AWebGrow Digital Agency",
-
   manifest: "/manifest.json",
-
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-
   robots: {
     index: true,
     follow: true,
@@ -69,11 +62,9 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
-
   verification: {
     google: "Zce3KX6aOJA6UHKpJVkl9JUMIFTLtLankJbNCvTT0Rw",
   },
-
   openGraph: {
     title: "Web Development Company India | Website & App Development | AWebGrow",
     description: "Transform your business with India's leading web development company. Custom websites, mobile apps, eCommerce solutions & digital marketing services.",
@@ -90,7 +81,6 @@ export const metadata = {
     locale: "en_IN",
     type: "website",
   },
-
   twitter: {
     card: "summary_large_image",
     title: "Web Development Company India | AWebGrow",
@@ -98,11 +88,9 @@ export const metadata = {
     images: ["/images/twitter-image.jpg"],
     creator: "@AWebGrow",
   },
-
   alternates: {
     canonical: BASE_URL,
   },
-
   category: "technology",
 };
 
@@ -128,66 +116,27 @@ const organizationSchema = {
     "https://twitter.com/AWebGrow"
   ],
   "description": "Leading web development company in India offering website, app development, UI/UX design, SEO and digital marketing services. Serving clients in Noida, Nichlaul, and across India.",
-
   "founder": [
-    {
-      "@type": "Person",
-      "name": "hridesh",
-      "url": "https://github.com/hrideshbharati"
-    },
-    {
-      "@type": "Person",
-      "name": "hridesh"
-    },
-    {
-      "@type": "Person",
-      "name": "hrideh Bharati"
-    },
-    {
-      "@type": "Person",
-      "name": "Sushant Rai"
-    },
-    {
-      "@type": "Person",
-      "name": "Sushil Kandu"
-    }
+    { "@type": "Person", "name": "hridesh", "url": "https://github.com/hrideshbharati" },
+    { "@type": "Person", "name": "hridesh" },
+    { "@type": "Person", "name": "hrideh Bharati" },
+    { "@type": "Person", "name": "Sushant Rai" },
+    { "@type": "Person", "name": "Sushil Kandu" }
   ],
-
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "+91-7267995307",
     "contactType": "customer service",
     "availableLanguage": ["English", "Hindi"]
   },
-
   "address": [
-    {
-      "@type": "PostalAddress",
-      "addressLocality": "Noida",
-      "addressRegion": "Uttar Pradesh",
-      "addressCountry": "IN"
-    },
-    {
-      "@type": "PostalAddress",
-      "addressLocality": "Nichlaul",
-      "addressRegion": "Uttar Pradesh",
-      "addressCountry": "IN"
-    }
+    { "@type": "PostalAddress", "addressLocality": "Noida", "addressRegion": "Uttar Pradesh", "addressCountry": "IN" },
+    { "@type": "PostalAddress", "addressLocality": "Nichlaul", "addressRegion": "Uttar Pradesh", "addressCountry": "IN" }
   ],
-
   "areaServed": [
-    {
-      "@type": "City",
-      "name": "Noida"
-    },
-    {
-      "@type": "City",
-      "name": "Nichlaul"
-    },
-    {
-      "@type": "Country",
-      "name": "India"
-    }
+    { "@type": "City", "name": "Noida" },
+    { "@type": "City", "name": "Nichlaul" },
+    { "@type": "Country", "name": "India" }
   ]
 };
 
@@ -242,31 +191,6 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <head>
         <meta name="google-site-verification" content="Zce3KX6aOJA6UHKpJVkl9JUMIFTLtLankJbNCvTT0Rw" />
-
-     <script
-  id="adsense-script"
-  async
-  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2660059673395664"
-  crossOrigin="anonymous"
-></script>
-        
-        <script
-    async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2660059673395664"
-    crossOrigin="anonymous"
-  ></script>
-
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify([
-              organizationSchema,
-              localBusinessSchemaNoida,
-              localBusinessSchemaNichlaul
-            ])
-          }}
-        />
-
         <link rel="icon" type="image/x-icon" href="/icons/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
@@ -276,11 +200,34 @@ export default function RootLayout({
         style={{ fontFamily: "var(--font-inter), sans-serif" }}
         suppressHydrationWarning
       >
-          <VisitorTracker />
-          {children}
-          <PWAInstallPrompt />
-          <Toaster position="top-center" richColors closeButton />
+        <VisitorTracker />
+        {children}
+        <PWAInstallPrompt />
+        <Toaster position="top-center" richColors closeButton />
 
+        {/* 1. JSON-LD in <body> with id and suppressHydrationWarning */}
+        <script
+          id="jsonld-structured-data"
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([
+              organizationSchema,
+              localBusinessSchemaNoida,
+              localBusinessSchemaNichlaul
+            ])
+          }}
+        />
+
+        {/* 2. Single AdSense Script using Next.js Script component */}
+        <Script
+          id="google-adsense"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2660059673395664"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+
+        {/* 3. Bootstrap Bundle */}
         <Script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
           strategy="afterInteractive"

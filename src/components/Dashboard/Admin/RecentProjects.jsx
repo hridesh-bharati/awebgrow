@@ -9,7 +9,7 @@ export default function RecentProjects() {
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
-  
+
   const [formData, setFormData] = useState({
     title: '',
     category: '',
@@ -17,16 +17,29 @@ export default function RecentProjects() {
     websiteUrl: '',
   });
 
-  // 1. READ: Fetch Projects in Realtime
+  // 1. READ: Fetch Projects & Calculate Average Ratings
   useEffect(() => {
     const projectsRef = ref(rtdb, 'projects');
     const unsubscribe = onValue(projectsRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        const list = Object.keys(data).map(key => ({
-          id: key,
-          ...data[key]
-        })).reverse();
+        const list = Object.keys(data).map(key => {
+          const item = data[key];
+          const feedbacksObj = item.feedbacks || {};
+          const feedbackList = Object.keys(feedbacksObj).map(fKey => feedbacksObj[fKey]);
+
+          // Average Rating Calculation
+          const avgRating = feedbackList.length > 0
+            ? (feedbackList.reduce((acc, curr) => acc + Number(curr.rating || 0), 0) / feedbackList.length).toFixed(1)
+            : '5.0';
+
+          return {
+            id: key,
+            ...item,
+            feedbacksCount: feedbackList.length,
+            avgRating
+          };
+        }).reverse();
         setDbProjects(list);
       } else {
         setDbProjects([]);
@@ -44,11 +57,11 @@ export default function RecentProjects() {
   const uploadScreenshotToCloudinary = async (websiteUrl) => {
     try {
       const screenshotUrl = `https://api.microlink.io/?url=${encodeURIComponent(websiteUrl)}&screenshot=true&embed=screenshot.url`;
-      
+
       const imageResponse = await fetch(screenshotUrl);
       if (!imageResponse.ok) throw new Error("Failed to fetch screenshot from Microlink");
       const imageBlob = await imageResponse.blob();
-      
+
       const cloudinaryData = new FormData();
       cloudinaryData.append("file", imageBlob);
       cloudinaryData.append("upload_preset", "webgrow_preset");
@@ -57,7 +70,7 @@ export default function RecentProjects() {
         method: "POST",
         body: cloudinaryData
       });
-      
+
       const fileData = await res.json();
       if (fileData.secure_url) {
         return fileData.secure_url;
@@ -82,7 +95,7 @@ export default function RecentProjects() {
 
       if (isEditing) {
         const currentProject = dbProjects.find(p => p.id === editId);
-        
+
         if (currentProject && currentProject.websiteUrl !== formData.websiteUrl) {
           finalImageUrl = await uploadScreenshotToCloudinary(formData.websiteUrl);
         } else {
@@ -169,9 +182,9 @@ export default function RecentProjects() {
       <div className="row g-3 m-0">
         {/* Dynamic Form: Add / Edit Project */}
         <div className="col-12 col-xl-8 ps-0">
-          <div 
-            className="rounded-4 p-4 border" 
-            style={{ 
+          <div
+            className="rounded-4 p-4 border"
+            style={{
               backgroundColor: 'var(--bg-card)',
               borderColor: 'var(--border-subtle)',
               boxShadow: '0 10px 30px var(--shadow-color)'
@@ -185,14 +198,14 @@ export default function RecentProjects() {
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label className="form-label small fw-bold text-theme-secondary">Project Title</label>
-                <input 
-                  type="text" 
-                  className="form-control form-control-sm rounded-3 text-theme-primary border" 
+                <input
+                  type="text"
+                  className="form-control form-control-sm rounded-3 text-theme-primary border"
                   name="title"
-                  value={formData.title} 
-                  onChange={handleChange} 
-                  placeholder="e.g. Asad Hospital Alwar" 
-                  required 
+                  value={formData.title}
+                  onChange={handleChange}
+                  placeholder="e.g. Asad Hospital Alwar"
+                  required
                   disabled={isUploading}
                   style={{ backgroundColor: 'var(--bg-pill)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }}
                 />
@@ -200,13 +213,13 @@ export default function RecentProjects() {
 
               <div className="mb-3">
                 <label className="form-label small fw-bold text-theme-secondary">Category</label>
-                <input 
-                  type="text" 
-                  className="form-control form-control-sm rounded-3 text-theme-primary border" 
+                <input
+                  type="text"
+                  className="form-control form-control-sm rounded-3 text-theme-primary border"
                   name="category"
-                  value={formData.category} 
-                  onChange={handleChange} 
-                  placeholder="e.g. Healthcare Portal" 
+                  value={formData.category}
+                  onChange={handleChange}
+                  placeholder="e.g. Healthcare Portal"
                   disabled={isUploading}
                   style={{ backgroundColor: 'var(--bg-pill)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }}
                 />
@@ -214,14 +227,14 @@ export default function RecentProjects() {
 
               <div className="mb-3">
                 <label className="form-label small fw-bold text-theme-secondary">Website / Live URL</label>
-                <input 
-                  type="url" 
-                  className="form-control form-control-sm rounded-3 text-theme-primary border" 
+                <input
+                  type="url"
+                  className="form-control form-control-sm rounded-3 text-theme-primary border"
                   name="websiteUrl"
-                  value={formData.websiteUrl} 
-                  onChange={handleChange} 
-                  placeholder="https://example.com" 
-                  required 
+                  value={formData.websiteUrl}
+                  onChange={handleChange}
+                  placeholder="https://example.com"
+                  required
                   disabled={isUploading}
                   style={{ backgroundColor: 'var(--bg-pill)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }}
                 />
@@ -229,21 +242,21 @@ export default function RecentProjects() {
 
               <div className="mb-3">
                 <label className="form-label small fw-bold text-theme-secondary">Description</label>
-                <textarea 
-                  className="form-control form-control-sm rounded-3 text-theme-primary border" 
-                  rows="3" 
+                <textarea
+                  className="form-control form-control-sm rounded-3 text-theme-primary border"
+                  rows="3"
                   name="description"
-                  value={formData.description} 
-                  onChange={handleChange} 
+                  value={formData.description}
+                  onChange={handleChange}
                   placeholder="Write a brief description..."
                   disabled={isUploading}
                   style={{ backgroundColor: 'var(--bg-pill)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }}
                 ></textarea>
               </div>
-              
+
               <div className="d-flex gap-2">
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="btn-neon-cta w-100 justify-content-center py-2"
                   disabled={isUploading}
                 >
@@ -258,8 +271,8 @@ export default function RecentProjects() {
                 </button>
 
                 {isEditing && !isUploading && (
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     className="btn btn-secondary-glow rounded-3 py-2"
                     onClick={cancelEditing}
                   >
@@ -273,49 +286,60 @@ export default function RecentProjects() {
 
         {/* Deployments List View */}
         <div className="col-12 col-xl-4 pe-0">
-          <div 
-            className="rounded-4 p-4 border" 
-            style={{ 
+          <div
+            className="rounded-4 p-4 border"
+            style={{
               backgroundColor: 'var(--bg-card)',
               borderColor: 'var(--border-subtle)',
               boxShadow: '0 10px 30px var(--shadow-color)'
             }}
           >
             <h5 className="fw-black text-theme-primary mb-3" style={{ fontWeight: 800 }}>Recent Deployments</h5>
-            
+
             <div className="overflow-auto pe-1" style={{ maxHeight: '480px' }}>
               <div className="row row-cols-1 g-3 m-0">
                 {dbProjects.map((project) => (
                   <div key={project.id} className="col px-0">
-                    <div 
+                    <div
                       className="p-3 rounded-3 border h-100 d-flex flex-column justify-content-between"
                       style={{ backgroundColor: 'var(--bg-pill)', borderColor: 'var(--border-subtle)' }}
                     >
                       <div className="text-truncate mb-2">
-                        <h6 className="fw-black text-theme-primary m-0 text-truncate" title={project.title} style={{ fontWeight: 800 }}>
-                          {project.title}
-                        </h6>
-                        <span className="badge rounded-pill text-white my-2 small text-truncate" style={{ background: 'linear-gradient(135deg, #a855f7, #3b82f6)', fontSize: '0.65rem' }}>
+                        <div className="d-flex justify-content-between align-items-center mb-1">
+                          <h6 className="fw-black text-theme-primary m-0 text-truncate" title={project.title} style={{ fontWeight: 800 }}>
+                            {project.title}
+                          </h6>
+                          {/* Rating display on Admin Card */}
+                          <div className="text-warning small d-flex align-items-center gap-1 fw-bold">
+                            <i className="bi bi-star-fill"></i>
+                            <span>{project.avgRating}</span>
+                            <span className="text-theme-secondary opacity-75" style={{ fontSize: '0.7rem' }}>
+                              ({project.feedbacksCount})
+                            </span>
+                          </div>
+                        </div>
+
+                        <span className="badge rounded-pill text-white my-1 small text-truncate" style={{ background: 'linear-gradient(135deg, #a855f7, #3b82f6)', fontSize: '0.65rem' }}>
                           {project.category}
                         </span>
-                        <small className="text-theme-secondary d-block text-truncate" title={project.websiteUrl} style={{ fontSize: '0.78rem' }}>
+                        <small className="text-theme-secondary d-block text-truncate mt-1" title={project.websiteUrl} style={{ fontSize: '0.78rem' }}>
                           <strong>Target:</strong> {project.websiteUrl}
                         </small>
                       </div>
-                      
+
                       <div className="d-flex justify-content-between align-items-center mt-2 pt-2 border-top" style={{ borderColor: 'var(--border-subtle)' }}>
                         <span className="badge bg-success bg-opacity-20 text-white rounded-pill px-2.5 py-1 small">
                           Production
                         </span>
                         <div className="d-flex gap-1">
-                          <button 
+                          <button
                             className="btn btn-sm btn-secondary-glow py-1 px-2 rounded-2"
                             onClick={() => handleEditClick(project)}
                             title="Edit Project"
                           >
                             <i className="bi bi-pencil-square"></i>
                           </button>
-                          <button 
+                          <button
                             className="btn btn-sm btn-outline-danger py-1 px-2 rounded-2"
                             onClick={() => handleDeleteClick(project.id)}
                             title="Delete Project"
